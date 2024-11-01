@@ -1,0 +1,112 @@
+:root{
+
+    --colorPrimario:#;
+    --colorSecundario:#;
+    --blanco:#ffff;
+    --negro:#000;
+
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+  }
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+}
+
+.contenedorPrincipal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    padding: 1rem;
+}
+.contenedorPrincipal__titulo h1{
+    font-size: 3.5rem;
+    margin: 2rem 0;
+}
+/*Informacion*/
+.informacion{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+@media(min-width: 768px){
+    .informacion{
+        flex-direction: row;
+        gap: 3rem;
+    }   
+}
+.informacion__estudiantes,
+.informacion__proyectos,
+.informacion__asesores{
+    width: 33.1rem;
+    height: 11.4rem;
+    padding: 1.5rem;
+    background-color: var(--blanco);
+    border-radius: 1.2rem;
+}   
+.informacion__estudiantes h2,
+.informacion__proyectos h2,
+.informacion__asesores h2{
+    font-size: 3rem;
+}
+@media(min-width: 768px){
+    .informacion__estudiantes h2,
+    .informacion__proyectos h2,
+    .informacion__asesores h2{
+        font-size: 2.5rem;
+    }
+}
+.informacion__estudiantes p,
+.informacion__proyectos p,
+.informacion__asesores p{
+    color: grey;
+    font-size: 1.5rem;
+}
+
+/*graficos*/
+.graficos{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    gap: 2.5rem;
+}
+@media(min-width: 768px){
+    .graficos{
+        flex-direction: row;
+    }   
+}
+.graficos__Estado,
+.graficos__Estudiantes{
+    background-color: var(--blanco);
+    border-radius: 1.2rem;
+}
+.graficos__Estado h2,
+.graficos__Estudiantes h2{
+    margin: 1rem 0 0 1rem;
+}
+.graficos__Estado{
+    width: 33.1rem;
+    height: 39.3rem;
+}
+.graficos__Estudiantes{
+    width: 33.1rem;
+    height: 39.3rem;
+}
+@media(min-width: 768px){
+    .graficos__Estado{
+        width: 55.1rem;
+    }
+    .graficos__Estudiantes{
+        width: 47.8rem;
+    }
+}
