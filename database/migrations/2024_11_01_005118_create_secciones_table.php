@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('secciones', function (Blueprint $table) {
             $table->id();
             $table->text('nombre_seccion');
-            $table->foreignId('id_departamento')->constrained('departamentos')->onDelete('cascade');
+            $table->foreignId('departamento_id')->constrained('departamentos')->onDelete('cascade'); //FK
             $table->timestamps();
         });
     }
