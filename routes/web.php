@@ -6,6 +6,15 @@ Route::get('/', function () {
     return view('login.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/registro', function () {
+    return view('registro.registro');
 });
+
+
+Route::get('/proyecto', function () {
+    return view('proyecto.publicar-proyecto');
+})->name('proyecto');
+
+Route::get('/dashboard', function () {
+    return view('dashboard.dashboard');
+})->name('dashboard');
