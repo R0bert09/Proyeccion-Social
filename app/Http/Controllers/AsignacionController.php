@@ -12,7 +12,7 @@ class AsignacionController extends Controller
 {
     public function index()
     {
-        $asignaciones = Asignacion::paginate();
+        $asignaciones = Asignacion::paginate(10);
         return view('asignaciones.index', compact('asignaciones'));
     }
 
