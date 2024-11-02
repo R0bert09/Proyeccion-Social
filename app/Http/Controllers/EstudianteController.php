@@ -7,33 +7,42 @@ use Illuminate\Http\Request;
 
 class EstudianteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    
+    public function index(Request $request)
     {
-        $ListEstudiantes = Estudiante::all();
+      
+        $query = $request->input('query');
+
+      
+        if ($query) {
+            $ListEstudiantes = Estudiante::where('nombre', 'LIKE', "%{$query}%")
+                ->orWhereHas('seccion', function ($q) use ($query) {
+                    $q->where('nombre', 'LIKE', "%{$query}%");
+                })
+                ->get();
+        } else {
+            $ListEstudiantes = Estudiante::all();
+        }
+
         return view("estudiante.index", compact("ListEstudiantes")); 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+   
     public function create()
     {
         return view("estudiante.create"); 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+  
     public function store(Request $request)
     {
+       
         $data = $request->validate([
             'id_usuario' => 'required|integer|exists:users,id',
             'id_seccion' => 'required|integer|exists:secciones,id',
             'porcentaje_completado' => 'required|numeric|min:0|max:100',
-            'horas_sociales_completadas' => 'required|integer|min:0'
+            'horas_sociales_completadas' => 'required|integer|min:0',
+            'nombre' => 'required|string|max:255', 
         ]);
 
         Estudiante::create($data);
@@ -41,9 +50,7 @@ class EstudianteController extends Controller
         return redirect()->route('estudiante.index')->with('success', 'Estudiante creado con éxito');  
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(string $id)
     {
         $estudiante = Estudiante::find($id);
@@ -55,9 +62,7 @@ class EstudianteController extends Controller
         return view("estudiante.show", compact('estudiante')); 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+   
     public function edit(string $id)
     {
         $estudiante = Estudiante::find($id);
@@ -69,9 +74,7 @@ class EstudianteController extends Controller
         return view("estudiante.edit", compact('estudiante')); 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+  
     public function update(Request $request, string $id)
     {
         $estudiante = Estudiante::find($id);
@@ -80,11 +83,13 @@ class EstudianteController extends Controller
             return redirect()->route('estudiante.index')->with('error', 'Estudiante no encontrado');
         }
 
+        
         $data = $request->validate([
             'id_usuario' => 'required|integer|exists:users,id',
             'id_seccion' => 'required|integer|exists:secciones,id',
             'porcentaje_completado' => 'required|numeric|min:0|max:100',
-            'horas_sociales_completadas' => 'required|integer|min:0'
+            'horas_sociales_completadas' => 'required|integer|min:0',
+            'nombre' => 'required|string|max:255', 
         ]);
 
         $estudiante->update($data);
@@ -92,9 +97,6 @@ class EstudianteController extends Controller
         return redirect()->route('estudiante.index')->with('success', 'Estudiante actualizado con éxito');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $estudiante = Estudiante::find($id);
