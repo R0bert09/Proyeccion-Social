@@ -16,7 +16,7 @@ class ProyectoDocumentoController extends Controller
         return view('proyectosDocumentos.index', compact('proyectosDocumentos'));
     }
 
-    // Mostrar el formulario de creación de un nuevo registro
+    // Mostramos el formulario de creación de un nuevo registro (NEW)
     public function create()
     {
         $documentos = Documento::all();
@@ -24,7 +24,7 @@ class ProyectoDocumentoController extends Controller
         return view('proyectosDocumentos.create', compact('documentos', 'proyectos'));
     }
 
-    // Guardar un nuevo registro en la base de datos y redirigir
+    // Guardamos un nuevo registro en la base de datos y redirigimos
     public function store(Request $request)
     {
         $request->validate([
@@ -34,19 +34,19 @@ class ProyectoDocumentoController extends Controller
 
         ProyectoDocumento::create($request->all());
 
-        // Redirigir al índice con un mensaje de éxito
+        // Redirigir al índice con un mensaje de éxito (que logro completarse sin errores :D)
         return redirect()->route('proyectosDocumentos.index')
                          ->with('success', 'ProyectoDocumento creado con éxito.');
     }
 
-    // Mostrar un registro específico en una vista de detalle
+    // Mostramos un registro específico en una vista de detalle
     public function show($id)
     {
         $proyectoDocumento = ProyectoDocumento::with('documento', 'proyecto')->findOrFail($id);
         return view('proyectosDocumentos.show', compact('proyectoDocumento'));
     }
 
-    // Mostrar el formulario de edición para un registro específico
+    // Mostramos el formulario de edición para un registro específico
     public function edit($id)
     {
         $proyectoDocumento = ProyectoDocumento::findOrFail($id);
@@ -55,7 +55,7 @@ class ProyectoDocumentoController extends Controller
         return view('proyectosDocumentos.edit', compact('proyectoDocumento', 'documentos', 'proyectos'));
     }
 
-    // Actualizar un registro específico y redirigir
+    // Actualizamos un registro específico y redirigimos
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -70,7 +70,7 @@ class ProyectoDocumentoController extends Controller
                          ->with('success', 'ProyectoDocumento actualizado con éxito.');
     }
 
-    // Eliminar un registro específico y redirigir
+    // Eliminamos un registro específico y redirigimos
     public function destroy($id)
     {
         $proyectoDocumento = ProyectoDocumento::findOrFail($id);
