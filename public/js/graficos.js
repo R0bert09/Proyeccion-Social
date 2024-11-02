@@ -19,17 +19,20 @@ document.addEventListener("DOMContentLoaded", function() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Estado de Proyectos', // Título del gráfico
+                    text: 'Estado de Proyectos',
                     align: 'start',
                     font: {
-                        size: 23
+                        size: 23,
+                        color: '#46de31' 
                     }
+                },
+                legend: {
+                    position: 'bottom' 
                 }
             }
         }
     });
-
-    // Configuración del gráfico para Estudiantes y Proyectos por Mes (tipo barras)
+    
     const ctxEstudiantes = document.getElementById('estudiantesProyectosChart').getContext('2d');
     const estudiantesProyectosChart = new Chart(ctxEstudiantes, {
         type: 'bar',
@@ -55,11 +58,15 @@ document.addEventListener("DOMContentLoaded", function() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Estudiantes y Proyectos por Mes', // Título del gráfico
+                    text: 'Estudiantes y Proyectos por Mes',
                     align: 'start',
                     font: {
-                        size: 23
+                        size: 23,
+                        color: '#000000' 
                     }
+                },
+                legend: {
+                    position: 'bottom' 
                 }
             },
             scales: {

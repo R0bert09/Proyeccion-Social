@@ -89,7 +89,7 @@
 }
 
 .graficos__Estado {
-    width: 90%; 
+    width: 100%; 
     height: 24.5625rem; 
 }
 
@@ -99,7 +99,10 @@
 }
 
 #estadoProyectosChart{
-    width: 100%;
-    height: 100%;
+    padding: 1rem;
+}
+
+#estudiantesProyectosChart{
+    padding: 1rem;
 }
 
