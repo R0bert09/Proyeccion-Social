@@ -27,7 +27,7 @@ class EstudianteExport implements FromView,WithColumnWidths
     public function view(): View
     {
         $estudiantes=Estudiante::all();
-        return view('exports.estudiantes', [
+        return view('exports.estudiantesExcel', [
             'estudiantes' => $estudiantes
         ]);
     }
