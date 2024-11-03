@@ -129,6 +129,7 @@
     }
 }
 
+
 .btn-yei{
     margin-left: 80%;
     background-color:#800000;
@@ -146,6 +147,7 @@
 
 .bi-trash-fill{
     padding: 10px;
+
 }
 
 #barra-lateral.visible {
@@ -397,4 +399,5 @@ input[type="checkbox"].form-check-input:checked::before {
 
 .btn-publicar:hover {
     background-color: #660000;
+
 }
