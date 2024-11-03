@@ -21,19 +21,19 @@ class EstadoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $estadosPermitidos = ['pendiente', 'en_proceso', 'completado', 'cancelado', 'rechazado'];
         $ListEstados = Estado::all();
-        return view("index", compact("ListEstados",'estadosPermitidos'));
+        return view("estado.index", compact("ListEstados")); 
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view("estado.create"); 
+        return view("estado.create");
     }
 
     /**
@@ -45,8 +45,11 @@ class EstadoController extends Controller
             'nombre_estado' => 'required|string|max:50',
         ]);
 
+        // Estandarización del nombre
+        $data['nombre_estado'] = ucfirst(strtolower($data['nombre_estado'])); #usamos ucfirst y strtolower para convertir la primera letra a mayúscula y las demás a minúsculas, estandarizando el formato.
+
         Estado::crearEstado($data);
-        return redirect()->route('estado.index')->with('success', 'Estado creado con éxito');  
+        return redirect()->route('estado.index')->with('success', 'Estado creado con éxito');
     }
 
     /**
@@ -55,7 +58,7 @@ class EstadoController extends Controller
     public function show( $id)
     {
         $estado = Estado::find($id);
-        return view("estado.show", compact('estado')); 
+        return view("estado.show", compact('estado'));
     }
 
     /**
@@ -63,12 +66,12 @@ class EstadoController extends Controller
      */
     public function edit(string $id)
     {
-        $estado = Estado::find($id); 
+        $estado = Estado::find($id);
 
         if (!$estado) {
             return redirect()->route('estado.index')->with('error', 'Estado no encontrado');
         }
-        return view("estado.edit", compact('estado')); 
+        return view("estado.edit", compact('estado'));
     }
 
     /**
@@ -79,13 +82,15 @@ class EstadoController extends Controller
         $data = $request->validate([
             'nombre_estado' => 'required|string|max:50',
         ]);
-    
+
         $estado = Estado::find($id);
-    
         if (!$estado) {
             return redirect()->route('estado.index')->with('error', 'Estado no encontrado');
         }
-    
+
+        // Estandarización del nombre
+        $data['nombre_estado'] = ucfirst(strtolower($data['nombre_estado'])); #usamos ucfirst y strtolower para convertir la primera letra a mayúscula y las demás a minúsculas, estandarizando el formato.
+
         $estado->update($data);
         return redirect()->route('estado.index')->with('success', 'Estado actualizado con éxito');
     }
@@ -99,56 +104,8 @@ class EstadoController extends Controller
         if (!$estado) {
             return redirect()->route('estado.index')->with('error', 'Estado no encontrado');
         }
-        
-        $estado->delete(); 
+
+        $estado->delete();
         return redirect()->route('estado.index')->with('success', 'Estado eliminado con éxito');
     }
-
-    public function mostrarHistorial()
-    {
-        // Obtener todos los registros del historial de cambios
-        $historial = HistorialCambiosEstado::all();
-        return view('historial', compact('historial'));
-    }  
-    
-    public function cambiarEstado(Request $request, $id)
-{
-    // Validar la entrada del nuevo estado
-    $data = $request->validate([
-        'nuevo_estado' => 'required|string|max:50',
-    ]);
-
-    // Buscar el estado por ID
-    $estado = Estado::find($id);
-
-    // Verificar si el estado existe
-    if (!$estado) {
-        return redirect()->route('estado.index')->with('error', 'Estado no encontrado');
-    }
-
-    // Verificar si la transición es permitida
-    if (!array_key_exists($estado->nombre_estado, $this->transiciones) || 
-        !in_array($data['nuevo_estado'], $this->transiciones[$estado->nombre_estado])) {
-        return redirect()->route('estado.index')->with('error', 'Transición no permitida');
-    }
-
-    // Cambiar el estado al nuevo estado
-    $estado->nombre_estado = $data['nuevo_estado'];
-    $estado->save();
-
-    // Registrar el cambio en el historial de cambios de estado
-    HistorialCambiosEstado::create([
-        'estado_id' => $estado->id,
-        'nuevo_estado' => $data['nuevo_estado'],
-        'fecha_cambio' => now(), // O la fecha y hora actual
-    ]);
-
-    return redirect()->route('estado.index')->with('success', 'Estado cambiado con éxito');
 }
-
-    
-    
-
-}
-
-
