@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProyectoController extends Controller
 {
@@ -99,4 +100,19 @@ class ProyectoController extends Controller
         $proyecto->delete(); 
         return redirect()->route('proyecto.index')->with('success', 'Proyecto eliminado con éxito');
     }
+
+    /*pruebitas*/ 
+    
+
+    public function generarInforme()
+    {
+        $proyectos = Proyecto::all(); // Obtenemos todos los proyectos
+
+        // Cargar la vista y pasarle los datos de los proyectos
+        $pdf = Pdf::loadView('test', compact('proyectos'));
+
+        // Retornar el PDF para descarga
+        return $pdf->download('informe_progreso.pdf');
+    }
+
 }
