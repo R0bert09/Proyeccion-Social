@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SeccionController;
 
 Route::get('/', function () {
     return view('login.login');
@@ -35,10 +34,18 @@ Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
 })->name('dashboard');
 
-Route::prefix('secciones')->group(function () {
-    Route::get('/', [SeccionController::class, 'index']);       
-    Route::post('/', [SeccionController::class, 'store']);      
-    Route::get('/{id}', [SeccionController::class, 'show']);    
-    Route::put('/{id}', [SeccionController::class, 'update']);  
-    Route::delete('/{id}', [SeccionController::class, 'destroy']);
+Route::get('/crear', function () {
+    return view('usuarios.crearUsuario');
+})->name('crear');
+
+Route::get('/usuarios', function () {
+    return view('usuarios.listaUsuario');
+})->name('usuarios');
+
+Route::controller(SeccionController::class)->group(function () {
+    Route::get('/secciones', 'index'); 
+    Route::post('/secciones', 'store'); 
+    Route::get('/secciones/{id}', 'show'); 
+    Route::put('/secciones/{id}', 'update');
+    Route::delete('/secciones/{id}', 'destroy'); 
 });
