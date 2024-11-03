@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
-class DepartamentoController extends Controller
+class DepartamentoController extends Controller // Cambiamos el nombre de la clase a DepartamentoController
 {
     /**
      * Muestra una lista de los departamentos.
@@ -18,8 +18,8 @@ class DepartamentoController extends Controller
         $sortOrder = $request->input('sort', 'asc'); // Orden ascendente por defecto
 
         // Filtrar y ordenar los departamentos
-        $departamentos = Departamento::query()
-            ->when($search, function ($query) use ($search) {
+        $departamentos = Departamento::query() 
+            ->when($search, function ($query) use ($search) { // Filtrar por nombre si se especifica la búsqueda
                 $query->where('nombre_departamento', 'like', '%' . $search . '%');  // Filtrar por nombre
             })
             ->orderBy('nombre_departamento', $sortOrder) // Ordenar por nombre
@@ -44,7 +44,7 @@ class DepartamentoController extends Controller
         // Retornar la vista con los resultados de búsqueda
         return view('departamentos.index', compact('departamentos', 'search'));
     }
-    
+
 
     /**
      * Muestra el formulario para crear un nuevo departamento.
