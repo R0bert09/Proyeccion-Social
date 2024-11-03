@@ -16,7 +16,7 @@ Route::get('/proyecto', function () {
 
 Route::get('/gestion-proyecto', function () {
     return view('gestionProyectos.gestionProyectos');
-});
+})->name('gestion-proyecto');
 
 Route::get('/proyecto', function () {
     return view('proyecto.publicar-proyecto');
