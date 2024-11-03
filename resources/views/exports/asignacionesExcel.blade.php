@@ -10,6 +10,7 @@
     <table style="border:2px solid #000">
         <thead>
             <tr>
+            
                 <td style="border:2px solid #000">ID Asignacion</td>
                 <td style="border:2px solid #000">ID Proyecto</td>
                 <td style="border:2px solid #000">Nombre Proyecto</td>
