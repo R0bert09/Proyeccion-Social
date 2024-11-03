@@ -14,14 +14,13 @@ return new class extends Migration
         Schema::create('secciones', function (Blueprint $table) {
             $table->id();
             $table->text('nombre_seccion');
-            $table->foreignId('departamento_id')->constrained('Departamentos')->onDelete('cascade'); //FK
+            $table->foreignId('id_departamento')->constrained('departamentos')->onDelete('cascade'); //FK
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     * 
      */
     public function down(): void
     {
