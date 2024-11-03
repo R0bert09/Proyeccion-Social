@@ -75,7 +75,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="establecerActivo(this)">
+                    <a class="nav-link" href="{{ route('gestion-proyecto') }}" onclick="establecerActivo(this)">
                         <i class="bi bi-file-earmark me-2"></i> Gestión de Proyectos
                     </a>
                 </li>
