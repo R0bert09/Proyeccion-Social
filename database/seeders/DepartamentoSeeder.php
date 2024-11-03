@@ -14,19 +14,19 @@ class DepartamentoSeeder extends Seeder
     public function run(): void
     {
         Departamento::factory()->create([
-            'nombre_departamento' => 'Agronomía',
+            'nombre_departamento' => 'Ciencias Agronómicas', 
         ]);
         Departamento::factory()->create([
-            'nombre_departamento' => 'Economía',
+            'nombre_departamento' => 'Ciencias Económicas', 
         ]);
         Departamento::factory()->create([
-            'nombre_departamento' => 'Humanidades',
+            'nombre_departamento' => 'Ciencias y Humanidades',
         ]);
         Departamento::factory()->create([
             'nombre_departamento' => 'Ingeniería y Arquitectura',
         ]);
         Departamento::factory()->create([
-            'nombre_departamento' => 'Jurisprudencia',
+            'nombre_departamento' => 'Jurisprudencia y Ciencias Sociales',
         ]);        
         Departamento::factory()->create([
             'nombre_departamento' => 'Medicina',
@@ -36,6 +36,15 @@ class DepartamentoSeeder extends Seeder
         ]);
         Departamento::factory()->create([
             'nombre_departamento' => 'Química y Farmacia',
+        ]);
+        Departamento::factory()->create([ 
+            'nombre_departamento' => 'Escuela de Carreras Técnicas. Sede Morazán',
+        ]);
+        Departamento::factory()->create([
+            'nombre_departamento' => 'Escuela de Postgrado',
+        ]);
+        Departamento::factory()->create([
+            'nombre_departamento' => 'Extensión La Unión',
         ]);
     }
 }
