@@ -11,22 +11,11 @@ class ChatDocumentoController extends Controller
 {
     public function index(Request $request)
     {
-        $id_documentos= $request->input('id_documentos');
-        $id_chats=$request->input('id_chats');
-        $fecha_envio=$request->input('id_chats');
-
-        $query= Chat_Documento::query();
-        if($id_documentos){
-            $query->where('id_documentos',$id_documentos);
-        }
-        if($id_chats){
-            $query->where('id_chats',$id_chats);
-        }
-        if($fecha_envio){
-            $query->whereDate('fecha_envio',$fecha_envio);
+        if($request->has(["id_documentos","id_chats","fecha_envio"])){
+            return $this->search($request);
         }
 
-        $chat_documentos = $query->get();
+        $chat_documentos = Chat_Documento::all();
         return view('chat_documentos.index', compact('chat_documentos'));
 
     }
@@ -88,4 +77,28 @@ class ChatDocumentoController extends Controller
         $chat_documento->delete();
         return redirect()->route('chat_documentos.index');
     }
+
+    public function search(Request $request)
+{
+    $id_documentos = $request->input('id_documentos');
+    $id_chats = $request->input('id_chats');
+    $fecha_envio = $request->input('fecha_envio'); 
+
+    $query = Chat_Documento::query();
+
+    if ($id_documentos) {
+        $query->where('id_documentos', $id_documentos);
+    }
+    if ($id_chats) {
+        $query->where('id_chats', $id_chats);
+    }
+    if ($fecha_envio) {
+        $query->whereDate('fecha_envio', $fecha_envio);
+    }
+
+    $chat_documentos = $query->get();
+    
+    return view('chat_documentos.index', compact('chat_documentos'));
+}
+
 }
