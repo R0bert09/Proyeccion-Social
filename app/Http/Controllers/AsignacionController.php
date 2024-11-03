@@ -62,6 +62,7 @@ class AsignacionController extends Controller
         $asignaciones=Asignacion::all();
        
         $pdf= Pdf::loadView('exports.asignacionesPDF', ['asignaciones' =>$asignaciones]);
+
         return $pdf->download('asignaciones.pdf');
     }
 }

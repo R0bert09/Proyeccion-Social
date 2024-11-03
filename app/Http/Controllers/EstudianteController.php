@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Exports\EstudianteExport;
@@ -10,43 +9,58 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class EstudianteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    // Método que maneja la búsqueda de estudiantes
+    private function buscarEstudiantes($query)
     {
-        $ListEstudiantes = Estudiante::all();
-        return view("estudiante.index", compact("ListEstudiantes")); 
+        if ($query) {
+            return Estudiante::where('nombre', 'LIKE', "%{$query}%")
+                ->orWhereHas('seccion', function ($q) use ($query) {
+                    $q->where('nombre', 'LIKE', "%{$query}%");
+                })
+                ->get();
+        } else {
+            return Estudiante::all();
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Método que valida los datos de los estudiantes
+    private function validarEstudiante(Request $request)
     {
-        return view("estudiante.create"); 
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $data = $request->validate([
+        return $request->validate([
             'id_usuario' => 'required|integer|exists:users,id',
             'id_seccion' => 'required|integer|exists:secciones,id',
             'porcentaje_completado' => 'required|numeric|min:0|max:100',
-            'horas_sociales_completadas' => 'required|integer|min:0'
+            'horas_sociales_completadas' => 'required|integer|min:0',
+            'nombre' => 'required|string|max:255',
         ]);
+    }
+
+    // Método para mostrar la lista de estudiantes (con o sin búsqueda)
+    public function index(Request $request)
+    {
+        $query = $request->input('query');
+        $ListEstudiantes = $this->buscarEstudiantes($query);
+
+        return view("estudiante.index", compact("ListEstudiantes")); 
+    }
+
+    // Mostrar formulario para crear un nuevo estudiante
+    public function create()
+    {
+        return view("estudiante.create");
+    }
+
+    // Almacenar un nuevo estudiante en la base de datos
+    public function store(Request $request)
+    {
+        $data = $this->validarEstudiante($request);
 
         Estudiante::create($data);
 
-        return redirect()->route('estudiante.index')->with('success', 'Estudiante creado con éxito');  
+        return redirect()->route('estudiante.index')->with('success', 'Estudiante creado con éxito');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Mostrar un estudiante específico por su ID
     public function show(string $id)
     {
         $estudiante = Estudiante::find($id);
@@ -58,9 +72,7 @@ class EstudianteController extends Controller
         return view("estudiante.show", compact('estudiante')); 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Mostrar formulario para editar un estudiante
     public function edit(string $id)
     {
         $estudiante = Estudiante::find($id);
@@ -69,12 +81,10 @@ class EstudianteController extends Controller
             return redirect()->route('estudiante.index')->with('error', 'Estudiante no encontrado');
         }
 
-        return view("estudiante.edit", compact('estudiante')); 
+        return view("estudiante.edit", compact('estudiante'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Actualizar los datos de un estudiante existente
     public function update(Request $request, string $id)
     {
         $estudiante = Estudiante::find($id);
@@ -83,21 +93,14 @@ class EstudianteController extends Controller
             return redirect()->route('estudiante.index')->with('error', 'Estudiante no encontrado');
         }
 
-        $data = $request->validate([
-            'id_usuario' => 'required|integer|exists:users,id',
-            'id_seccion' => 'required|integer|exists:secciones,id',
-            'porcentaje_completado' => 'required|numeric|min:0|max:100',
-            'horas_sociales_completadas' => 'required|integer|min:0'
-        ]);
+        $data = $this->validarEstudiante($request);
 
         $estudiante->update($data);
 
         return redirect()->route('estudiante.index')->with('success', 'Estudiante actualizado con éxito');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Eliminar un estudiante
     public function destroy(string $id)
     {
         $estudiante = Estudiante::find($id);
@@ -123,4 +126,3 @@ class EstudianteController extends Controller
         return $pdf->download('estudiantes.pdf');
     }
 }
-

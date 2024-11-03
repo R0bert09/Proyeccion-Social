@@ -25,13 +25,12 @@ class AsignacionExport implements FromView,WithColumnWidths
             'ID Tutor' => 100,
             'Nombre Tutor' =>100,
             'Fecha Asignacion' =>100,
-
         ];
     }
 
     public function view():View
     {
-        $asignaciones=Asignacion::all();
+        $asignaciones = Asignacion::all();
         return view('exports.asignacionesExcel', [
             'asignaciones' => $asignaciones
         ]);
