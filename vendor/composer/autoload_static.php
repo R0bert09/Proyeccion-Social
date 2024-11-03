@@ -596,14 +596,10 @@ class ComposerStaticInit3284c38b25b1f9b1be05593f5fc0ba39
         'App\\Http\\Controllers\\DepartamentoController' => __DIR__ . '/../..' . '/app/Http/Controllers/DepartamentoController.php',
         'App\\Http\\Controllers\\DocumentoController' => __DIR__ . '/../..' . '/app/Http/Controllers/DocumentoController.php',
         'App\\Http\\Controllers\\EstadoController' => __DIR__ . '/../..' . '/app/Http/Controllers/EstadoController.php',
-<<<<<<< HEAD
-        'App\\Http\\Controllers\\ProyectoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProyectoController.php',
         'App\\Http\\Controllers\\ProyectosDocumentosController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProyectosDocumentosController.php',
-=======
         'App\\Http\\Controllers\\HorasSocialesController' => __DIR__ . '/../..' . '/app/Http/Controllers/HorasSocialesController.php',
         'App\\Http\\Controllers\\ProyectoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProyectoController.php',
         'App\\Http\\Controllers\\ProyectosEstudiantesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProyectosEstudiantesController.php',
->>>>>>> b20b2cd9731467f0849d6212462c23e055f69344
         'App\\Http\\Controllers\\SeccionController' => __DIR__ . '/../..' . '/app/Http/Controllers/SeccionController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Middleware\\EstudianteMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/EstudianteMiddleware.php',
@@ -615,11 +611,8 @@ class ComposerStaticInit3284c38b25b1f9b1be05593f5fc0ba39
         'App\\Models\\Estudiante' => __DIR__ . '/../..' . '/app/Models/Estudiante.php',
         'App\\Models\\HorasSociales' => __DIR__ . '/../..' . '/app/Models/HorasSociales.php',
         'App\\Models\\Proyecto' => __DIR__ . '/../..' . '/app/Models/Proyecto.php',
-<<<<<<< HEAD
         'App\\Models\\ProyectosDocumentos' => __DIR__ . '/../..' . '/app/Models/ProyectosDocumentos.php',
-=======
         'App\\Models\\ProyectosEstudiantes' => __DIR__ . '/../..' . '/app/Models/ProyectosEstudiantes.php',
->>>>>>> b20b2cd9731467f0849d6212462c23e055f69344
         'App\\Models\\Seccion' => __DIR__ . '/../..' . '/app/Models/Seccion.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

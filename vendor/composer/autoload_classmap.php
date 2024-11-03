@@ -13,14 +13,10 @@ return array(
     'App\\Http\\Controllers\\DepartamentoController' => $baseDir . '/app/Http/Controllers/DepartamentoController.php',
     'App\\Http\\Controllers\\DocumentoController' => $baseDir . '/app/Http/Controllers/DocumentoController.php',
     'App\\Http\\Controllers\\EstadoController' => $baseDir . '/app/Http/Controllers/EstadoController.php',
-<<<<<<< HEAD
-    'App\\Http\\Controllers\\ProyectoController' => $baseDir . '/app/Http/Controllers/ProyectoController.php',
     'App\\Http\\Controllers\\ProyectosDocumentosController' => $baseDir . '/app/Http/Controllers/ProyectosDocumentosController.php',
-=======
     'App\\Http\\Controllers\\HorasSocialesController' => $baseDir . '/app/Http/Controllers/HorasSocialesController.php',
     'App\\Http\\Controllers\\ProyectoController' => $baseDir . '/app/Http/Controllers/ProyectoController.php',
     'App\\Http\\Controllers\\ProyectosEstudiantesController' => $baseDir . '/app/Http/Controllers/ProyectosEstudiantesController.php',
->>>>>>> b20b2cd9731467f0849d6212462c23e055f69344
     'App\\Http\\Controllers\\SeccionController' => $baseDir . '/app/Http/Controllers/SeccionController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
     'App\\Http\\Middleware\\EstudianteMiddleware' => $baseDir . '/app/Http/Middleware/EstudianteMiddleware.php',
@@ -32,11 +28,8 @@ return array(
     'App\\Models\\Estudiante' => $baseDir . '/app/Models/Estudiante.php',
     'App\\Models\\HorasSociales' => $baseDir . '/app/Models/HorasSociales.php',
     'App\\Models\\Proyecto' => $baseDir . '/app/Models/Proyecto.php',
-<<<<<<< HEAD
     'App\\Models\\ProyectosDocumentos' => $baseDir . '/app/Models/ProyectosDocumentos.php',
-=======
     'App\\Models\\ProyectosEstudiantes' => $baseDir . '/app/Models/ProyectosEstudiantes.php',
->>>>>>> b20b2cd9731467f0849d6212462c23e055f69344
     'App\\Models\\Seccion' => $baseDir . '/app/Models/Seccion.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
