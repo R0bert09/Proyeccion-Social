@@ -9,32 +9,32 @@ use App\Models\Proyecto;
 class Estado extends Model
 {
     use HasFactory;
-    protected $table = 'Estados';
-    protected $primaryKey= 'id_estado';
 
+    // Especifica la tabla que utilizará este modelo
+    protected $table = 'estados';
 
+    // Especifica la clave primaria de la tabla
+    protected $primaryKey = 'id'; // Por defecto, Laravel utiliza 'id' como clave primaria
 
-    protected $fillable =
-    [
-        'nombre_estado'
+    // Especifica los atributos que se pueden llenar masivamente
+    protected $fillable = [
+        'nombre_estado',
     ];
 
-    //relaciones
+    // Relaciones
     public function proyectos()
     {
         return $this->hasMany(Proyecto::class);
     }
 
-    //gets
-
-    public function get_estado_porId($id)
+    // Métodos para obtener estados
+    public function getEstadoPorId($id)
     {
         return self::find($id);
     }
-    public function get_estados()
-    {
-        $estados = self::all();
-        return $estados;
-    }
 
+    public function getEstados()
+    {
+        return self::all();
+    }
 }

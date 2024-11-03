@@ -9,19 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('historial_cambios_estados', function (Blueprint $table) {
+        Schema::create('historial_cambios_estado', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('estado_id')->constrained('estados')->onDelete('cascade'); // Cambia 'estados' si tu tabla tiene otro nombre
+            $table->string('nuevo_estado');
+            $table->timestamp('fecha_cambio')->useCurrent();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('historial_cambios_estados');
+        Schema::dropIfExists('historial_cambios_estado');
     }
 };
