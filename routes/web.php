@@ -22,7 +22,7 @@ Route::get('/proyecto', function () {
 
 Route::get('/gestion-proyecto', function () {
     return view('gestionProyectos.gestionProyectos');
-});
+})->name('gestion-proyecto');
 
 Route::get('/crear', function () {
     return view('usuarios.crearUsuario');
