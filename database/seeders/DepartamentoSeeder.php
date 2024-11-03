@@ -37,5 +37,5 @@ class DepartamentoSeeder extends Seeder
         Departamento::factory()->create([
             'nombre_departamento' => 'Química y Farmacia',
         ]);
-     }
+    }
 }
