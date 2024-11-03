@@ -11,7 +11,6 @@ Route::get('/permisos', function () {
 })
 ->name('permisos');
 
-
 Route::get('/registro', function () {
     return view('registro.registro');
 });
