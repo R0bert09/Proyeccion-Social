@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +16,6 @@ return new class extends Migration
             $table->foreignId('id_departamento')->constrained('departamentos')->onDelete('cascade'); //FK
             $table->foreignId('id_usuario')->constrained('users')->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 
