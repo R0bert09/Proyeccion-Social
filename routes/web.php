@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     return view('login.login');
 });
@@ -30,3 +31,6 @@ Route::get('/crear', function () {
 Route::get('/usuarios', function () {
     return view('usuarios.listaUsuario');
 })->name('usuarios');
+
+
+
