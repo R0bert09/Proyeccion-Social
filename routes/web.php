@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatDocumentoController;
+use App\Http\Controllers\DepartamentoController;
 
 Route::get('/', function () {
     return view('login.login');
@@ -30,6 +32,10 @@ Route::get('/crear', function () {
 Route::get('/usuarios', function () {
     return view('usuarios.listaUsuario');
 })->name('usuarios');
+
+Route::get('/layouts', function () {
+    return view('layouts.gestion-de-roles');
+})->name('roles');
 
 Route::get('/perfil', function () {
     return view('perfil.perfilUsuario');
