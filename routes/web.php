@@ -25,3 +25,7 @@ Route::get('/crear', function () {
 Route::get('/usuarios', function () {
     return view('usuarios.listaUsuario');
 })->name('usuarios');
+
+Route::get('/perfil-usuario', function () {
+    return view('usuarios.perfilUsuario');
+});
