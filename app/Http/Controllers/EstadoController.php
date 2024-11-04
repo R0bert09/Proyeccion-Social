@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estado;
-use App\Models\HistorialCambiosEstado;
 use Illuminate\Http\Request;
 
 class EstadoController extends Controller
