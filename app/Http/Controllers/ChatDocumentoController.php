@@ -9,6 +9,10 @@ class ChatDocumentoController extends Controller
 {
     public function index()
     {
+
+
+
+        
         //aplicando la paginacion
         $chat_documentos = Chat_Documento::paginate(20);
         return view('chat_documentos.index', compact('chat_documentos'));
@@ -26,15 +30,13 @@ class ChatDocumentoController extends Controller
         $chat_documento->id_chats = $request->id_chats;
         $chat_documento->fecha_envio = $request->fecha_envio;
         $chat_documento->save();
-        return redirect()->route('chat_documentos.index')
-        ->with('success', 'Documento enviado correctamente al chat.');
+        return redirect()->route('chat_documentos.index')->with('success', 'Documento enviado correctamente al chat.');
     }
 
     public function edit($id)
     {
         $chat_documento = Chat_Documento::find($id);
-        return view('chat_documentos.edit', compact('chat_documento'))
-        ->with('info', 'Puedes editar el documento seleccionado.');;
+        return view('chat_documentos.edit', compact('chat_documento'))->with('info', 'Puedes editar el documento seleccionado.');;
     }
 
     public function update(Request $request, $id)
@@ -44,14 +46,14 @@ class ChatDocumentoController extends Controller
         $chat_documento->id_chats = $request->id_chats;
         $chat_documento->fecha_envio = $request->fecha_envio;
         $chat_documento->save();
-        return redirect()->route('chat_documentos.index')
-        ->with('success', 'Documento actualizado correctamente.');
+        return redirect()->route('chat_documentos.index')->with('success', 'Documento actualizado correctamente.');
     }
 
     public function destroy($id)
     {
         $chat_documento = Chat_Documento::find($id);
         $chat_documento->delete();
-        return redirect()->route('chat_documentos.index')->with('success', 'Documento eliminado correctamente.');
+        return redirect()->route('chat_documentos.index')
+        ->with('success', 'Documento eliminado correctamente.');   
     }
 }
