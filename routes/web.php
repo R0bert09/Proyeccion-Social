@@ -41,3 +41,7 @@ Route::get('/perfil', function () {
     return view('perfil.perfilUsuario');
 })
 ->name('perfil');
+
+Route::get('/perfil-usuario', function () {
+    return view('usuarios.perfilUsuario');
+});
