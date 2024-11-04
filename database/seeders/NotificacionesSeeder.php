@@ -4,12 +4,13 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Estudiante;
+use Carbon\Carbon;
+use App\Models\Notificacion;
 
 class NotificacionesSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
     public function run(): void
     {
         //
@@ -40,6 +41,7 @@ class NotificacionesSeeder extends Seeder
                 $numNotificaciones = rand(3, 8);
                 
                 for ($i = 0; $i < $numNotificaciones; $i++) {
+                   
                     Notificacion::create([
                         'id_usuario' => $estudiante->id_usuario,
                         'mensaje' => $mensajes[array_rand($mensajes)],
