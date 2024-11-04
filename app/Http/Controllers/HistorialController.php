@@ -20,6 +20,10 @@ class HistorialController extends Controller
         return view('historial.index', compact('historial'));
     }
 
+    /*
+    * se necesita la tabla para ir guardando el horial delestado
+    */
+    
     public function store(Request $request)
     {
         $data = $request->validate([
