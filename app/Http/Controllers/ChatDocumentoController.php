@@ -52,7 +52,6 @@ class ChatDocumentoController extends Controller
     {
         $chat_documento = Chat_Documento::find($id);
         $chat_documento->delete();
-        return redirect()->route('chat_documentos.index')
-        ->with('success', 'Documento eliminado correctamente.');
+        return redirect()->route('chat_documentos.index')->with('success', 'Documento eliminado correctamente.');
     }
 }
