@@ -70,7 +70,7 @@ class EstadoController extends Controller
         if (!$estado) {
             return redirect()->route('estado.index')->with('error', 'Estado no encontrado');
         }
-        return view("estado.edit", compact('estado'));
+        return view("estado.edit", compact('estado'))->with('success', 'Estado cambiado correctamente');
     }
 
     /**
