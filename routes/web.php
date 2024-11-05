@@ -42,4 +42,5 @@ Route::get('/ExportHistorialDptPdf', [historial_departamentoController::class, '
 Route::resource('Historial_Departamentos', historial_departamentoController::class);
 
 
-Route::get('/tests_kev',[Tests_KevControllerController::class,'index'])->name('Tests.test');w
+Route::get('/tests_kev',[Tests_KevControllerController::class,'index'])->name('Tests.test');
+Route::get('/tests_kev',[Tests_KevControllerController::class,'index'])->name('Tests.test');
