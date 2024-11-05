@@ -4,9 +4,12 @@ use App\Http\Controllers\AsignacionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatDocumentoController;
 use App\Http\Controllers\DepartamentoController;
+use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstadoController;
 use Illuminate\Http\Request;
+
 
 Route::get('/', function () {
     return view('login.login');
@@ -41,6 +44,28 @@ Route::get('/perfil', function () {
 })
 ->name('perfil');
 
+
+Route::controller(EstudianteController::class)
+    ->prefix('estudiantes')
+    ->name('estudiantes.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');          
+        Route::post('/', 'store')->name('store');         
+        Route::get('/{id}', 'show')->name('show');        
+        Route::put('/{id}', 'update')->name('update');    
+        Route::delete('/{id}', 'destroy')->name('destroy'); 
+    });
+
+Route::controller(ProyectoController::class)
+    ->prefix('proyectos')
+    ->name('proyectos.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');          
+        Route::post('/', 'store')->name('store');         
+        Route::get('/{id}', 'show')->name('show');        
+        Route::put('/{id}', 'update')->name('update');    
+        Route::delete('/{id}', 'destroy')->name('destroy'); 
+    });
 
 Route::get('/recuperarcontraseña', function () {
     return view('auth.recupassword');
@@ -89,4 +114,5 @@ Route::controller(AsignacionController::class)
         Route::get('/export/excel', 'exportExcel')->name('export.excel');
         Route::get('/export/pdf', 'exportPDF')->name('export.pdf');
     });
+
 
