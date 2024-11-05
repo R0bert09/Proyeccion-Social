@@ -10,9 +10,24 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AsignacionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = Asignacion::query();
+
+        // Busqueda y filtrado por Id y fecha de asignación
+        if ($request->has('id_asignacion')) {
+            $idAsignacion = $request->input('id_asignacion');
+            $query->where('id_asignacion', $idAsignacion);
+        }
+
+        if ($request->has('fecha_asignacion')) {
+            $fechaAsignacion = $request->input('fecha_asignacion');
+            $query->where('fecha_asignacion', $fechaAsignacion);
+        }
+        
+        //Paginacion para mostrar 10 resultados por pagina
         $asignaciones = Asignacion::paginate(10);
+
         return view('asignaciones.index', compact('asignaciones'));
     }
 
@@ -23,7 +38,15 @@ class AsignacionController extends Controller
 
     public function store(Request $request)
     {
-        $asignacion = Asignacion::create($request->all());
+        // Validar datos al crear
+        $request->validate([
+            'id_proyecto' => 'required|integer|min:1',
+            'id_estudiante' => 'required|integer|min:1',
+            'id_tutor' => 'required|integer|min:1',
+            'fecha_asignacion' => 'required|date|after_or_equal:today',
+        ]);
+
+        Asignacion::create($request->all());
         return redirect()->route('asignaciones.index')->with('success', 'Asignación creada con éxito');
     }
 
@@ -42,6 +65,15 @@ class AsignacionController extends Controller
     public function update(Request $request, $id)
     {
         $asignacion = Asignacion::findOrFail($id);
+
+        // Validar datos al actualizar
+        $request->validate([
+            'id_proyecto' => 'sometimes|integer|min:1',
+            'id_estudiante' => 'sometimes|integer|min:1',
+            'id_tutor' => 'sometimes|integer|min:1',
+            'fecha_asignacion' => 'sometimes|date|after_or_equal:today',
+        ]);
+
         $asignacion->update($request->all());
         return redirect()->route('asignaciones.index')->with('success', 'Asignación actualizada con éxito');
     }
