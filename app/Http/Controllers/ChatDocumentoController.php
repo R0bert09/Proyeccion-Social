@@ -120,3 +120,4 @@ class ChatDocumentoController extends Controller
         return view('chat_documentos.index', compact('chat_documentos'));
     }
 }
+

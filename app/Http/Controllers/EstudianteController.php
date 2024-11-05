@@ -1,8 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Exports\EstudianteExport;
 use App\Models\Estudiante;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EstudianteController extends Controller
 {
@@ -54,7 +57,7 @@ class EstudianteController extends Controller
 
         Estudiante::create($data);
 
-        return redirect()->route('estudiante.index')->with('success', 'Estudiante creado con éxito');
+        return redirect()->route('estudiantes.index')->with('success', 'Estudiante creado con éxito');
     }
 
     // Mostrar un estudiante específico por su ID
@@ -63,7 +66,7 @@ class EstudianteController extends Controller
         $estudiante = Estudiante::find($id);
 
         if (!$estudiante) {
-            return redirect()->route('estudiante.index')->with('error', 'Estudiante no encontrado');
+            return redirect()->route('estudiantes.index')->with('error', 'Estudiante no encontrado');
         }
 
         return view("estudiante.show", compact('estudiante')); 
@@ -75,7 +78,7 @@ class EstudianteController extends Controller
         $estudiante = Estudiante::find($id);
 
         if (!$estudiante) {
-            return redirect()->route('estudiante.index')->with('error', 'Estudiante no encontrado');
+            return redirect()->route('estudiantes.index')->with('error', 'Estudiante no encontrado');
         }
 
         return view("estudiante.edit", compact('estudiante'));
@@ -87,14 +90,14 @@ class EstudianteController extends Controller
         $estudiante = Estudiante::find($id);
 
         if (!$estudiante) {
-            return redirect()->route('estudiante.index')->with('error', 'Estudiante no encontrado');
+            return redirect()->route('estudiantes.index')->with('error', 'Estudiante no encontrado');
         }
 
         $data = $this->validarEstudiante($request);
 
         $estudiante->update($data);
 
-        return redirect()->route('estudiante.index')->with('success', 'Estudiante actualizado con éxito');
+        return redirect()->route('estudiantes.index')->with('success', 'Estudiante actualizado con éxito');
     }
 
     // Eliminar un estudiante
@@ -103,11 +106,23 @@ class EstudianteController extends Controller
         $estudiante = Estudiante::find($id);
 
         if (!$estudiante) {
-            return redirect()->route('estudiante.index')->with('error', 'Estudiante no encontrado');
+            return redirect()->route('estudiantes.index')->with('error', 'Estudiante no encontrado');
         }
 
         $estudiante->delete();
 
-        return redirect()->route('estudiante.index')->with('success', 'Estudiante eliminado con éxito');
+        return redirect()->route('estudiantes.index')->with('success', 'Estudiante eliminado con éxito');
+    }
+
+    public function exportExcel() 
+    {
+        return Excel::download(new EstudianteExport, 'estudiantes.xlsx');
+    }
+    
+    public function exportPDF(){
+        $estudiantes = Estudiante::all();
+       
+        $pdf = Pdf::loadView('exports.estudiantesPDF', ['estudiantes' => $estudiantes]);
+        return $pdf->download('estudiantes.pdf');
     }
 }

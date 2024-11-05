@@ -1,0 +1,79 @@
+/* Estilo general */
+.container {
+    margin-top: 20px;
+}
+
+/* Estilos de la tabla */
+.table-hover tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Alinear los botones a la derecha */
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn {
+    font-weight: bold;
+    padding: 8px 15px;
+}
+
+.btn-success {
+    background-color: #800000;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #660000;
+    border-color: #660000;
+}
+
+.btn-primary {
+    background-color: #21813c;
+    border-color: #21813c;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #1d6c34; /* Verde oscuro en hover */
+    border-color: #1d6c34;  
+    color: white;
+}
+
+/* Botones de acciones en la tabla */
+.table .btn-outline-secondary, .table .btn-outline-danger {
+    font-size: 0.875rem;
+    padding: 3px 10px;
+}
+
+.search-bar {
+    max-width: 300px;
+    
+}
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .page-numbers {
+    display: flex;
+  }
+  
+  .page-numbers li {
+    list-style: none;
+    margin: 0 5px;
+  }
+  
+  .page-numbers li.active a {
+    font-weight: bold;
+  }

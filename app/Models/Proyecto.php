@@ -34,6 +34,8 @@ class Proyecto extends Model
             'periodo' => 'required|string|max:255',
             'lugar' => 'required|string|max:255',
             'coordinador' => 'required|integer',
+            'fecha_inicio' => 'required|date',  
+            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
         ])->validate();
 
         return self::create($validarCampos);
@@ -43,6 +45,11 @@ class Proyecto extends Model
     public function estado()
     {
         return $this->belongsTo(Estado::class);
+    }
+
+    public static function AsignarFeechas($data)
+    {
+        return self::create($data);
     }
 
     public function coordinador()
