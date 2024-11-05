@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Proyecto;
@@ -30,7 +29,7 @@ class ProyectoController extends Controller
             'lugar' => 'required|string|max:255',
             'coordinador' => 'required|integer',
         ]);
-    
+
         Proyecto::create($data);
         return redirect()->route('proyectos.index')->with('success', 'Proyecto creado con éxito');
     }
@@ -60,13 +59,13 @@ class ProyectoController extends Controller
             'lugar' => 'required|string|max:255',
             'coordinador' => 'required|integer',
         ]);
-    
+
         $proyecto = Proyecto::find($id);
-    
+
         if (!$proyecto) {
             return redirect()->route('proyectos.index')->with('error', 'Proyecto no encontrado');
         }
-    
+
         $proyecto->update($data);
         return redirect()->route('proyectos.index')->with('success', 'Proyecto actualizado con éxito');
     }
@@ -77,13 +76,13 @@ class ProyectoController extends Controller
         if (!$proyecto) {
             return redirect()->route('proyectos.index')->with('error', 'Proyecto no encontrado');
         }
-        
-        $proyecto->delete(); 
+
+        $proyecto->delete();
         return redirect()->route('proyectos.index')->with('success', 'Proyecto eliminado con éxito');
     }
 
     public function filtrarProyectos(Request $request)
-    {   
+    {
         $estado = $request->input('estado');
         $periodo = $request->input('periodo');
         $query = Proyecto::query();
