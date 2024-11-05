@@ -139,3 +139,30 @@ Route::controller(AsignacionController::class)
         Route::get('/export/excel', 'exportExcel')->name('export.excel');
         Route::get('/export/pdf', 'exportPDF')->name('export.pdf');
     });
+
+    Route::controller(ChatDocumentoController::class)
+        ->prefix('chat_documentos')
+        ->name('chat_documentos.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');            
+            Route::get('/crear', 'create')->name('create');       
+            Route::post('/', 'store')->name('store');            
+            Route::get('/{id}/editar', 'edit')->name('edit');   
+            Route::put('/{id}', 'update')->name('update');            
+            Route::delete('/{id}', 'destroy')->name('destroy');         
+            Route::get('/buscar', 'search')->name('search');            
+        });
+
+    Route::controller(DepartamentoController::class)
+        ->prefix('departamentos')
+        ->name('departamentos.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/buscar', 'searchByName')->name('searchByName'); 
+            Route::get('/crear', 'create')->name('create'); 
+            Route::post('/', 'store')->name('store');  
+            Route::get('/{id}', 'show')->name('show');
+            Route::get('/{id}/editar', 'edit')->name('edit');   
+            Route::put('/{departamento}', 'update')->name('update');   
+            Route::delete('/{id}', 'destroy')->name('destroy');      
+        });
