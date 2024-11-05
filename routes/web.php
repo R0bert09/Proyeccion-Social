@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AsignacionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatDocumentoController;
 use App\Http\Controllers\DepartamentoController;
@@ -59,3 +60,20 @@ Route::controller(DocumentoController::class)->group(function () {
     Route::put('/documentos/{id}', 'update');       
     Route::delete('/documentos/{id}', 'destroy');   
 });
+
+
+Route::controller(AsignacionController::class)
+    ->prefix('asignaciones')
+    ->name('asignaciones.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{id}', 'show')->name('show');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+        Route::get('/export/excel', 'exportExcel')->name('export.excel');
+        Route::get('/export/pdf', 'exportPDF')->name('export.pdf');
+    });
+
