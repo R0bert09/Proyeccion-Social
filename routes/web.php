@@ -5,6 +5,7 @@ use App\Http\Controllers\ChatDocumentoController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstadoController;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('login.login');
