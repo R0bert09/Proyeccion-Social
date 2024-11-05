@@ -1,19 +1,19 @@
 <?php
 
+use App\Http\Controllers\AsignacionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatDocumentoController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\EstadoController;
+use Illuminate\Http\Request;
+
 
 Route::get('/', function () {
     return view('login.login');
 });
-
-Route::get('/permisos', function () {
-    return view('permisos.gestionpermiso');
-})
-->name('permisos');
 
 Route::get('/registro', function () {
     return view('registro.registro');
@@ -45,26 +45,74 @@ Route::get('/perfil', function () {
 ->name('perfil');
 
 
-// Rutas para EstudianteController
 Route::controller(EstudianteController::class)
     ->prefix('estudiantes')
     ->name('estudiantes.')
     ->group(function () {
-        Route::get('/', 'index')->name('index');          // Listar todos los estudiantes
-        Route::post('/', 'store')->name('store');         // Crear un nuevo estudiante
-        Route::get('/{id}', 'show')->name('show');        // Obtener un estudiante específico
-        Route::put('/{id}', 'update')->name('update');    // Actualizar un estudiante específico
-        Route::delete('/{id}', 'destroy')->name('destroy'); // Eliminar un estudiante específico
+        Route::get('/', 'index')->name('index');          
+        Route::post('/', 'store')->name('store');         
+        Route::get('/{id}', 'show')->name('show');        
+        Route::put('/{id}', 'update')->name('update');    
+        Route::delete('/{id}', 'destroy')->name('destroy'); 
     });
 
-// Rutas para ProyectoController
 Route::controller(ProyectoController::class)
     ->prefix('proyectos')
     ->name('proyectos.')
     ->group(function () {
-        Route::get('/', 'index')->name('index');          // Listar todos los proyectos
-        Route::post('/', 'store')->name('store');         // Crear un nuevo proyecto
-        Route::get('/{id}', 'show')->name('show');        // Obtener un proyecto específico
-        Route::put('/{id}', 'update')->name('update');    // Actualizar un proyecto específico
-        Route::delete('/{id}', 'destroy')->name('destroy'); // Eliminar un proyecto específico
+        Route::get('/', 'index')->name('index');          
+        Route::post('/', 'store')->name('store');         
+        Route::get('/{id}', 'show')->name('show');        
+        Route::put('/{id}', 'update')->name('update');    
+        Route::delete('/{id}', 'destroy')->name('destroy'); 
     });
+
+Route::get('/recuperarcontraseña', function () {
+    return view('auth.recupassword');
+});
+
+Route::get('/resetearcontraseña', function () {
+    return view('auth.resetpassword');
+});
+
+Route::get('/proyecto-general', function () {
+    return view('proyecto.proyecto-general');
+})->name('proyecto-general');
+
+Route::get('/perfil-usuario', function () {
+    return view('usuarios.perfilUsuario');
+});
+
+Route::controller(EstadoController::class)->group(function () {
+    Route::get('/estados', 'index');            
+    Route::post('/estados', 'store');          
+    Route::get('/estados/{id}', 'show');        
+    Route::put('/estados/{id}', 'update');       
+    Route::delete('/estados/{id}', 'destroy');   
+});
+
+Route::controller(DocumentoController::class)->group(function () {
+    Route::get('/documentos', 'index');            
+    Route::post('/documentos', 'store');            
+    Route::get('/documentos/{id}', 'show');        
+    Route::put('/documentos/{id}', 'update');       
+    Route::delete('/documentos/{id}', 'destroy');   
+});
+
+
+Route::controller(AsignacionController::class)
+    ->prefix('asignaciones')
+    ->name('asignaciones.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{id}', 'show')->name('show');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+        Route::get('/export/excel', 'exportExcel')->name('export.excel');
+        Route::get('/export/pdf', 'exportPDF')->name('export.pdf');
+    });
+
+

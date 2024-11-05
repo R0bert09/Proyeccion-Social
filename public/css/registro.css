@@ -28,3 +28,11 @@
     transform: scaleX(1.2);
     font-size: 1.1rem; 
 }
+
+.text-color {
+    color: #6e6c6c !important;
+}
+
+.w-40 {
+    width: 40%;
+}
