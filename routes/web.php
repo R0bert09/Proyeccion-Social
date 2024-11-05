@@ -139,5 +139,3 @@ Route::controller(AsignacionController::class)
         Route::get('/export/excel', 'exportExcel')->name('export.excel');
         Route::get('/export/pdf', 'exportPDF')->name('export.pdf');
     });
-
-

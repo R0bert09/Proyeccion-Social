@@ -20,6 +20,7 @@ class Estudiante extends Model
         'horas_sociales_completadas'
     ];
 
+    
     public function usuario()
     {
         return $this->belongsTo(User::class, 'id_usuario');
