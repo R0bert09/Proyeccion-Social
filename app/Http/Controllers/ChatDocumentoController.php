@@ -16,7 +16,7 @@ class ChatDocumentoController extends Controller
 
         // Aplicando la paginación si no hay búsqueda
         $chat_documentos = Chat_Documento::paginate(20);
-        
+
         return view('chat_documentos.index', compact('chat_documentos'));
     }
 
@@ -27,14 +27,14 @@ class ChatDocumentoController extends Controller
 
     public function store(Request $request)
     {
-        $v = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'id_documentos' => 'required|exists:documentos,id',
             'id_chats' => 'required|exists:chats,id',
             'fecha_envio' => 'required|date',
         ]);
 
-        if ($v->fails()) {
-            return redirect()->back()->withInput()->withErrors($v->errors());
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
         $chat_documento = new Chat_Documento();
@@ -50,23 +50,31 @@ class ChatDocumentoController extends Controller
     public function edit($id)
     {
         $chat_documento = Chat_Documento::find($id);
+        if (!$chat_documento) {
+            return redirect()->route('chat_documentos.index')->with('error', 'Documento no encontrado.');
+        }
+
         return view('chat_documentos.edit', compact('chat_documento'))
             ->with('info', 'Puedes editar el documento seleccionado.');
     }
 
     public function update(Request $request, $id)
     {
-        $v = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'id_documentos' => 'required|exists:documentos,id',
             'id_chats' => 'required|exists:chats,id',
             'fecha_envio' => 'required|date',
         ]);
 
-        if ($v->fails()) {
-            return redirect()->back()->withInput()->withErrors($v->errors());
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
         $chat_documento = Chat_Documento::find($id);
+        if (!$chat_documento) {
+            return redirect()->route('chat_documentos.index')->with('error', 'Documento no encontrado.');
+        }
+
         $chat_documento->id_documentos = $request->id_documentos;
         $chat_documento->id_chats = $request->id_chats;
         $chat_documento->fecha_envio = $request->fecha_envio;
@@ -79,6 +87,10 @@ class ChatDocumentoController extends Controller
     public function destroy($id)
     {
         $chat_documento = Chat_Documento::find($id);
+        if (!$chat_documento) {
+            return redirect()->route('chat_documentos.index')->with('error', 'Documento no encontrado.');
+        }
+
         $chat_documento->delete();
 
         return redirect()->route('chat_documentos.index')
@@ -103,8 +115,9 @@ class ChatDocumentoController extends Controller
             $query->whereDate('fecha_envio', $fecha_envio);
         }
 
-        $chat_documentos = $query->get();
+        $chat_documentos = $query->paginate(20);
 
         return view('chat_documentos.index', compact('chat_documentos'));
     }
 }
+
