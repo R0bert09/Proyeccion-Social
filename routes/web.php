@@ -4,15 +4,13 @@ use App\Http\Controllers\AsignacionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatDocumentoController;
 use App\Http\Controllers\DepartamentoController;
+use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\EstadoController;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('login.login');
 });
-
-Route::get('/permisos', function () {
-    return view('permisos.gestionpermiso');
-})
-->name('permisos');
 
 Route::get('/registro', function () {
     return view('registro.registro');
@@ -47,6 +45,22 @@ Route::get('/perfil-usuario', function () {
     return view('usuarios.perfilUsuario');
 });
 
+Route::controller(EstadoController::class)->group(function () {
+    Route::get('/estados', 'index');            
+    Route::post('/estados', 'store');          
+    Route::get('/estados/{id}', 'show');        
+    Route::put('/estados/{id}', 'update');       
+    Route::delete('/estados/{id}', 'destroy');   
+});
+
+Route::controller(DocumentoController::class)->group(function () {
+    Route::get('/documentos', 'index');            
+    Route::post('/documentos', 'store');            
+    Route::get('/documentos/{id}', 'show');        
+    Route::put('/documentos/{id}', 'update');       
+    Route::delete('/documentos/{id}', 'destroy');   
+});
+
 
 Route::controller(AsignacionController::class)
     ->prefix('asignaciones')
@@ -62,3 +76,4 @@ Route::controller(AsignacionController::class)
         Route::get('/export/excel', 'exportExcel')->name('export.excel');
         Route::get('/export/pdf', 'exportPDF')->name('export.pdf');
     });
+
