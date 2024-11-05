@@ -41,6 +41,19 @@ Route::get('/perfil', function () {
 })
 ->name('perfil');
 
+
+Route::get('/recuperarcontraseña', function () {
+    return view('auth.recupassword');
+});
+
+Route::get('/resetearcontraseña', function () {
+    return view('auth.resetpassword');
+});
+
+Route::get('/proyecto-general', function () {
+    return view('proyecto.proyecto-general');
+})->name('proyecto-general');
+
 Route::get('/perfil-usuario', function () {
     return view('usuarios.perfilUsuario');
 });
