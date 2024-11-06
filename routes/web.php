@@ -10,6 +10,7 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\HorasSocialesController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 
 
@@ -182,4 +183,17 @@ Route::controller(AsignacionController::class)
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'destroy')->name('destroy');
         Route::get('/estudiante/{id_estudiante}', 'getHorasByEstudiantes')->name('getHorasByEstudiantes');
+    });
+
+    Route::controller(NotificationController::class)
+    ->prefix('notificaciones')
+    ->name('notificaciones.')
+    ->group(function () {
+        Route::get('/usuario/{userId}', 'index')->name('index');        
+        Route::get('/create', 'create')->name('create');                  
+        Route::post('/', 'store')->name('store');                        
+        Route::get('/{id}', 'show')->name('show');                        
+        Route::get('/{id}/edit', 'edit')->name('edit');                   
+        Route::put('/{id}', 'update')->name('update');                   
+        Route::delete('/{id}', 'destroy')->name('destroy');               
     });
