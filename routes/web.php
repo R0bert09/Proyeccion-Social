@@ -211,3 +211,18 @@ Route::controller(AsignacionController::class)
         Route::put('/{id}', 'update')->name('update');        
         Route::delete('/{id}', 'destroy')->name('destroy');  
     });
+
+    Route::controller(ProyectosEstudiantesController::class)
+    ->prefix('proyectos_estudiantes')
+    ->name('proyectos_estudiantes.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{id}', 'show')->name('show');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+        Route::get('/proyecto/{id_proyectos}', 'getEstudiantesbyProyecto')->name('getEstudiantesbyProyecto');
+        Route::get('/estudiante/{id_estudiantes}', 'getProyectobyEstudiantes')->name('getProyectobyEstudiantes');
+    });
