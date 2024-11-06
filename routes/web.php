@@ -8,6 +8,7 @@ use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstadoController;
+use App\Http\Controllers\HistorialController;
 use Illuminate\Http\Request;
 
 
@@ -52,13 +53,6 @@ Route::get('/usuarios', function () {
 })->name('usuarios');
 
 
-Route::controller(SeccionController::class)->group(function () {
-    Route::get('/secciones', 'index'); 
-    Route::post('/secciones', 'store'); 
-    Route::get('/secciones/{id}', 'show'); 
-    Route::put('/secciones/{id}', 'update');
-    Route::delete('/secciones/{id}', 'destroy'); 
-});
 
 Route::get('/layouts', function () {
     return view('layouts.gestion-de-roles');
@@ -166,3 +160,11 @@ Route::controller(AsignacionController::class)
             Route::put('/{departamento}', 'update')->name('update');   
             Route::delete('/{id}', 'destroy')->name('destroy');      
         });
+
+    Route::controller(HistorialController::class)
+    ->prefix('historial')
+    ->name('historial.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/', 'store')->name('store');
+    });
