@@ -8,21 +8,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('secciones', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_seccion');
             $table->text('nombre_seccion');
-            $table->foreignId('id_departamento')->constrained('departamentos')->onDelete('cascade'); //FK
-            $table->foreignId('id_usuario')->constrained('users')->onDelete('cascade');
+            $table->foreignId('id_departamento')
+                  ->references('id_departamento') 
+                  ->on('departamentos')
+                  ->onDelete('cascade');
+            $table->foreignId('id_coordinador')
+                  ->references('id_usuario')
+                  ->on('users')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('secciones');
     }

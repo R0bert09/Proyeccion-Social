@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('historial_cambios_estado', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('estado_id')->constrained('estados')->onDelete('cascade'); // Cambia 'estados' si tu tabla tiene otro nombre
+            $table->foreignId('id_estado')->constrained('estados', 'id_estado')->onDelete('cascade');
             $table->string('nuevo_estado');
             $table->timestamp('fecha_cambio')->useCurrent();
             $table->timestamps();
         });
+        
     }
 
     public function down()
