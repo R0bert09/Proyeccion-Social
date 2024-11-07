@@ -25,21 +25,26 @@ class EstudianteSeeder extends Seeder
 
             // Lista de estudiantes
             $estudiantes = [
-                ['name' => 'Carlos Eduardo Martínez', 'email' => 'carlos.martinez@ejemplo.com'],
-                ['name' => 'Andrea Michelle López', 'email' => 'andrea.lopez@ejemplo.com'],
-                ['name' => 'José Alberto Ramírez', 'email' => 'jose.ramirez@ejemplo.com'],
-                ['name' => 'María Fernanda Castro', 'email' => 'maria.castro@ejemplo.com'],
-                ['name' => 'Daniel Alexander Pérez', 'email' => 'daniel.perez@ejemplo.com'],
-                ['name' => 'Sofia Isabella Morales', 'email' => 'sofia.morales@ejemplo.com'],
-                ['name' => 'Luis Fernando González', 'email' => 'luis.gonzalez@ejemplo.com'],
-                ['name' => 'Ana Gabriela Mendoza', 'email' => 'ana.mendoza@ejemplo.com'],
-                ['name' => 'Diego Alejandro Torres', 'email' => 'diego.torres@ejemplo.com'],
-                ['name' => 'Valeria Nicole Flores', 'email' => 'valeria.flores@ejemplo.com'],
-                ['name' => 'Roberto Carlos Santos', 'email' => 'roberto.santos@ejemplo.com'],
-                ['name' => 'Carmen Elena Rivas', 'email' => 'carmen.rivas@ejemplo.com'],
-                ['name' => 'Jorge Alberto Mejía', 'email' => 'jorge.mejia@ejemplo.com'],
-                ['name' => 'Patricia Alexandra Díaz', 'email' => 'patricia.diaz@ejemplo.com'],
-                ['name' => 'Eduardo José Quintanilla', 'email' => 'eduardo.quintanilla@ejemplo.com']
+                ['name' => 'Carlos Eduardo Martínez', 'email' => 'carlos.martinez2024@gmail.com'],
+                ['name' => 'Andrea Michelle López', 'email' => 'andrea.lopez98@gmail.com'],
+                ['name' => 'José Alberto Ramírez', 'email' => 'jose.ramirez01@gmail.com'],
+                ['name' => 'María Fernanda Castro', 'email' => 'mafe.castro99@gmail.com'],
+                ['name' => 'Daniel Alexander Pérez', 'email' => 'daniel.perez02@gmail.com'],
+                ['name' => 'Sofia Isabella Morales', 'email' => 'sofi.morales00@gmail.com'],
+                ['name' => 'Luis Fernando González', 'email' => 'luisfer.gonzalez@gmail.com'],
+                ['name' => 'Ana Gabriela Mendoza', 'email' => 'anagaby.mendoza@gmail.com'],
+                ['name' => 'Diego Alejandro Torres', 'email' => 'diego.torres03@gmail.com'],
+                ['name' => 'Valeria Nicole Flores', 'email' => 'vale.flores99@gmail.com'],
+                ['name' => 'Roberto Carlos Santos', 'email' => 'roberto.santos01@gmail.com'],
+                ['name' => 'Carmen Elena Rivas', 'email' => 'carmen.rivas02@gmail.com'],
+                ['name' => 'Jorge Alberto Mejía', 'email' => 'jorge.mejia00@gmail.com'],
+                ['name' => 'Patricia Alexandra Díaz', 'email' => 'paty.diaz99@gmail.com'],
+                ['name' => 'Eduardo José Quintanilla', 'email' => 'eduardo.quintanilla@gmail.com'],
+                ['name' => 'Katherine Michelle Renderos', 'email' => 'kathy.renderos@gmail.com'],
+                ['name' => 'Bryan Alexander Portillo', 'email' => 'bryan.portillo01@gmail.com'],
+                ['name' => 'Melissa Alejandra Zelaya', 'email' => 'mel.zelaya02@gmail.com'],
+                ['name' => 'Kevin Ernesto Bonilla', 'email' => 'kevin.bonilla00@gmail.com'],
+                ['name' => 'Gabriela María Recinos', 'email' => 'gaby.recinos99@gmail.com']
             ];
 
             // Crear estudiantes
