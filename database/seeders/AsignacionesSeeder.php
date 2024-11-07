@@ -6,7 +6,10 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-
+use App\Models\Estudiante;
+use App\Models\Proyecto;
+use App\Models\User;
+use App\Models\Asignacion;
 class AsignacionesSeeder extends Seeder
 {
     /**
@@ -16,67 +19,26 @@ class AsignacionesSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('asignaciones')->insert([
-            [
-                'id_proyecto' => 1,
-                'id_estudiante' => 1,
-                'id_tutor' => 1,
-                'fecha_asignacion' => Carbon::create(2024, 1, 10)->format('Y-m-d'),
-            ],
-            [
-                'id_proyecto' => 2,
-                'id_estudiante' => 2,
-                'id_tutor' => 2,
-                'fecha_asignacion' => Carbon::create(2024, 2, 15)->format('Y-m-d'),
-            ],
-            [
-                'id_proyecto' => 3,
-                'id_estudiante' => 3,
-                'id_tutor' => 1,
-                'fecha_asignacion' => Carbon::create(2024, 3, 20)->format('Y-m-d'),
-            ],
-            [
-                'id_proyecto' => 4,
-                'id_estudiante' => 4,
-                'id_tutor' => 2,
-                'fecha_asignacion' => Carbon::create(2024, 4, 25)->format('Y-m-d'),
-            ],
-            [
-                'id_proyecto' => 5,
-                'id_estudiante' => 5,
-                'id_tutor' => 1,
-                'fecha_asignacion' => Carbon::create(2024, 5, 30)->format('Y-m-d'),
-            ],
-            [
-                'id_proyecto' => 6,
-                'id_estudiante' => 6,
-                'id_tutor' => 2,
-                'fecha_asignacion' => Carbon::create(2024, 6, 5)->format('Y-m-d'),
-            ],
-            [
-                'id_proyecto' => 7,
-                'id_estudiante' => 7,
-                'id_tutor' => 1,
-                'fecha_asignacion' => Carbon::create(2024, 7, 10)->format('Y-m-d'),
-            ],
-            [
-                'id_proyecto' => 8,
-                'id_estudiante' => 8,
-                'id_tutor' => 2,
-                'fecha_asignacion' => Carbon::create(2024, 8, 15)->format('Y-m-d'),
-            ],
-            [
-                'id_proyecto' => 9,
-                'id_estudiante' => 9,
-                'id_tutor' => 1,
-                'fecha_asignacion' => Carbon::create(2024, 9, 20)->format('Y-m-d'),
-            ],
-            [
-                'id_proyecto' => 10,
-                'id_estudiante' => 10,
-                'id_tutor' => 2,
-                'fecha_asignacion' => Carbon::create(2024, 10, 25)->format('Y-m-d'),
-            ]
-        ]);
+        // Obtener todos los estudiantes, proyectos y tutores
+        $estudiantes = Estudiante::all();
+        $proyectos = Proyecto::all();
+        $tutores = User::role('Tutor')->get(); // Obtener solo los usuarios con el rol de 'Tutor'
+        
+        // Verificar si hay datos en las tablas necesarias
+        if ($estudiantes->isEmpty() || $proyectos->isEmpty() || $tutores->isEmpty()) {
+            throw new \Exception('Probablemenete no hay datos de Estudiantes, datos de Proyectos o datos de Tutor');
+        }
+
+        // Iterar sobre los estudiantes y asignarles un proyecto y tutor aleatorio
+        foreach ($estudiantes as $estudiante) {
+            Asignacion::create([
+                'id_proyecto' => $proyectos->random()->id, // Selecciona un proyecto aleatorio
+                'id_estudiante' => $estudiante->id, // ID del estudiante actual
+                'id_tutor' => $tutores->random()->id, // Selecciona un tutor aleatorio
+                'fecha_asignacion' => Carbon::now()->subDays(rand(0, 365))->format('d/m/Y'), // Fecha aleatoria en el ultimo año con formato dia/mes/año
+            ]);
+        }
+         
     }
+    
 }
