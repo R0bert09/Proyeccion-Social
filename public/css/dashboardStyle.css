@@ -1,0 +1,108 @@
+:root {
+    --colorPrimario: #;
+    --colorSecundario: #;
+    --blanco: #ffff;
+    --negro: #000;
+}
+
+.contenedorPrincipal {
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    padding: 0.625rem; 
+    margin: 0;
+}
+
+.contenedorPrincipal__titulo h1 {
+    font-size: 2.1875rem; 
+    margin: 1.25rem 0; 
+}
+
+/* Informacion */
+.informacion {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.625rem; 
+}
+
+@media (min-width: 768px) {
+    .informacion {
+        flex-direction: row;
+        gap: 1.875rem; 
+    }
+}
+
+.informacion__estudiantes,
+.informacion__proyectos,
+.informacion__asesores {
+    width: 100%; 
+    height: auto; 
+    padding: 0.9375rem; 
+    background-color: var(--blanco);
+    border-radius: 0.75rem; 
+}
+
+.informacion__estudiantes h2,
+.informacion__proyectos h2,
+.informacion__asesores h2 {
+    font-size: 1.875rem; 
+}
+
+@media (min-width: 768px) {
+    .informacion__estudiantes h2,
+    .informacion__proyectos h2,
+    .informacion__asesores h2 {
+        font-size: 1.5625rem; 
+    }
+}
+
+.informacion__estudiantes p,
+.informacion__proyectos p,
+.informacion__asesores p {
+    color: grey;
+    font-size: 0.9375rem; 
+}
+
+/* Graficos */
+.graficos {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 1.25rem; 
+    gap: 1.5625rem; 
+}
+
+@media (min-width: 768px) {
+    .graficos {
+        flex-direction: row;
+    }
+}
+
+.graficos__Estado,
+.graficos__Estudiantes {
+    background-color: var(--blanco);
+    border-radius: 0.75rem; 
+}
+
+.graficos__Estado {
+    width: 100%; 
+    height: 24.5625rem; 
+}
+
+.graficos__Estudiantes {
+    width: 100%; 
+    height: 24.5625rem; 
+}
+
+#estadoProyectosChart{
+    padding: 1rem;
+}
+
+#estudiantesProyectosChart{
+    padding: 1rem;
+}
+
