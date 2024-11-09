@@ -2,8 +2,19 @@
 
 namespace Database\Seeders;
 
+use App\Models\Asignacion;
+use App\Models\Departamento;
+use App\Models\Documento;
+use App\Models\Estado;
+use App\Models\Estudiante;
 use App\Models\HorasSociales;
+use App\Models\Notificacion;
+use App\Models\Proyecto;
+use App\Models\ProyectosDocumentos;
 use App\Models\ProyectosEstudiantes;
+use App\Models\Seccion;
+use App\Models\User;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
