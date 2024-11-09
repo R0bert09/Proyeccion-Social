@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Seccion;
 use App\Models\Estudiante;
+use Illuminate\Support\Facades\Hash;//importacion de la clase
 
 class EstudianteSeeder extends Seeder
 {
