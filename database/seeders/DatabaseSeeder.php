@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\HorasSociales;
+use App\Models\ProyectosEstudiantes;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,7 +17,15 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RoleSeeder::class);
         $this->call(UsersSeeder::class);
-        //$this->call(EstadoSeeder::class);
+        $this->call(EstudianteSeeder::class);
+        $this->call(EstadosSeeder::class);
+        $this->call(DepartamentoSeeder::class);
+        $this->call(SeccionSeeder::class);
         $this->call(AsignacionesSeeder::class);
+        $this->call(HorasSociales::class);
+        $this->call(NotificacionesSeeder::class);
+        $this->call(ProyectosDocumentosSeeder::class);
+        $this->call(ProyectosEstudiantes::class);
+
     }
 }
