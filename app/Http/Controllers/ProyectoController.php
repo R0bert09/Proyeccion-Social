@@ -9,10 +9,18 @@ use Illuminate\Support\Facades\Storage;
 
 class ProyectoController extends Controller
 {
-    public function index()
+    /*public function index()
     {
         $ListProyecto = Proyecto::all();
         return view("Proyecto.indexProyecto", compact("ListProyecto"));
+    }*/
+
+    //para usar fetch en JavaScript para obtener los datos del servidor,
+    //se ajusta el metodo para devolver JSON en lugar de una vista.
+    public function index()
+    {
+        $ListProyecto = Proyecto::all();
+        return response()->json($ListProyecto);
     }
 
     public function create()
