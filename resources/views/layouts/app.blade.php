@@ -49,12 +49,12 @@
             </li>
             <li class="nav-item text-muted">Usuarios</li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('crear') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-people me-2"></i> Gestión de Usuarios
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('usuarios') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-person me-2"></i> Usuarios
                 </a>
             </li>
@@ -64,7 +64,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('layouts.roles') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-journal me-2"></i> Gestión de Roles
                 </a>
             </li>
