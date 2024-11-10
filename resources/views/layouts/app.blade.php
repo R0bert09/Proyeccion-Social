@@ -59,7 +59,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('gestion-permiso') }}" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('permissions.index') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-person-gear me-2"></i> Gestión de Permisos
                 </a>
             </li>
