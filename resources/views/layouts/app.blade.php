@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/user.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardStyle.css') }}">
+    <link rel="stylesheet" href="{{ asset(path: 'css/mensaje.css')}}">
     @yield('styles')
 </head>
 <body>
@@ -112,5 +113,6 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('js/graficos.js') }}"></script>
+    <script src="{{asset(path:'js/mensaje.js') }}"></script>
 </body>
 </html>

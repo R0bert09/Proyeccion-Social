@@ -28,6 +28,10 @@ Route::get('/proyecto', function () {
     return view('proyecto.publicar-proyecto');
 })->name('proyecto');
 
+Route::get('/mensaje', function () {
+    return view('mensaje.mensaje');
+})->name('proyecto');
+
 Route::get('/gestion-proyecto', function () {
     return view('gestionProyectos.gestionProyectos');
 })->name('gestion-proyecto');
