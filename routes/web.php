@@ -16,6 +16,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProyectosDocumentosController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PermissionController;
 
 Route::get('/', function () {
     return view('login.login');
@@ -33,13 +34,21 @@ Route::get('/proyecto', function () {
     return view('proyecto.publicar-proyecto');
 })->name('proyecto');
 
-Route::get('/mensaje', function () {
+Route::get('/mensajeria', function () {
     return view('mensaje.mensaje');
-})->name('proyecto');
+})->name('mensajeria');
 
 Route::get('/gestion-proyecto', function () {
     return view('gestionProyectos.gestionProyectos');
 })->name('gestion-proyecto');
+
+Route::get('/gestion-permiso', function () {
+    return view('permisos.gestionpermiso');
+})->name('gestion-permiso');
+
+Route::get('/gestion-roles', function () {
+    return view('layouts.gestion-de-roles');
+})->name('gestion-roles');
 
 Route::get('/proyecto-disponible', function () {
     return view('proyecto.proyecto-disponible');
@@ -60,6 +69,8 @@ Route::get('/crear', function () {
 Route::get('/usuarios', function () {
     return view('usuarios.listaUsuario');
 })->name('usuarios');
+
+Route::resource('permissions', PermissionController::class)->except(['show']);
 
 // Rutas de departamentos
 Route::get('/ExportDptExcel', [DepartamentoController::class, 'exportarAllDepartamentos_Excel'])->name('Departamento.ExportExcel');

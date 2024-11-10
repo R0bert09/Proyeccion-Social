@@ -43,7 +43,7 @@
 
         <ul class="nav flex-column">
             <li class="nav-item mb-2">
-                <a class="nav-link" href="#" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('dashboard') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-house-door me-2"></i> Dashboard
                 </a>
             </li>
@@ -59,11 +59,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('permissions.index') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-person-gear me-2"></i> Gestión de Permisos
                 </a>
             </li>
             <li class="nav-item">
+
                 <a class="nav-link" href="{{ route('layouts.roles') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-journal me-2"></i> Gestión de Roles
                 </a>
@@ -81,7 +82,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('gestion-proyecto') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-folder-check me-2"></i> Gestión de Proyectos
                 </a>
             </li>
@@ -93,7 +94,7 @@
 
             <li class="nav-item text-muted mt-3">Mensajería</li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('mensajeria') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-chat me-2"></i> Mensajes
                 </a>
             </li>
