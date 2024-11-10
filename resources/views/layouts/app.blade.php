@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/user.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardStyle.css') }}">
+    <link rel="stylesheet" href="{{ asset(path: 'css/mensaje.css')}}">
     @yield('styles')
 </head>
 <body>
@@ -75,17 +76,17 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('proyecto-disponible') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-person me-2"></i> Proyectos Disponibles
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('proyecto-disponible') }}" onclick="establecerActivo(this)">
+                <a class="nav-link" href="#" onclick="establecerActivo(this)">
                     <i class="bi bi-folder-check me-2"></i> Gestión de Proyectos
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('proyecto-g') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-briefcase me-2"></i> Proyectos
                 </a>
             </li>
@@ -112,5 +113,6 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('js/graficos.js') }}"></script>
+    <script src="{{asset(path:'js/mensaje.js') }}"></script>
 </body>
 </html>

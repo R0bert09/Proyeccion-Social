@@ -9,7 +9,6 @@ use App\Models\Seccion;
 use App\Models\Estudiante;
 use Illuminate\Support\Facades\Hash;
 
-
 class EstudianteSeeder extends Seeder
 {
     /**
@@ -63,7 +62,7 @@ class EstudianteSeeder extends Seeder
 
 
                 Estudiante::create([
-                    'id_usuario' => $usuario->id,
+                    'id_usuario' => $usuario->id_usuario,   
                     'id_seccion' => $secciones->random()->id_seccion,
                     'porcentaje_completado' => rand(0, 100),
                     'horas_sociales_completadas' => rand(0, 500),
