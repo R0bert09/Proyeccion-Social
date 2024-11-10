@@ -6,6 +6,7 @@
 
 <div class="container-fluid">
     <div class="row chat-container">
+      
       <!-- Sidebar de navegación -->
       <div class="col-12 col-md-3 sidebar d-flex flex-column rounded-3" id="sidebar">
         <h5 class="px-3">Chats</h5>
