@@ -14,6 +14,7 @@ use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\HorasSocialesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProyectosDocumentosController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\PermissionController;
 
@@ -216,6 +217,10 @@ Route::controller(ProyectosDocumentosController::class)
         Route::put('/{id}', 'update')->name('update');        
         Route::delete('/{id}', 'destroy')->name('destroy');  
     });
+    //Rutas de controllador de roles 
+    Route::get('/layouts/roles', [RoleController::class, 'index'])->name('layouts.roles');
+    Route::post('/layouts/roles/store', [RoleController::class, 'store'])->name('roles.store');
+    Route::delete('/layouts/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::put('/layouts/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
 
 ?>
-
