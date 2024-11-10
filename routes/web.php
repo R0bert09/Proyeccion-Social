@@ -15,6 +15,7 @@ use App\Http\Controllers\HorasSocialesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProyectosDocumentosController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PermissionController;
 
 Route::get('/', function () {
     return view('login.login');
@@ -59,6 +60,8 @@ Route::get('/crear', function () {
 Route::get('/usuarios', function () {
     return view('usuarios.listaUsuario');
 })->name('usuarios');
+
+Route::resource('permissions', PermissionController::class)->except(['show']);
 
 // Rutas de departamentos
 Route::get('/ExportDptExcel', [DepartamentoController::class, 'exportarAllDepartamentos_Excel'])->name('Departamento.ExportExcel');
