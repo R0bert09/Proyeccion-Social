@@ -32,13 +32,21 @@ Route::get('/proyecto', function () {
     return view('proyecto.publicar-proyecto');
 })->name('proyecto');
 
-Route::get('/mensaje', function () {
+Route::get('/mensajeria', function () {
     return view('mensaje.mensaje');
-})->name('proyecto');
+})->name('mensajeria');
 
 Route::get('/gestion-proyecto', function () {
     return view('gestionProyectos.gestionProyectos');
 })->name('gestion-proyecto');
+
+Route::get('/gestion-permiso', function () {
+    return view('permisos.gestionpermiso');
+})->name('gestion-permiso');
+
+Route::get('/gestion-roles', function () {
+    return view('layouts.gestion-de-roles');
+})->name('gestion-roles');
 
 Route::get('/proyecto-disponible', function () {
     return view('proyecto.proyecto-disponible');

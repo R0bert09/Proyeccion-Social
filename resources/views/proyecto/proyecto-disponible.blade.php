@@ -56,7 +56,7 @@
                     <td>Desarrollo de una plataforma web para gestión de contenidos</td>
                     <td>300</td>
                     <td>UES-SM</td>
-                    <td>Ingeniería de Sistemas</td>
+                    <td>Ingenieria y Arquitectura</td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-2">
                             <a href="{{ route('detalle') }}" class="btn btn-light btn-sm p-2 px-3">
