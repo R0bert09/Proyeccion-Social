@@ -33,6 +33,7 @@ class DocumentosSeeder extends Seeder
             'HOJA_DE_VIDA_bolsa_de_trabajo_UES.docx',
             'MANUALDEPROYECCIONSOCIAL_LINIAMIENTOS.docx',
             'MANUALDEPROYECCIONSOCIAL.doc',
+            //'MANUALDEPROYECCIONSOCIAL.doc',
         ];
 
         
