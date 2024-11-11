@@ -162,5 +162,12 @@ class ProyectoController extends Controller
         Proyecto::asignarFechas($validatedData);
         return redirect()->route('proyectos.index')->with('success', 'Fechas asignadas exitosamente.');
     }
+
+    // Método para mostrar los proyectos disponibles
+    public function proyectos_disponibles() 
+    {
+        $proyectos = Proyecto::where('estado', 1)->get(); // 1 = Disponible 
+        return view('proyecto.proyecto-disponible', compact('proyectos')); 
+    }
 }
 
