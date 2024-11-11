@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 use App\Exports\EstudianteExport;
 use App\Models\Estudiante;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Hash;
 
 class EstudianteController extends Controller
 {
@@ -21,6 +23,15 @@ class EstudianteController extends Controller
         } else {
             return Estudiante::all();
         }
+    }
+    private function validarRegistro(Request $request)
+    {
+        return $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'id_seccion' => 'required|integer|exists:secciones,id',
+        ]);
     }
 
     // Método que valida los datos de los estudiantes
@@ -117,6 +128,30 @@ class EstudianteController extends Controller
     public function exportExcel() 
     {
         return Excel::download(new EstudianteExport, 'estudiantes.xlsx');
+    }
+    public function register(Request $request)
+    {
+        $data = $this->validarRegistro($request);
+
+        $usuario = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'email_verified_at' => now(),
+        ]);
+        $usuario->assignRole('Estudiante');
+
+        // Crear el estudiante
+        Estudiante::create([
+            'id_usuario' => $usuario->id,
+            'id_seccion' => $data['id_seccion'],
+            'nombre' => $data['name'],
+            'porcentaje_completado' => 0,
+            'horas_sociales_completadas' => 0, 
+        ]);
+
+        return redirect()->route('estudiantes.index')
+            ->with('success', 'Estudiante registrado exitosamente');
     }
     
     public function exportPDF(){
