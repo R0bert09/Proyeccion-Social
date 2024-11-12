@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/dashboardStyle.css') }}">
     <link rel="stylesheet" href="{{ asset(path: 'css/mensaje.css')}}">
     @yield('styles')
+    
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-2">
@@ -115,5 +116,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('js/graficos.js') }}"></script>
     <script src="{{asset(path:'js/mensaje.js') }}"></script>
+    <script src="{{ asset('js/showPassword.js') }}"></script>
 </body>
 </html>
