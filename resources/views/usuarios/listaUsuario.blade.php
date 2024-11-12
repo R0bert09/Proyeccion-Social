@@ -58,7 +58,7 @@
                             <td>{{ $usuario->name }}</td>
                             <td>{{ $usuario->email }}</td>
                             <td>{{ $usuario->getRoleNames()->first() ?? 'Sin rol' }}</td>
-                            <td>{{ $usuario->seccion ?? 'Sin sección asignada' }}</td>
+                            <td>{{ $usuario->seccion}}</td>
                             <td>
                                 <a href="{{ route('usuarios.editarUsuario', ['id' => $usuario->id_usuario]) }}" class="text-warning me-3"><i class="bi bi-pencil"></i> Editar</a>
                                 <a href="#" class="text-danger"><i class="bi bi-trash"></i> Eliminar</a>
