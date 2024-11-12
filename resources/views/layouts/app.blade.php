@@ -44,7 +44,7 @@
 
         <ul class="nav flex-column">
             <li class="nav-item mb-2">
-                <a class="nav-link" href="{{ route('dashboard') }}" onclick="establecerActivo(this)">
+                <a class="nav-link" href="" onclick="establecerActivo(this)">
                     <i class="bi bi-house-door me-2"></i> Dashboard
                 </a>
             </li>
