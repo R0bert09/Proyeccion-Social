@@ -90,7 +90,7 @@ class UserController extends Controller
         // Asignar el rol al usuario
         $user->assignRole($request->rol);
 
-        return response()->json(['message' => 'Usuario creado exitosamente']);
+        return redirect()->route('usuarios')->with('success', 'Usuario creado exitosamente');
     }
 
     public function deleteSelected(Request $request)
