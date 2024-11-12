@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Seccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -176,5 +177,19 @@ class UserController extends Controller
         $user->save();
         CodigosRecuperacion::where('codigo', $request->codigo_verificacion)->delete();
         return redirect('/');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('correo', 'contrasena');
+
+        if (Auth::attempt(['email' => $credentials['correo'], 'password' => $credentials['contrasena']])) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
+        }
+
+        return redirect()->route('login')->withErrors([
+            'error' => 'Usuario o contraseña inválidos.',
+        ]);
     }
 }
