@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 use Illuminate\Database\Eloquent\Builder;
 
-class User extends Authenticatable
+class User extends Authenticatable Implements JWTSubject 
 {
     use HasRoles;
     use Notifiable;
@@ -34,6 +36,26 @@ class User extends Authenticatable
             'id_tutor',
             'id_seccion'
         );
+    }
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 
     public function scopeEstudiantesPorSeccion(Builder $query)

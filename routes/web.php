@@ -14,8 +14,10 @@ use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\HorasSocialesController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\ProyectosDocumentosController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\PermissionController;
 
 Route::get('/', function () {
     return view('login.login');
@@ -33,9 +35,21 @@ Route::get('/proyecto', function () {
     return view('proyecto.publicar-proyecto');
 })->name('proyecto');
 
+Route::get('/mensajeria', function () {
+    return view('mensaje.mensaje');
+})->name('mensajeria');
+
 Route::get('/gestion-proyecto', function () {
     return view('gestionProyectos.gestionProyectos');
 })->name('gestion-proyecto');
+
+Route::get('/gestion-permiso', function () {
+    return view('permisos.gestionpermiso');
+})->name('gestion-permiso');
+
+Route::get('/gestion-roles', function () {
+    return view('layouts.gestion-de-roles');
+})->name('gestion-roles');
 
 Route::get('/proyecto-disponible', function () {
     return view('proyecto.proyecto-disponible');
@@ -55,6 +69,8 @@ Route::put('/usuarios/{id}/actualizar', [UserController::class, 'update'])->name
 Route::get('/usuarios', [UserController::class, 'list'])->name('usuarios');
 Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
 Route::delete('/usuarios/eliminar', [UserController::class, 'deleteSelected'])->name('usuarios.eliminar');
+
+Route::resource('permissions', PermissionController::class)->except(['show']);
 
 // Rutas de departamentos
 Route::get('/ExportDptExcel', [DepartamentoController::class, 'exportarAllDepartamentos_Excel'])->name('Departamento.ExportExcel');
@@ -200,6 +216,10 @@ Route::controller(ProyectosDocumentosController::class)
         Route::put('/{id}', 'update')->name('update');        
         Route::delete('/{id}', 'destroy')->name('destroy');  
     });
+    //Rutas de controllador de roles 
+    Route::get('/layouts/roles', [RoleController::class, 'index'])->name('layouts.roles');
+    Route::post('/layouts/roles/store', [RoleController::class, 'store'])->name('roles.store');
+    Route::delete('/layouts/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::put('/layouts/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
 
 ?>
-
