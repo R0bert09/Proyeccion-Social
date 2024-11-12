@@ -2,7 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Exports\EstudianteExport;
+use App\Models\User;
 use App\Models\Estudiante;
+use App\Models\Seccion;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -40,14 +42,17 @@ class EstudianteController extends Controller
     {
         $query = $request->input('query');
         $ListEstudiantes = $this->buscarEstudiantes($query);
-
-        return view("estudiante.index", compact("ListEstudiantes")); 
+        $User=User::all();
+        // dd($ListEstudiantes);
+        return view("estudiante.index", compact("ListEstudiantes"));
     }
 
     // Mostrar formulario para crear un nuevo estudiante
     public function create()
     {
-        return view("estudiante.create");
+        $secciones=Seccion::all();
+        // dd($secciones);
+        return view("estudiante.create",compact("secciones"));
     }
 
     // Almacenar un nuevo estudiante en la base de datos

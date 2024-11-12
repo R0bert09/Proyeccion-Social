@@ -12,8 +12,9 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\HorasSocialesController;
-use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\ProyectosDocumentosController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
@@ -48,13 +49,12 @@ Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
 })->name('dashboard');
 
-Route::get('/crear', function () {
-    return view('usuarios.crearUsuario');
-})->name('crear');
-
-Route::get('/usuarios', function () {
-    return view('usuarios.listaUsuario');
-})->name('usuarios');
+Route::get('/crear', [UserController::class, 'allSeccion'])->name('crear');
+Route::get('/usuarios/{id}/editar', [UserController::class, 'edit'])->name('usuarios.editarUsuario');
+Route::put('/usuarios/{id}/actualizar', [UserController::class, 'update'])->name('usuarios.actualizar');
+Route::get('/usuarios', [UserController::class, 'list'])->name('usuarios');
+Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
+Route::delete('/usuarios/eliminar', [UserController::class, 'deleteSelected'])->name('usuarios.eliminar');
 
 // Rutas de departamentos
 Route::get('/ExportDptExcel', [DepartamentoController::class, 'exportarAllDepartamentos_Excel'])->name('Departamento.ExportExcel');
@@ -74,9 +74,7 @@ Route::get('/layouts', function () {
     return view('layouts.gestion-de-roles');
 })->name('roles');
 
-Route::get('/perfil', function () {
-    return view('perfil.perfilUsuario');
-})->name('perfil');
+Route::get('perfil/{id}', [UserController::class, 'showPerfil'])->name('perfil');
 
 // Rutas del controlador Estudiante
 Route::controller(EstudianteController::class)
@@ -84,6 +82,7 @@ Route::controller(EstudianteController::class)
     ->name('estudiantes.')
     ->group(function () {
         Route::get('/', 'index')->name('index');          
+        Route::get('/create', 'create')->name('create');          
         Route::post('/', 'store')->name('store');         
         Route::get('/{id}', 'show')->name('show');        
         Route::put('/{id}', 'update')->name('update');    
@@ -175,7 +174,7 @@ Route::controller(HorasSocialesController::class)
     });
 
 // Rutas del controlador Notification
-Route::controller(NotificationController::class)
+Route::controller(NotificacionController::class)
     ->prefix('notificaciones')
     ->name('notificaciones.')
     ->group(function () {
