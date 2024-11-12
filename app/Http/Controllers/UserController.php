@@ -12,27 +12,35 @@ class UserController extends Controller
     public function list(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-    
-        // Obtener consultas de cada rol con scopes
-        $estudiantes = User::estudiantesPorSeccion()->select('users.*')->toBase();
-        $tutores = User::tutoresPorSeccion()->select('users.*')->toBase();
-        $coordinadores = User::coordinadoresPorSeccion()->select('users.*')->toBase();
-        $administradores = User::AdministradoresPorSeccion()->select('users.*')->toBase();
-    
-        // Combinar los resultados en el orden deseado
+
+        $estudiantes = User::estudiantesPorSeccion()
+            ->select('users.*', 'secciones.nombre_seccion as seccion')
+            ->toBase();
+
+        $tutores = User::tutoresPorSeccion()
+            ->select('users.*', 'secciones.nombre_seccion as seccion')
+            ->toBase();
+
+        $coordinadores = User::coordinadoresPorSeccion()
+            ->select('users.*', 'secciones.nombre_seccion as seccion')
+            ->toBase();
+
+        $administradores = User::AdministradoresPorSeccion()
+            ->select('users.*', \DB::raw("'Este usuario no posee seccion' as seccion"))
+            ->toBase();
+
         $query = User::query()->fromSub(
             $administradores
                 ->unionAll($coordinadores)
                 ->unionAll($tutores)
                 ->unionAll($estudiantes),
-
             'users_ordenados'
         );
-    
-        // Aplicar paginación
+
         $users = $query->paginate($perPage);
         return view('usuarios.listaUsuario', compact('users'));
     }
+
     
     //mostrar usuario especifico
     public function showPerfil($id)
