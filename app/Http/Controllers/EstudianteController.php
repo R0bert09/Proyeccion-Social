@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Estudiante;
 use App\Models\Seccion;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;

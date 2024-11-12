@@ -15,9 +15,9 @@ use App\Http\Controllers\HorasSocialesController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\ProyectosDocumentosController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('login.login');
@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 Route::get('/registro', function () {
     return view('registro.registro');
-});
+})->name('registro');
 
 Route::get('/proyecto-g', function () {
     return view('proyecto.proyecto-general');
@@ -118,13 +118,15 @@ Route::controller(ProyectoController::class)
     });
 
 // Rutas de recuperación y reseteo de contraseña
-Route::get('/recuperarcontraseña', function () {
+Route::get('/recuperarpassword', function () {
     return view('auth.recupassword');
-});
+})->name('recuperarpassword');
 
-Route::get('/resetearcontraseña', function () {
-    return view('auth.resetpassword');
-});
+Route::get('/resetearpassword/{idUser}',[UserController::class,'resetearpassword'] );
+
+Route::post('/enviocorreocode', [UserController::class, 'enviocorreocode'])->name('enviocorreocode');
+
+Route::post('/updatepassword/{idUser}', [UserController::class, 'updatepassword'])->name('updatepassword');
 
 // Rutas del controlador Estado
 Route::controller(EstadoController::class)->group(function () {

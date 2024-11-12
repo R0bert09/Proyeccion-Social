@@ -37,13 +37,13 @@
             </div>
 
             <div class="mb-3 text-end">
-                <a href="" class="text-muted">¿Has olvidado tu contraseña?</a>
+                <a href="{{route('recuperarpassword')}}" class="text-muted">¿Has olvidado tu contraseña?</a>
             </div>
 
             <button type="submit" class="btn btn-primary w-100 mb-3 fw-bold">Iniciar sesión</button>
             
             <div class="text-center">
-              <small>Aún no tienes una cuenta? <a href="" class="text-danger link-registrate">Regístrate Aquí</a></small>
+                <small>Aún no tienes una cuenta? <a href="{{route('registro')}}" class="text-danger link-registrate">Regístrate Aquí</a></small>
             </div>
 
         </form>
