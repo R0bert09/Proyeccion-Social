@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/dashboardStyle.css') }}">
     <link rel="stylesheet" href="{{ asset(path: 'css/mensaje.css')}}">
     @yield('styles')
+    
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm p-2">
@@ -43,7 +44,7 @@
 
         <ul class="nav flex-column">
             <li class="nav-item mb-2">
-                <a class="nav-link" href="{{ route('dashboard') }}" onclick="establecerActivo(this)">
+                <a class="nav-link" href="" onclick="establecerActivo(this)">
                     <i class="bi bi-house-door me-2"></i> Dashboard
                 </a>
             </li>
@@ -115,5 +116,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('js/graficos.js') }}"></script>
     <script src="{{asset(path:'js/mensaje.js') }}"></script>
+    <script src="{{ asset('js/showPassword.js') }}"></script>
 </body>
 </html>

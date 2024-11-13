@@ -15,7 +15,7 @@
       <hr class="custom-hr">
       <p>Ingresa el correo electrónico asociado a tu cuenta para restablecerla.</p>
 
-      <form action="" method="POST">
+      <form action="enviocorreocode" method="POST">
         @csrf
 
         <div class="mb-3">
