@@ -21,7 +21,13 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('login.login');
-});
+})->name('login');
+
+Route::post('/', [UserController::class, 'login'])->name('login.process');
+
+Route::get('/dashboard', function () {
+    return view('dashboard.dashboard');
+})->middleware('auth');
 
 Route::get('/registro', function () {
     return view('registro.registro');
@@ -59,9 +65,6 @@ Route::get('/detalle', function () {
     return view('proyecto.detalle-proyecto');
 })->name('detalle');
 
-Route::get('/dashboard', function () {
-    return view('dashboard.dashboard');
-})->name('dashboard');
 
 Route::get('/crear', [UserController::class, 'allSeccion'])->name('crear');
 Route::get('/usuarios/{id}/editar', [UserController::class, 'edit'])->name('usuarios.editarUsuario');
