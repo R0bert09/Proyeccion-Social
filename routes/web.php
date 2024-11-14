@@ -18,6 +18,7 @@ use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -250,6 +251,16 @@ Route::controller(ProyectosDocumentosController::class)
     Route::get('/layouts/roles', [RoleController::class, 'index'])->name('layouts.roles');
     Route::post('/layouts/roles/store', [RoleController::class, 'store'])->name('roles.store');
     Route::delete('/layouts/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
-    Route::put('/layouts/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    Route::put('/layouts/roles/{role}', [RoleController::class, 'update'])->name('roles.update');   
+
+    //esto lo encontramos en la carpeta config (auth:api)
+    Route::middleware(['auth:api', RoleMiddleware::class . ':admin'])->group(function () {
+        Route::get('/dashboard', function () {
+            return redirect()->route('home')->with('message', 'Bienvenido administrador');
+        });
+    });
+
 
 ?>
+
+
