@@ -87,11 +87,6 @@
                         <a class="nav-link" href="{{ route('gestion-roles') }}" onclick="establecerActivo(this)">
                             <i class="bi bi-journal me-2"></i> Gestión de Roles
                         </a>
-                    </li><li class="nav-item">
-
-                        <a class="nav-link" href="{{ route('layouts.roles') }}" onclick="establecerActivo(this)">
-                            <i class="bi bi-journal me-2"></i> Gestión de Roles
-                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('usuarios') }}" onclick="establecerActivo(this)">

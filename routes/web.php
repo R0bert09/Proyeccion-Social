@@ -40,60 +40,55 @@ Route::get('/registro', function () {
 })->name('registro');
 
 Route::get('/proyecto-g', function () {
-    if (Auth::check() && auth()->user()->hasAnyRole(['Coordinador', 'Administrador'])) {
+    if (Auth::check() && auth()->user()->hasAnyRole(['Administrador', 'Coordinador', 'Tutor'])) {
         return view('proyecto.proyecto-general');
     }
     return view('dashboard.dashboard');
-})->name('proyecto-g');
+})->middleware('auth')->name('proyecto-g');
 
 Route::get('/proyecto', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
         return view('proyecto.publicar-proyecto');
     }
     return view('dashboard.dashboard');
-})->name('proyecto');
+})->middleware('auth')->name('proyecto');
 
 Route::get('/mensajeria', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
         return view('mensaje.mensaje');
     }
     return view('dashboard.dashboard');
-})->name('mensajeria');
+})->middleware('auth')->name('mensajeria');
 
 Route::get('/gestion-proyecto', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Coordinador', 'Administrador'])) {
         return view('gestionProyectos.gestionProyectos');
     }
     return view('dashboard.dashboard');
-})->name('gestion-proyecto');
+})->middleware('auth')->name('gestion-proyecto');
 
 Route::get('/gestion-permiso', function () {
     if (Auth::check() && auth()->user()->hasRole('Administrador')) {
         return view('permisos.gestionpermiso');
     }
     return view('dashboard.dashboard');
-})->name('gestion-permiso');
+})->middleware('auth')->name('gestion-permiso');
 
-Route::get('/gestion-roles', function () {
-    if (Auth::check() && auth()->user()->hasRole('Administrador, Coordinador')) {
-        return view('layouts.gestion-de-roles');
-    }
-    return view('dashboard.dashboard');
-})->name('gestion-roles');
+Route::get('/gestion-roles', [RoleController::class, 'index'])->middleware('auth')->name('gestion-roles');
 
 Route::get('/proyecto-disponible', function () {
-    if (Auth::check() && auth()->user()->hasRole('Coordinador')) {
+    if (Auth::check() && auth()->user()->hasAnyRole(['Administrador', 'Coordinador'])) {
         return view('proyecto.proyecto-disponible');
     }
     return view('dashboard.dashboard'); 
-})->name('proyecto-disponible');
+})->middleware('auth')->name('proyecto-disponible');
 
 Route::get('/detalle', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
         return view('proyecto.detalle-proyecto');
     }
     return view('dashboard.dashboard');
-})->name('detalle');
+})->middleware('auth')->name('detalle');
 
 
 Route::get('/crear', [UserController::class, 'allSeccion'])->name('crear');
