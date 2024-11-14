@@ -149,6 +149,7 @@ class UserController extends Controller
         try {
             $email = $request->correo;
             $user = User::where('email', $email)->first();
+            //dd($user);
             $codigo = substr(md5(uniqid()), 0, 6);
             $codigorecuperacion = new CodigosRecuperacion();
             $codigorecuperacion->codigo = $codigo;
@@ -161,6 +162,7 @@ class UserController extends Controller
             return view('auth.recupassword');
         }catch (\Exception $e) {
             session()->flash('error', 'El correo no existe');
+            return view('auth.recupassword');
         }
     }
     public function resetearpassword($idUser){
