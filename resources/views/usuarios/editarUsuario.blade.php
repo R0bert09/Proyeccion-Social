@@ -34,9 +34,9 @@
             </div>
             <div class="mb-4 row">
                 <div class="col-md-6">
-                    <label for="departamento" class="form-label">Sección/Departamento</label>
-                    <select name="departamento" class="form-select" id="departamento">
-                        <option value="" disabled selected>Seleccionar departamento</option>
+                    <label for="id_seccion" class="form-label">Sección/Departamento</label>
+                    <select name="id_seccion" class="form-select @error('departamento') is-invalid @enderror" id="id_seccion">
+                        <option selected>Seleccionar departamento</option>
                     @foreach($secciones as $seccion)
                         <option value="{{$seccion->id_seccion}}">{{$seccion->nombre_seccion}}</option>
                     @endforeach

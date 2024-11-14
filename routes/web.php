@@ -35,9 +35,8 @@ Route::post('/logout', function () {
     return redirect('/'); 
 })->middleware('auth')->name('logout');
 
-Route::get('/registro', function () {
-    return view('registro.registro');
-})->name('registro');
+Route::get('/registro', [UserController::class, 'allSeccionRegistro'])->name('registro');
+Route::post('/registro', [UserController::class, 'registro'])->name('usuarios.registro');
 
 Route::get('/proyecto-g', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Administrador', 'Coordinador', 'Tutor'])) {
@@ -97,6 +96,10 @@ Route::put('/usuarios/{id}/actualizar', [UserController::class, 'update'])->name
 Route::get('/usuarios', [UserController::class, 'list'])->name('usuarios');
 Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
 Route::delete('/usuarios/eliminar', [UserController::class, 'deleteSelected'])->name('usuarios.eliminar');
+Route::delete('/usuarios/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminarUsuario');
+Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('usuarios.buscar');
+
+
 
 Route::resource('permissions', PermissionController::class)->except(['show']);
 
