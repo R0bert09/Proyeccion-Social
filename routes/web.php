@@ -29,9 +29,8 @@ Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
 })->middleware('auth');
 
-Route::get('/registro', function () {
-    return view('registro.registro');
-})->name('registro');
+Route::get('/registro', [UserController::class, 'allSeccionRegistro'])->name('registro');
+Route::post('/registro', [UserController::class, 'registro'])->name('usuarios.registro');
 
 Route::get('/proyecto-g', function () {
     return view('proyecto.proyecto-general');
@@ -72,6 +71,10 @@ Route::put('/usuarios/{id}/actualizar', [UserController::class, 'update'])->name
 Route::get('/usuarios', [UserController::class, 'list'])->name('usuarios');
 Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
 Route::delete('/usuarios/eliminar', [UserController::class, 'deleteSelected'])->name('usuarios.eliminar');
+Route::delete('/usuarios/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminarUsuario');
+Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('usuarios.buscar');
+
+
 
 Route::resource('permissions', PermissionController::class)->except(['show']);
 
