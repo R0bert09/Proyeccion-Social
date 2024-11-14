@@ -35,8 +35,18 @@
 
 
         
-        <span class="rounded-circle text-white p-2 ms-2" style="background-color: #800000;">DU</span>
-    </div>
+        <a href="{{ route('perfilusuario') }}" class="text-decoration-none">
+    <span class="rounded-circle text-white p-2 ms-2" style="background-color: #800000; display: inline-block; transition: all 0.3s ease;">
+        {{ substr(Auth::user()->name ?? 'DU', 0, 2) }}
+    </span>
+</a>
+
+<style>
+    a:hover .rounded-circle {
+        background-color: #600000 !important;
+        transform: scale(1.1);
+    }
+</style>    </div>
 </nav>
 
     <div id="contenedor-principal" class="d-flex">
