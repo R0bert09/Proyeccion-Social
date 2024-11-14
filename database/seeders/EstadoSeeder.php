@@ -10,16 +10,14 @@ class EstadoSeeder extends Seeder
     public function run()
     {
         Estado::insert([
-            ['nombre_estado' => 'Pendiente'],
-            ['nombre_estado' => 'En Proceso'],
-            ['nombre_estado' => 'Completado'],
-            ['nombre_estado' => 'Cancelado'],
-            ['nombre_estado' => 'Rechazado'],
+            ['nombre_estado' => 'Disponible'],
+            ['nombre_estado' => 'Inscripción'],
+            ['nombre_estado' => 'Anteproyecto'],
+            ['nombre_estado' => 'Informe del 50%'],
+            ['nombre_estado' => 'finalizacion (Memoria)'],
             ['nombre_estado' => 'Aprobado'],
-            ['nombre_estado' => 'En Espera'],
-            ['nombre_estado' => 'Inactivo'],
-            ['nombre_estado' => 'Activo'],
-            ['nombre_estado' => 'Finalizado'],
+            ['nombre_estado' => 'Certificación'],
+            ['nombre_estado' => 'Rechazado'],
         ]);
     }
 }
