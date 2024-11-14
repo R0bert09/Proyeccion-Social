@@ -17,13 +17,17 @@
         <div class="card p-4 registro-card shadow">
             <h3 class="text-center mb-4 fw-bold">Registrarse</h3>
     
-            <form action="" method="POST">
+            <form action="{{ route('usuarios.registro') }}" method="POST">
                 @csrf
                 <div class="mb-3">
+                    <label for="correo" class="form-label">Nombre</label>
+                    <div class="input-group">
+                        <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror" id="nombre" placeholder="Nombre">
+                    </div>
                     <label for="correo" class="form-label">Correo Electrónico</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-envelope "></i></span>
-                        <input type="email" class="form-control" id="correo" name="correo" placeholder="example@ues.edu.sv" required>
+                        <input type="email" name="correo" class="form-control @error('correo') is-invalid @enderror" id="correo" placeholder="example@ues.edu.sv">
                     </div>
                 </div>
 
@@ -31,7 +35,7 @@
                 <label for="contrasena" class="form-label">Contraseña</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock icono-candado"></i></span>
-                    <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Contraseña" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
                     <button type="button" class="btn btn-outline-secondary" id="botonMostrarContrasena" data-campo="contrasena" data-icono="iconoMostrarContrasena">
                         <i class="bi bi-eye-slash" id="iconoMostrarContrasena"></i>
                     </button>
@@ -50,11 +54,16 @@
                     </div>
                 </div>
     
-                <div class="mb-3">
-                    <label for="departmento" class="form-label">Sección/Departamento</label>
-                    <select class="form-select" id="departmento" required>
-                        <option selected disabled>Seleccionar departamento</option>
-                    </select>
+                <div class="mb-4 row">
+                    <div class="col-md-8">
+                        <label for="id_seccion" class="form-label">Sección/Departamento</label>
+                        <select name="id_seccion" class="form-select @error('departamento') is-invalid @enderror" id="id_seccion">
+                            <option selected>Seleccionar departamento</option>
+                        @foreach($secciones as $seccion)
+                            <option value="{{$seccion->id_seccion}}">{{$seccion->nombre_seccion}}</option>
+                        @endforeach
+                        </select>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-dark w-100 btn-registrarse">Registrarse</button>
                 <div class="text-center mt-3 ">
@@ -65,7 +74,26 @@
         </div>
     </div>
     
+        <!-- validacion de errores -->
+        @if ($errors->any())
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div class="toast show align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/registro.js') }}"></script>
+    <script src="{{ asset('js/comprobarContrasenia.js') }}"></script>
 </body>
 </html>
