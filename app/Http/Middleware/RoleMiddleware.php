@@ -21,7 +21,7 @@ class RoleMiddleware
         }
 
         if (!auth()->user()->hasAnyRole($roles)) {
-            abort(403); // Prohibido
+            abort(403); 
         }
 
         return $next($request);
