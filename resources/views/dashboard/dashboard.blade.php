@@ -23,8 +23,8 @@
             <h2>23</h2>
         </div>
         <div class="informacion__asesores">
-            <h3>Asesore/Estudiantes</h3>
-            <p>Total de asesores</p>
+            <h3>Tutores</h3>
+            <p>Total de tutores</p>
             <h2>12</h2>
         </div>
     </div>
