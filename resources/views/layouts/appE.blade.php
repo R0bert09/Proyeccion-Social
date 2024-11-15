@@ -7,7 +7,7 @@
     <title>@yield('title', 'Dashboard')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/appE.css') }}">
     <link rel="stylesheet" href="{{ asset('css/user.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardStyle.css') }}">
     <link rel="stylesheet" href="{{ asset(path: 'css/mensaje.css')}}">
@@ -125,7 +125,6 @@
                             <i class="bi bi-briefcase me-2"></i> Proyectos
                         </a>
                     </li>
-                
             
                     <li class="nav-item text-muted mt-3">Mensajería</li>
                     <li class="nav-item">
@@ -154,7 +153,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/appE.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('js/graficos.js') }}"></script>
     <script src="{{asset(path:'js/mensaje.js') }}"></script>
