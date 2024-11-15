@@ -51,7 +51,7 @@
                     </a>
                 </li>
             
-               
+                @if(auth()->user()->hasRole('Administrador'))
                     <li class="nav-item text-muted">Usuarios</li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('crear') }}" onclick="establecerActivo(this)">
@@ -75,6 +75,7 @@
                         </a>
                     </li>
 
+                @elseif(auth()->user()->hasRole('Coordinador'))
 
                     <li class="nav-item text-muted">Usuarios</li>
                     <li class="nav-item">
@@ -94,13 +95,17 @@
                         </a>
                     </li>
 
+                @elseif(auth()->user()->hasRole('Tutor'))
+
                     <li class="nav-item text-muted">Usuarios</li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('usuarios') }}" onclick="establecerActivo(this)">
                             <i class="bi bi-person me-2"></i> Usuarios
                         </a>
                     </li>
+                @endif
             
+                @if(auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador']))
                     <li class="nav-item text-muted mt-3">Proyectos</li>
                     
                     <li class="nav-item">
@@ -109,6 +114,7 @@
                         </a>
                     </li>
             
+                    @if(auth()->user()->hasAnyRole(['Coordinador', 'Administrador']))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('proyecto-disponible') }}" onclick="establecerActivo(this)">
                                 <i class="bi bi-person me-2"></i> Proyectos Disponibles
@@ -119,20 +125,23 @@
                                 <i class="bi bi-folder-check me-2"></i> Gestión de Proyectos
                             </a>
                         </li>
+                    @endif
             
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('proyecto-g') }}" onclick="establecerActivo(this)">
                             <i class="bi bi-briefcase me-2"></i> Proyectos
                         </a>
                     </li>
-                
+                @endif
             
+                @if(auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador']))
                     <li class="nav-item text-muted mt-3">Mensajería</li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('mensajeria') }}" onclick="establecerActivo(this)">
                             <i class="bi bi-chat me-2"></i> Mensajes
                         </a>
                     </li>
+                @endif
 
                 <li class="nav-item mt-3">
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
