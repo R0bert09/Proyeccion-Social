@@ -25,6 +25,10 @@ Route::get('/', function () {
     return view('login.login');
 })->name('login');
 
+Route::get('/est', function () {
+    return view('estudiantes.dashboard');
+});
+
 Route::post('/', [UserController::class, 'login'])->name('login.process');
 
 Route::get('/dashboard', function () {
