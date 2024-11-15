@@ -14,16 +14,22 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next ,string $rol): Response
     {
-        if (!Auth::check()) {
-            return redirect('login');
+        // Verificamos si el parámetro $role ha sido pasado
+        if ($rol == null) {
+            return redirect()->route('home')->with('error', 'Rol no especificado.');
         }
 
-        if (!auth()->user()->hasAnyRole($roles)) {
-            abort(403); 
+        //Obtenemos el usuario autenticado
+        $user = auth()->user();
+
+        // Verificamos si el usuario está autenticado y si tiene el rol necesario
+        if (!$user || !$user->hasRole($rol)) {
+            return redirect()->route('home')->with('error', 'No tienes permisos para acceder a esta página.');
         }
 
+        // Si todo está bien, dejamos pasar la solicitud
         return $next($request);
     }
 }
