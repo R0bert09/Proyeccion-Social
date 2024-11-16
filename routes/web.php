@@ -24,6 +24,14 @@ Route::get('/', function () {
     return view('login.login');
 })->name('login');
 
+Route::get('/est', function () {
+    return view('estudiantes.dashboard');
+})->name('estu');
+
+Route::get('/pry', function () {
+    return view('estudiantes.proyecto-disponibles');
+})->name('pryt');
+
 Route::post('/', [UserController::class, 'login'])->name('login.process');
 
 Route::get('/dashboard', function () {
