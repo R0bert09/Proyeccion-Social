@@ -255,7 +255,11 @@ Route::controller(ProyectosDocumentosController::class)
     Route::delete('/layouts/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
     Route::put('/layouts/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
 
-    Route::get('/perfil_usuario', function () {
+    Route::get('/perfil_usuario', [UserController::class, 'mostrarPerfil'], function () {
         return view('usuarios.perfilUsuario');
     })->name('perfil_usuario');
+
+    Route::put('/perfil_usuario/{id}', [UserController::class, 'updateusuario'])->name('update_usuario');
+
+    Route::put('/perfil_usuario', [UserController::class, 'updatepassperfil'])->name('update_password');
 ?>

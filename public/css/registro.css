@@ -36,3 +36,81 @@
 .w-40 {
     width: 40%;
 }
+
+    .btn-custom {
+        background-color: #660000;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #8b0000; /* Rojo vino */
+        transform: scale(1.05); /* Efecto de crecimiento al hacer hover */
+    }
+
+    .btn-custom:active {
+        transform: scale(0.98); /* Efecto al presionar el botón */
+    }
+
+    .btn-custom:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.4);
+    }
+
+    .toast {
+        opacity: 1 !important;
+        animation: fadeInRight 0.5s;
+    }
+
+    .toast-container {
+        z-index: 1051;
+    }
+
+    .toast-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .toast-body {
+        padding: 1rem;
+        background-color: white;
+    }
+
+    @keyframes fadeInRight {
+        from {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeOutRight {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+    }
+
+    /* Estilos para dispositivos móviles */
+    @media (max-width: 576px) {
+        .toast-container {
+            width: 100%;
+            padding: 1rem;
+        }
+        
+        .toast {
+            width: 100%;
+            max-width: none;
+        }
+    }

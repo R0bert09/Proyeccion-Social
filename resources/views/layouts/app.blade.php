@@ -34,20 +34,14 @@
             <span class="badge">4</span>
         </div>      
 
-
-        
-        <a href="{{ route('perfilusuario') }}" class="text-decoration-none">
-    <span class="rounded-circle text-white p-2 ms-2" style="background-color: #800000; display: inline-block; transition: all 0.3s ease;">
+        <a href="{{ route('perfil_usuario') }}" class="text-decoration-none">
+    <span class="rounded-circle text-white d-flex align-items-center justify-content-center" 
+          style="background-color: #800000; width: 40px; height: 40px; border-radius: 50%; transition: all 0.3s ease;">
         {{ substr(Auth::user()->name ?? 'DU', 0, 2) }}
     </span>
 </a>
 
-<style>
-    a:hover .rounded-circle {
-        background-color: #600000 !important;
-        transform: scale(1.1);
-    }
-</style>    </div>
+</div>
 </nav>
 
     <div id="contenedor-principal" class="d-flex">
@@ -179,5 +173,6 @@
     <script src="{{asset(path:'js/mensaje.js') }}"></script>
     <script src="{{ asset('js/showPassword.js') }}"></script>
     <script src="{{ asset('js/busqueda.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
