@@ -34,21 +34,6 @@
 
                 <div class="mb-5">
                     <label for="descripcion" class="form-label">Descripción del proyecto</label>
-                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-                        <div class="btn-toolbar flex-wrap">
-                            <button type="button" class="btn btn-light btn-sm me-1"><strong>B</strong></button>
-                            <button type="button" class="btn btn-light btn-sm me-1"><em>I</em></button>
-                            <button type="button" class="btn btn-light btn-sm me-1"><u>U</u></button>
-                            <button type="button" class="btn btn-light btn-sm me-3"><i class="bi bi-link-45deg"></i></button>
-                            <button type="button" class="btn btn-light btn-sm me-1"><i class="bi bi-code-slash"></i></button>
-                            <button type="button" class="btn btn-light btn-sm me-1"><i class="bi bi-list-ul"></i></button>
-                            <button type="button" class="btn btn-light btn-sm ms-3"><i class="bi bi-image"></i></button>
-                        </div>
-                        <div class="d-flex">
-                            <small class="fw-bold text-dark me-2">Edit</small>
-                            <small class="text-muted">Preview</small>
-                        </div>
-                    </div>
                     <textarea class="form-control" id="descripcion" rows="4" placeholder="Descripción del proyecto"></textarea>
                 </div>
 
@@ -72,4 +57,17 @@
         </div>
     </div>
 </div>
+
+<!-- Scripts de CKEditor -->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#descripcion'), {
+            toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'],
+            language: 'es'
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 @endsection
