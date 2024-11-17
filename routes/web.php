@@ -24,11 +24,22 @@ Route::get('/', function () {
     return view('login.login');
 })->name('login');
 
+//prueba
+// Ruta para el dashboard de estudiantes
+Route::get('/est', function () {
+    return view('estudiantes.dashboard'); // Especifica la ruta a la vista
+});
+
+Route::get('/publi', function () {
+    return view('estudiantes.publicar-proyecto'); // Especifica la ruta a la vista
+});
+
 Route::post('/', [UserController::class, 'login'])->name('login.process');
 
 Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
 })->middleware('auth')->name('dashboard');
+
 
 Route::post('/logout', function () {
     auth()->logout();
@@ -257,7 +268,12 @@ Route::controller(ProyectosDocumentosController::class)
     Route::delete('/layouts/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
     Route::put('/layouts/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
 
+    Route::get('/perfil_usuario', [UserController::class, 'mostrarPerfil'], function () {
+        return view('usuarios.perfilUsuario');
+    })->name('perfil_usuario');
 
+    Route::put('/perfil_usuario/{id}', [UserController::class, 'updateusuario'])->name('update_usuario');
 
+    Route::put('/perfil_usuario', [UserController::class, 'updatepassperfil'])->name('update_password');
 ?>
 
