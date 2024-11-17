@@ -36,7 +36,7 @@ class Proyecto extends Model
             'nombre_proyecto' => 'required|string|max:255',
             'descripcion_proyecto' => 'required|string',
             'horas_requeridas' => 'required|integer',
-            'estado' => 'required|string',
+            'estado' => 'required|exist:estados,id_estado',
             'periodo' => 'required|string|max:255',
             'lugar' => 'required|string|max:255',
             'coordinador' => 'required|exists:users,id_usuario',

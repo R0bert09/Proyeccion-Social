@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->text('nombre_proyecto');
             $table->text('descripcion_proyecto');
             $table->integer('horas_requeridas');
-            $table->text('estado');
+            $table->foreignId('estado')->constrained('estados', 'id_estado')->onDelete('cascade');
             $table->text('periodo');
             $table->text('lugar');
             $table->foreignId('coordinador')->constrained('users', 'id_usuario')->onDelete('cascade');
