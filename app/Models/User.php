@@ -9,7 +9,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class User extends Authenticatable Implements JWTSubject 
+class User extends Authenticatable implements JWTSubject
 {
     use HasRoles;
     use Notifiable;
@@ -21,7 +21,7 @@ class User extends Authenticatable Implements JWTSubject
         'email',
         'password',
     ];
-    
+
     public function seccionesCoordinadas()
     {
         return $this->hasMany(Seccion::class, 'id_coordinador');
@@ -86,11 +86,17 @@ class User extends Authenticatable Implements JWTSubject
     }
 
     public function scopeAdministradoresPorSeccion(Builder $query)
-{
-    return $query->role('administrador')
-        ->select('users.*')
-        ->orderBy('users.name');
-}
+    {
+        return $query->role('administrador')
+            ->select('users.*')
+            ->orderBy('users.name');
+    }
+
+    //Obtener roles de cada usuario segun su id
+    public static function rolesPorUsuario($id)
+    {
+        return self::find($id)->getRoleNames();
+    }
 
     public static function UsuariosPorSeccion()
     {

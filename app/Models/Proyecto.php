@@ -28,6 +28,7 @@ class Proyecto extends Model
         'fecha_fin',
     ];
 
+
     protected $with = ['estado', 'coordinador'];
 
     private static $rules = [
@@ -38,12 +39,11 @@ class Proyecto extends Model
         'periodo' => 'required|string|max:255',
         'lugar' => 'required|string|max:255',
         'coordinador' => 'required|exists:users,id_usuario',
-        'tutor' => 'required|exists:users,id_usuario',
+        'tutor' => 'nullable|exists:users,id_usuario', 
         'fecha_inicio' => 'required|date',
         'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
     ];
 
-    // Relaciones
     public function estado()
     {
         return $this->belongsTo(Estado::class, 'estado', 'id_estado');
@@ -56,7 +56,9 @@ class Proyecto extends Model
 
     public function tutor()
     {
-        return $this->belongsTo(User::class, 'tutor', 'id_usuario');
+        return $this->belongsTo(User::class, 'tutor', 'id_usuario')->withDefault([
+            'nombre' => 'Sin tutor asignado'
+        ]);
     }
 
     public function scopePorEstado(Builder $query, $estadoId)
@@ -74,9 +76,19 @@ class Proyecto extends Model
         return $query->where('periodo', $periodo);
     }
 
-    public function scopeVigentes(Builder $query)
+    public function scopeActivos(Builder $query)
     {
         return $query->whereDate('fecha_fin', '>=', now());
+    }
+
+    public function scopeConTutor(Builder $query)
+    {
+        return $query->whereNotNull('tutor');
+    }
+
+    public function scopeSinTutor(Builder $query)
+    {
+        return $query->whereNull('tutor');
     }
 
     public static function crearProyecto(array $data)
@@ -91,6 +103,24 @@ class Proyecto extends Model
         $validatedData = self::validarDatos($data);
         $proyecto->update($validatedData);
         return $proyecto->fresh();
+    }
+
+    public function asignarTutor($tutorId)
+    {
+        if ($tutorId) {
+            Validator::make(['tutor' => $tutorId], [
+                'tutor' => 'exists:users,id_usuario'
+            ])->validate();
+        }
+        
+        $this->update(['tutor' => $tutorId]);
+        return $this->fresh();
+    }
+
+    public function removerTutor()
+    {
+        $this->update(['tutor' => null]);
+        return $this->fresh();
     }
 
     public static function obtenerPorId($id)
@@ -132,6 +162,11 @@ class Proyecto extends Model
     public function estaActivo(): bool
     {
         return $this->fecha_fin >= now();
+    }
+
+    public function tieneTutor(): bool
+    {
+        return !is_null($this->tutor);
     }
 
     public function getDuracionEnDias(): int
