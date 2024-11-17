@@ -275,5 +275,9 @@ Route::controller(ProyectosDocumentosController::class)
     Route::get('/pry', function () {
         return view('estudiantes.publicar-proyecto');
     });
+
+    Route::get('/est', function () {
+        return view('estudiantes.dashboard');
+    });
 ?>
 
