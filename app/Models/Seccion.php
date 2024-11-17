@@ -19,6 +19,7 @@ class Seccion extends Model
      */
     public function departamento() 
     {
-        return $this->belongsTo(Departamento::class, 'id_departamento', 'id'); 
+        return $this->belongsTo(Departamento::class, 'departamento_id', 'id_departamento');
+
     }
 }

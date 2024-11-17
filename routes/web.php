@@ -52,6 +52,8 @@ Route::get('/proyecto', function () {
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto');
 
+Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
+
 Route::get('/mensajeria', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
         return view('mensaje.mensaje');
@@ -146,6 +148,9 @@ Route::controller(ProyectoController::class)
         Route::get('/{id}', 'show')->name('show');        
         Route::put('/{id}', 'update')->name('update');    
         Route::delete('/{id}', 'destroy')->name('destroy'); 
+        Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
+        Route::get('/proyectos_disponibles', 'index')->name('disponibles'); // Proyectos disponibles
+        Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
     });
 
 // Rutas de recuperación y reseteo de contraseña

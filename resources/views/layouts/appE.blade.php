@@ -110,7 +110,7 @@
                     </li>
             
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('proyecto-disponible') }}" onclick="establecerActivo(this)">
+                            <a class="nav-link" href="{{ route('proyectos.proyectos_disponibles') }}" onclick="establecerActivo(this)">
                                 <i class="bi bi-person me-2"></i> Proyectos Disponibles
                             </a>
                         </li>

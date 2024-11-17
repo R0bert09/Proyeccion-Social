@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Estado;
 use App\Models\User;
 
-
-
 class Proyecto extends Model
 {
     use HasFactory;
@@ -19,11 +17,21 @@ class Proyecto extends Model
     protected $fillable =
     [
         'nombre_proyecto',
-        'estado',
-        'periodo',
+        'descripcion_proyecto',
+        'horas_requeridas',
         'lugar',
-        'coordinador'
     ];
+
+    /*public function seccion()
+    {
+        return $this->belongsTo(Seccion::class, 'seccion', 'id_seccion');
+    }*/
+    // En el modelo Proyecto
+    public function seccion()
+    {
+        return $this->belongsTo(Seccion::class, 'seccion_id', 'id_seccion');
+
+    }
 
     //create
     public static function crearProyecto($data)
