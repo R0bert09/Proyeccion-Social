@@ -2,13 +2,28 @@
 @section('title', 'Publicar Proyecto')
 @section('content')
 <div class="container mt-4">
-    <!-- Mostrar el mensaje de éxito si existe -->
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
-<div class="container mt-4">
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <h2 class="mb-4">Publicar nuevo proyecto de horas sociales</h2>
     <div class="card shadow-sm">
         <div class="card-body">
@@ -16,43 +31,50 @@
                 @csrf
                 <div class="mb-3">
                     <label for="titulo" class="form-label">Título del proyecto</label>
-                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título del proyecto" required>
+                    <input type="text" class="form-control" id="titulo" name="titulo" 
+                           value="{{ old('titulo') }}" required>
                 </div>
                
                 <div class="mb-3">
                     <label for="descripcion" class="form-label">Descripción del proyecto</label>
-                    <textarea id="descripcion" name="descripcion">{{ old('descripcion') }}</textarea>
+                    <textarea class="form-control" id="descripcion" name="descripcion">{{ old('descripcion') }}</textarea>
                 </div>
                
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="horas" class="form-label">Horas Requeridas</label>
-                        <input type="number" class="form-control" id="horas" name="horas" placeholder="Horas Requeridas" required>
+                        <input type="number" class="form-control" id="horas" name="horas" 
+                               value="{{ old('horas') }}" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="ubicacion" class="form-label">Ubicación</label>
-                        <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Ubicación" required>
+                        <input type="text" class="form-control" id="ubicacion" name="ubicacion" 
+                               value="{{ old('ubicacion') }}" required>
                     </div>
+                </div>
+                
+                <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="fecha_inicio" class="form-label">Fecha inicio</label>
-                        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" placeholder="fecha inicio" required>
+                        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" 
+                               value="{{ old('fecha_inicio') }}" required>
                     </div>
-
                     <div class="col-md-6 mb-3">
                         <label for="fecha_fin" class="form-label">Fecha fin</label>
-                        <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" placeholder="fecha fin" required>
+                        <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" 
+                               value="{{ old('fecha_fin') }}" required>
                     </div>
                 </div>
                
-                
-               
-                <button type="submit" class="btn btn-publicar w-100" style="background-color: #800000; color: white;">Publicar Proyecto</button>
+                <button type="submit" class="btn btn-publicar w-100" 
+                        style="background-color: #800000; color: white;">
+                    Publicar Proyecto
+                </button>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Scripts de CKEditor -->
 <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 <script>
     ClassicEditor

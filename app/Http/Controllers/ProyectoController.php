@@ -26,62 +26,40 @@ class ProyectoController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'descripcion' => 'required|string',
-            'horas' => 'required|integer|min:1',
-            'ubicacion' => 'required|string|max:255',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
-        ]);
+        // Validar los datos del formulario
+    $validatedData = $request->validate([
+        'titulo' => 'required|string|max:255',
+        'descripcion' => 'required|string',
+        'horas' => 'required|integer|min:1',
+        'ubicacion' => 'required|string|max:255',
+        'fecha_inicio' => 'required|date',
+        'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+    ]);
 
-        $user = auth()->user(); 
-        $roles = auth()->user()->getRoleNames();
-        $coordinadorId = null;
+    try {
+        // Crear el nuevo proyecto
+        $proyecto = new Proyecto();
+        $proyecto->nombre_proyecto = $validatedData['titulo'];
+        $proyecto->descripcion_proyecto = $validatedData['descripcion'];
+        $proyecto->horas_requeridas = $validatedData['horas'];
+        $proyecto->lugar = $validatedData['ubicacion'];
+        $proyecto->fecha_inicio = $validatedData['fecha_inicio'];
+        $proyecto->fecha_fin = $validatedData['fecha_fin'];
+        $proyecto->estado = 1; // Estado inicial
+        $proyecto->periodo = now()->format('Y-m');
+        $proyecto->coordinador = auth()->id();
+        $proyecto->tutor = null; // Agregamos esta línea para establecer el tutor como null inicialmente
+        
+        $proyecto->save();
 
-        if ($roles->contains('estudiante')) {
-            $seccionEstudiante = $user->seccion;
-            if (!$seccionEstudiante) {
-                return back()
-                    ->withInput()
-                    ->with('error', 'No se encontró una sección asignada para el estudiante.');
-            }
+        return redirect()->back()->with('success', 'Proyecto creado exitosamente');
 
-            $coordinadorId = $seccionEstudiante->id_coordinador;
-            if (!$coordinadorId) {
-                return back()
-                    ->withInput()
-                    ->with('error', 'La sección no tiene un coordinador asignado.');
-            }
-        } elseif ($roles->contains('coordinador')) {
-            $coordinadorId = $user->id;
-        } else {
-            return back()
-                ->withInput()
-                ->with('error', 'No tienes los permisos necesarios para crear proyectos.');
-        }
-
-        try {
-            $proyecto = Proyecto::create([
-                'nombre_proyecto' => $data['titulo'],
-                'descripcion' => $data['descripcion'],
-                'estado' => 9,
-                'periodo' => now()->format('Y-m'),
-                'lugar' => $data['ubicacion'],
-                'coordinador' => $coordinadorId,
-                'horas_requeridas' => $data['horas'],
-                'fecha_inicio' => $data['fecha_inicio'],
-                'fecha_fin' => $data['fecha_fin'],
-            ]);
-
-            return redirect()->route('proyectos.index')
-                ->with('success', 'Proyecto publicado exitosamente');
-
-        } catch (\Exception $e) {
-            return back()
-                ->withInput()
-                ->with('error', 'Ocurrió un error al crear el proyecto. Por favor, intenta nuevamente.');
-        }
+    } catch (\Exception $e) {
+        \Log::error('Error al crear proyecto: ' . $e->getMessage());
+        return redirect()->back()
+            ->withInput()
+            ->with('error', 'Error al crear el proyecto. Por favor intente nuevamente.');
+    }
     }
 
     public function show(string $id)

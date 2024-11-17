@@ -4,10 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
+return new class extends Migration
+{
     public function up()
     {
         Schema::create('proyectos', function (Blueprint $table) {
@@ -19,14 +17,14 @@ return new class extends Migration {
             $table->text('periodo');
             $table->text('lugar');
             $table->foreignId('coordinador')->constrained('users', 'id_usuario')->onDelete('cascade');
-            $table->foreignId('tutor')->constrained('users', 'id_usuario')->onDelete('cascade');            
+            $table->foreignId('tutor')->nullable()->constrained('users', 'id_usuario')->onDelete('cascade');
             $table->date('fecha_inicio');
-            $table->date('fecha_fin'); 
+            $table->date('fecha_fin');
             $table->timestamps();
         });
     }
 
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('proyectos');
     }
