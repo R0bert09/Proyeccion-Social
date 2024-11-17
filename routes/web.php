@@ -263,3 +263,4 @@ Route::controller(ProyectosDocumentosController::class)
 
     Route::put('/perfil_usuario', [UserController::class, 'updatepassperfil'])->name('update_password');
 ?>
+

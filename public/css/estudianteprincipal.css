@@ -1,0 +1,205 @@
+.tarjeta-proceso {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border: none;
+}
+
+.titulo-proceso {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.descripcion-proceso {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.circulo-paso {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    line-height: 2.5rem;
+    text-align: center;
+    border-radius: 50%;
+    color: #800000;
+    background-color: #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-carrusel {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.titulo-proyectos {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    padding-left: 1rem;
+}
+
+.carrusel {
+    display: flex;
+    overflow: hidden;
+    gap: 1.5rem;
+    width: 70%;
+    margin: auto;
+}
+
+.tarjeta-proyecto {
+    flex-shrink: 0;
+    width: calc(50% - 1rem);
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    background-color: #fff;
+    text-align: left;
+    transition: transform 0.2s;
+}
+
+.tarjeta-proyecto:hover {
+    transform: translateY(-5px);
+}
+
+.estado-boton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.estado-disponible {
+    background-color: #64d84d;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.estado-no-disponible {
+    background-color: #dd3d38;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.ver-mas {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.ver-mas:hover {
+    text-decoration: underline;
+}
+
+.boton-carrusel {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    color: #000;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.3s;
+}
+
+.boton-carrusel:hover {
+    color: #6c757d;
+}
+
+.flecha-carrusel {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.contenedor-documentos {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    margin: auto;
+}
+
+.titulo-documentos {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.descripcion-documentos {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.lista-documentos {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+}
+
+.item-documento {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.item-documento:hover {
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.enlace-documento {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.icono-documento {
+    font-size: 1.2rem;
+    color: #007bff;
+    margin-right: 1rem;
+}
+
+.texto-documento {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #000;
+    flex: 1;
+}
+
+.ver-mas-documentos {
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #6c757d;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+    margin-top: 1rem;
+    margin-right: 0;
+    padding-right: 1rem;
+}
+
+.ver-mas-documentos:hover {
+    text-decoration: underline;
+}

@@ -18,7 +18,8 @@ return new class extends Migration {
             $table->text('estado');
             $table->text('periodo');
             $table->text('lugar');
-            $table->foreignId('coordinador')->constrained('users', 'id_usuario');            
+            $table->foreignId('coordinador')->constrained('users', 'id_usuario')->onDelete('cascade');
+            $table->foreignId('tutor')->constrained('users', 'id_usuario')->onDelete('cascade');            
             $table->date('fecha_inicio');
             $table->date('fecha_fin'); 
             $table->timestamps();

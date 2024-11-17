@@ -19,6 +19,7 @@ use Carbon\Carbon;
                 'periodo' => '2024-1',
                 'lugar' => 'Parque Nacional Los Volcanes',
                 'coordinador' => 1, // Asegúrate que este ID exista en la tabla users
+                'tutor'=> 4,
                 'fecha_inicio' => '2024-01-15',
                 'fecha_fin' => '2024-06-15',
                 'created_at' => Carbon::now(),
@@ -31,7 +32,8 @@ use Carbon\Carbon;
                 'estado' => 'activo',
                 'periodo' => '2024-1',
                 'lugar' => 'Centro Comunitario San Miguel',
-                'coordinador' => 2, // Asegúrate que este ID exista en la tabla users
+                'coordinador' => 2, 
+                'tutor'=> 4,
                 'fecha_inicio' => '2024-02-01',
                 'fecha_fin' => '2024-05-30',
                 'created_at' => Carbon::now(),
@@ -44,7 +46,8 @@ use Carbon\Carbon;
                 'estado' => 'planificado',
                 'periodo' => '2024-2',
                 'lugar' => 'Comunidad El Progreso',
-                'coordinador' => 1, // Asegúrate que este ID exista en la tabla users
+                'coordinador' => 1, 
+                'tutor'=> 4,
                 'fecha_inicio' => '2024-07-01',
                 'fecha_fin' => '2024-12-15',
                 'created_at' => Carbon::now(),
