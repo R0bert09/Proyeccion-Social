@@ -1,13 +1,15 @@
 <?php
 namespace App\Http\Controllers;
 
+
 use App\Models\Proyecto;
+use App\Models\Seccion;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Departamento;
-use App\Models\Seccion;
+
 class ProyectoController extends Controller
 {
     public function index()
@@ -24,32 +26,28 @@ class ProyectoController extends Controller
 
     public function store(Request $request)
     {
-        // Validar los datos del formulario
-        $validatedData = $request->validate([
-            'nombre_proyecto' => 'required|string|max:255',
+        $data = $request->validate([
+            'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'horas' => 'required|integer|min:1',
-            'lugar' => 'required|string|max:255',
-            'seccion_id' => 'required|exists:secciones,id_seccion', // Sección válida
+            'ubicacion' => 'required|string|max:255',
+            'departamento' => 'required|exists:departamentos,id_departamento',
         ]);
-
-        // Crear el proyecto con los datos básicos
-        $proyecto = new Proyecto();
-        $proyecto->nombre_proyecto = $validatedData['nombre_proyecto'];
-        $proyecto->descripcion_proyecto = $validatedData['descripcion'];
-        $proyecto->horas_requeridas = $validatedData['horas'];
-        $proyecto->lugar = $validatedData['lugar'];
-        $proyecto->seccion_id = $validatedData['seccion_id']; // Relacionar sección
-
-        // Guardar el proyecto
-        $proyecto->save();
-
-        return redirect()
-            ->route('proyectos.publiccar-proyecto')
-            ->with('success', 'Proyecto creado exitosamente.');
-        }
-
     
+        $proyecto = Proyecto::create([
+            'nombre_proyecto' => $data['titulo'],
+            'descripcion' => $data['descripcion'],
+            'estado' => 1,
+            'periodo' => now()->format('Y-m'),
+            'lugar' => $data['ubicacion'],
+            'coordinador' => auth()->id(), 
+            'horas' => $data['horas'],
+            'departamento' => $data['departamento']
+        ]);
+    
+        return redirect()->route('proyectos.index')
+            ->with('success', 'Proyecto publicado exitosamente');
+    }
 
     public function show(string $id)
     {
@@ -191,7 +189,6 @@ class ProyectoController extends Controller
     {
         $departamentos = Departamento::all();
         $secciones = Seccion::all();
-        $secciones = Seccion::with('departamento')->get(); // Cargar relaciones necesarias
         return view("proyecto.publicar-proyecto", compact('departamentos', 'secciones'));
         
     }

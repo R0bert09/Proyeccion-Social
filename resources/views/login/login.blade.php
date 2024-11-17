@@ -10,13 +10,6 @@
 </head>
 <body class="bg-light">
 
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="card p-4 shadow login-card">
         <h3 class="text-center mb-4 fw-bold">Iniciar sesión</h3>
@@ -30,6 +23,12 @@
                 </div>
             @endif
     
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
 
             <div class="mb-3">
                 <label for="correo" class="form-label">Correo Electrónico</label>
