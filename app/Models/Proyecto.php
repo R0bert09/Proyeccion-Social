@@ -22,7 +22,11 @@ class Proyecto extends Model
         'estado',
         'periodo',
         'lugar',
-        'coordinador'
+        'coordinador',
+        'descripcion',  
+        'horas',        
+        'ubicacion',    
+        'departamento'  
     ];
 
     //create

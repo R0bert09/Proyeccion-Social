@@ -1,11 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
+
 use App\Models\Proyecto;
+use App\Models\Seccion;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Departamento;
 
 class ProyectoController extends Controller
 {
@@ -23,15 +26,26 @@ class ProyectoController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nombre_proyecto' => 'required|string|max:255',
-            'estado' => 'required|integer',
-            'periodo' => 'required|string|max:255',
-            'lugar' => 'required|string|max:255',
-            'coordinador' => 'required|integer',
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'horas' => 'required|integer|min:1',
+            'ubicacion' => 'required|string|max:255',
+            'departamento' => 'required|exists:departamentos,id_departamento',
         ]);
-
-        Proyecto::create($data);
-        return redirect()->route('proyectos.index')->with('success', 'Proyecto creado con éxito');
+    
+        $proyecto = Proyecto::create([
+            'nombre_proyecto' => $data['titulo'],
+            'descripcion' => $data['descripcion'],
+            'estado' => 1,
+            'periodo' => now()->format('Y-m'),
+            'lugar' => $data['ubicacion'],
+            'coordinador' => auth()->id(), 
+            'horas' => $data['horas'],
+            'departamento' => $data['departamento']
+        ]);
+    
+        return redirect()->route('proyectos.index')
+            ->with('success', 'Proyecto publicado exitosamente');
     }
 
     public function show(string $id)
@@ -168,6 +182,14 @@ class ProyectoController extends Controller
     {
         $proyectos = Proyecto::where('estado', 1)->get(); // 1 = Disponible 
         return view('proyecto.proyecto-disponible', compact('proyectos')); 
+    }
+
+    public function retornar_departamentos()
+    {
+        $departamentos = Departamento::all();
+        $secciones = Seccion::all();
+        return view("proyecto.publicar-proyecto", compact('departamentos', 'secciones'));
+        
     }
 }
 
