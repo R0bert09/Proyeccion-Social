@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Estado;
-use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class Proyecto extends Model
 {
     use HasFactory;
-    protected $table = 'proyectos';
-    protected $primaryKey= 'id_proyecto';
 
+    protected $table = 'proyectos';
+    protected $primaryKey = 'id_proyecto';
 
     protected $fillable = [
         'nombre_proyecto',
@@ -27,61 +28,121 @@ class Proyecto extends Model
         'fecha_fin',
     ];
 
-    //create
-    public static function crearProyecto($data)
-    {
-        $validarCampos = validator($data, [
-            'nombre_proyecto' => 'required|string|max:255',
-            'descripcion_proyecto' => 'required|string',
-            'horas_requeridas' => 'required|integer',
-            'estado' => 'required|exist:estados,id_estado',
-            'periodo' => 'required|string|max:255',
-            'lugar' => 'required|string|max:255',
-            'coordinador' => 'required|exists:users,id_usuario',
-            'tutor' => 'required|exists:users,id_usuario',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
-        ])->validate();
+    protected $with = ['estado', 'coordinador'];
 
-        return self::create($validarCampos);
-    }
+    private static $rules = [
+        'nombre_proyecto' => 'required|string|max:255',
+        'descripcion_proyecto' => 'required|string',
+        'horas_requeridas' => 'required|integer',
+        'estado' => 'required|exists:estados,id_estado',
+        'periodo' => 'required|string|max:255',
+        'lugar' => 'required|string|max:255',
+        'coordinador' => 'required|exists:users,id_usuario',
+        'tutor' => 'required|exists:users,id_usuario',
+        'fecha_inicio' => 'required|date',
+        'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+    ];
 
-    //Relaciones a tabla estado y usuario
+    // Relaciones
     public function estado()
     {
-        return $this->belongsTo(Estado::class);
-    }
-
-    public static function AsignarFeechas($data)
-    {
-        return self::create($data);
+        return $this->belongsTo(Estado::class, 'estado', 'id_estado');
     }
 
     public function coordinador()
     {
-
-        return $this->belongsTo(user::class);
+        return $this->belongsTo(User::class, 'coordinador', 'id_usuario');
     }
 
-    //gets
-    public function getProyecto_porId($id)
+    public function tutor()
     {
-        return self::with('estado', 'coordinador')->find($id);
+        return $this->belongsTo(User::class, 'tutor', 'id_usuario');
     }
-    public function getProyecto_porNombre_estudiante($nombre_estudiante)
+
+    public function scopePorEstado(Builder $query, $estadoId)
     {
-        return self::with('estado', 'coordinador')->where('nombre_proyecto', $nombre_estudiante)->first();
+        return $query->where('estado', $estadoId);
     }
-    public function getProyectos_porEstado($estadoId)
+
+    public function scopePorCoordinador(Builder $query, $coordinadorId)
     {
-        return self::with('estado', 'coordinador')->where('estado', $estadoId)->get();
+        return $query->where('coordinador', $coordinadorId);
     }
-    public function getProyectos_porCoordinador($coordinadorId)
+
+    public function scopePorPeriodo(Builder $query, $periodo)
     {
-        return self::with('estado', 'coordinador')->where('coordinador', $coordinadorId)->get();
+        return $query->where('periodo', $periodo);
     }
-    public function getProyectos_porPeriodo($periodo)
+
+    public function scopeVigentes(Builder $query)
     {
-        return self::with('estado', 'coordinador')->where('periodo', $periodo)->get();
+        return $query->whereDate('fecha_fin', '>=', now());
+    }
+
+    public static function crearProyecto(array $data)
+    {
+        $validatedData = self::validarDatos($data);
+        return self::create($validatedData);
+    }
+
+    public static function actualizarProyecto($id, array $data)
+    {
+        $proyecto = self::findOrFail($id);
+        $validatedData = self::validarDatos($data);
+        $proyecto->update($validatedData);
+        return $proyecto->fresh();
+    }
+
+    public static function obtenerPorId($id)
+    {
+        return self::findOrFail($id);
+    }
+
+    public static function obtenerPorNombreEstudiante($nombre)
+    {
+        return self::where('nombre_proyecto', 'LIKE', "%{$nombre}%")->first();
+    }
+
+    public static function listarPorEstado($estadoId)
+    {
+        return self::porEstado($estadoId)->get();
+    }
+
+    public static function listarPorCoordinador($coordinadorId)
+    {
+        return self::porCoordinador($coordinadorId)->get();
+    }
+
+    public static function listarPorPeriodo($periodo)
+    {
+        return self::porPeriodo($periodo)->get();
+    }
+
+    private static function validarDatos(array $data)
+    {
+        $validator = Validator::make($data, self::$rules);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
+        return $validator->validated();
+    }
+
+    public function estaActivo(): bool
+    {
+        return $this->fecha_fin >= now();
+    }
+
+    public function getDuracionEnDias(): int
+    {
+        return now()->parse($this->fecha_inicio)->diffInDays($this->fecha_fin);
+    }
+
+    public function getProgresoEnPorcentaje(): float
+    {
+        $totalDias = $this->getDuracionEnDias();
+        $diasTranscurridos = now()->parse($this->fecha_inicio)->diffInDays(now());
+        return min(100, ($diasTranscurridos / $totalDias) * 100);
     }
 }
