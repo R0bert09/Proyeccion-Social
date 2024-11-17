@@ -52,6 +52,8 @@ Route::get('/proyecto', function () {
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto');
 
+Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
+
 Route::get('/mensajeria', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
         return view('mensaje.mensaje');
@@ -254,6 +256,8 @@ Route::controller(ProyectosDocumentosController::class)
     Route::post('/layouts/roles/store', [RoleController::class, 'store'])->name('roles.store');
     Route::delete('/layouts/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
     Route::put('/layouts/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+
+
 
 ?>
 
