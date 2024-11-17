@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\Departamento;
+use App\Models\Seccion;
 class ProyectoController extends Controller
 {
     public function index()
     {
-        $ListProyecto = Proyecto::all();
-        return view("Proyecto.indexProyecto", compact("ListProyecto"));
+
+       $proyectos = Proyecto::with('seccion.departamento')->get();
+       return view('proyectos.proyectos-disponibles', compact('proyectos'));
     }
 
     public function create()
@@ -22,17 +24,32 @@ class ProyectoController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        // Validar los datos del formulario
+        $validatedData = $request->validate([
             'nombre_proyecto' => 'required|string|max:255',
-            'estado' => 'required|integer',
-            'periodo' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'horas' => 'required|integer|min:1',
             'lugar' => 'required|string|max:255',
-            'coordinador' => 'required|integer',
+            'seccion_id' => 'required|exists:secciones,id_seccion', // Sección válida
         ]);
 
-        Proyecto::create($data);
-        return redirect()->route('proyectos.index')->with('success', 'Proyecto creado con éxito');
-    }
+        // Crear el proyecto con los datos básicos
+        $proyecto = new Proyecto();
+        $proyecto->nombre_proyecto = $validatedData['nombre_proyecto'];
+        $proyecto->descripcion_proyecto = $validatedData['descripcion'];
+        $proyecto->horas_requeridas = $validatedData['horas'];
+        $proyecto->lugar = $validatedData['lugar'];
+        $proyecto->seccion_id = $validatedData['seccion_id']; // Relacionar sección
+
+        // Guardar el proyecto
+        $proyecto->save();
+
+        return redirect()
+            ->route('proyectos.publiccar-proyecto')
+            ->with('success', 'Proyecto creado exitosamente.');
+        }
+
+    
 
     public function show(string $id)
     {
@@ -168,6 +185,15 @@ class ProyectoController extends Controller
     {
         $proyectos = Proyecto::where('estado', 1)->get(); // 1 = Disponible 
         return view('proyecto.proyecto-disponible', compact('proyectos')); 
+    }
+
+    public function retornar_departamentos()
+    {
+        $departamentos = Departamento::all();
+        $secciones = Seccion::all();
+        $secciones = Seccion::with('departamento')->get(); // Cargar relaciones necesarias
+        return view("proyecto.publicar-proyecto", compact('departamentos', 'secciones'));
+        
     }
 }
 
