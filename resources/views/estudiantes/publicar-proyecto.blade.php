@@ -14,20 +14,17 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <form>
-                <!-- Campo para el nombre del proyecto -->
                 <div class="mb-4">
                     <label for="nombreProyecto" class="form-label">Nombre del Proyecto</label>
                     <input type="text" class="form-control" id="nombreProyecto" placeholder="Nombre del Proyecto">
                 </div>
 
-                <!-- Campo para agregar estudiantes -->
                 <div class="mb-4">
                     <label for="nombreEstudiante" class="form-label">Estudiantes</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="nombreEstudiante" placeholder="Nombre del estudiante">
                         <button type="button" class="btn btn-danger">Agregar estudiante</button>
                     </div>
-                    <!-- Lista de estudiantes -->
                     <ul class="mt-3">
                         <li>Kevin Nathanael Granados Perez</li>
                         <li>Carlos Orlando Del Cid</li>
@@ -35,7 +32,6 @@
                     </ul>
                 </div>
 
-                <!-- Descripción del proyecto -->
                 <div class="mb-5">
                     <label for="descripcion" class="form-label">Descripción del proyecto</label>
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
@@ -56,7 +52,6 @@
                     <textarea class="form-control" id="descripcion" rows="4" placeholder="Descripción del proyecto"></textarea>
                 </div>
 
-                <!-- Ubicación y fechas -->
                 <div class="row mb-5">
                     <div class="col-md-6 mb-4">
                         <label for="ubicacion" class="form-label">Ubicación</label>
@@ -72,7 +67,6 @@
                     </div>
                 </div>
 
-                <!-- Botón para enviar el formulario -->
                 <button type="submit" class="btn btn-danger w-100">Enviar solicitud</button>
             </form>
         </div>
