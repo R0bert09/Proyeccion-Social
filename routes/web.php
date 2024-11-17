@@ -267,5 +267,11 @@ Route::controller(ProyectosDocumentosController::class)
     Route::put('/perfil_usuario/{id}', [UserController::class, 'updateusuario'])->name('update_usuario');
 
     Route::put('/perfil_usuario', [UserController::class, 'updatepassperfil'])->name('update_password');
+
+
+    //ruta publicar proyectos de estudiantes
+    Route::get('/pry', function () {
+        return view('estudiantes.publicar-proyecto');
+    });
 ?>
 
