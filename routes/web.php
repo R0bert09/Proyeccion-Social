@@ -24,22 +24,11 @@ Route::get('/', function () {
     return view('login.login');
 })->name('login');
 
-//prueba
-// Ruta para el dashboard de estudiantes
-Route::get('/est', function () {
-    return view('estudiantes.dashboard'); // Especifica la ruta a la vista
-});
-
-Route::get('/publi', function () {
-    return view('estudiantes.publicar-proyecto'); // Especifica la ruta a la vista
-});
-
 Route::post('/', [UserController::class, 'login'])->name('login.process');
 
 Route::get('/dashboard', function () {
     return view('dashboard.dashboard');
 })->middleware('auth')->name('dashboard');
-
 
 Route::post('/logout', function () {
     auth()->logout();
@@ -159,6 +148,9 @@ Route::controller(ProyectoController::class)
         Route::get('/{id}', 'show')->name('show');        
         Route::put('/{id}', 'update')->name('update');    
         Route::delete('/{id}', 'destroy')->name('destroy'); 
+
+        Route::get('/proyectos-disponibles', 'index')->name('disponibles'); // Proyectos disponibles
+        Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
     });
 
 // Rutas de recuperación y reseteo de contraseña

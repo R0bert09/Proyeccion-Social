@@ -2,6 +2,13 @@
 @section('title', 'Publicar Proyecto')
 @section('content')
 <div class="container mt-4">
+    <!-- Mostrar el mensaje de éxito si existe -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+<div class="container mt-4">
     <h2 class="mb-4">Publicar nuevo proyecto de horas sociales</h2>
     <div class="card shadow-sm">
         <div class="card-body">
@@ -26,20 +33,18 @@
                         <label for="ubicacion" class="form-label">Ubicación</label>
                         <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Ubicación" required>
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="fecha_inicio" class="form-label">Fecha inicio</label>
+                        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" placeholder="fecha inicio" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="fecha_fin" class="form-label">Fecha fin</label>
+                        <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" placeholder="fecha fin" required>
+                    </div>
                 </div>
                
-                <div class="mb-3">
-                    <label for="departamento" class="form-label">Sección/Departamento</label>
-                    <select class="form-select" id="departamento" name="departamento" required>
-                        <option value="">Seleccionar departamento</option>
-                        @foreach($departamentos as $departamento)
-                        <option value="{{ $departamento->id_departamento }}">{{ $departamento->nombre_departamento }}</option>
-                        @endforeach
-                        @foreach($secciones as $seccion)
-                        <option value="{{ $seccion->id_seccion }}">{{ $seccion->nombre_seccion }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                
                
                 <button type="submit" class="btn btn-publicar w-100" style="background-color: #800000; color: white;">Publicar Proyecto</button>
             </form>

@@ -15,8 +15,8 @@ class ProyectoController extends Controller
 {
     public function index()
     {
-        $ListProyecto = Proyecto::all();
-        return view("Proyecto.indexProyecto", compact("ListProyecto"));
+       $proyectos = Proyecto::with('seccion.departamento')->get();
+       return view('proyectos.proyectos-disponibles', compact('proyectos'));
     }
 
     public function create()
@@ -35,8 +35,8 @@ class ProyectoController extends Controller
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
         ]);
 
-        $user = Auth::user();
-        $roles = User::rolesPorUsuario($user->id);
+        $user = auth()->user(); 
+        $roles = auth()->user()->getRoleNames();
         $coordinadorId = null;
 
         if ($roles->contains('estudiante')) {
