@@ -63,6 +63,8 @@ Route::get('/proyecto', function () {
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto');
 
+Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
+
 Route::get('/mensajeria', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
         return view('mensaje.mensaje');
