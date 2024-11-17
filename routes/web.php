@@ -101,7 +101,9 @@ Route::delete('/usuarios/eliminar', [UserController::class, 'deleteSelected'])->
 Route::delete('/usuarios/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminarUsuario');
 Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('usuarios.buscar');
 
-
+Route::get('/est', function () {
+    return view('estudiantes.dashboard');
+});
 
 Route::resource('permissions', PermissionController::class)->except(['show']);
 
