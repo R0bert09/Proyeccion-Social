@@ -14,35 +14,32 @@ class Proyecto extends Model
     protected $primaryKey= 'id_proyecto';
 
 
-    protected $fillable =
-    [
+    protected $fillable = [
         'nombre_proyecto',
         'descripcion_proyecto',
         'horas_requeridas',
+        'estado',
+        'periodo',
         'lugar',
+        'coordinador',
+        'tutor',
+        'fecha_inicio',
+        'fecha_fin',
     ];
-
-    /*public function seccion()
-    {
-        return $this->belongsTo(Seccion::class, 'seccion', 'id_seccion');
-    }*/
-    // En el modelo Proyecto
-    public function seccion()
-    {
-        return $this->belongsTo(Seccion::class, 'seccion_id', 'id_seccion');
-
-    }
 
     //create
     public static function crearProyecto($data)
     {
         $validarCampos = validator($data, [
             'nombre_proyecto' => 'required|string|max:255',
-            'estado' => 'required|integer',
+            'descripcion_proyecto' => 'required|string',
+            'horas_requeridas' => 'required|integer',
+            'estado' => 'required|exist:estados,id_estado',
             'periodo' => 'required|string|max:255',
             'lugar' => 'required|string|max:255',
-            'coordinador' => 'required|integer',
-            'fecha_inicio' => 'required|date',  
+            'coordinador' => 'required|exists:users,id_usuario',
+            'tutor' => 'required|exists:users,id_usuario',
+            'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
         ])->validate();
 
