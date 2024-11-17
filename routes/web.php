@@ -153,6 +153,8 @@ Route::controller(ProyectoController::class)
         Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
     });
 
+    Route::post('/proyectos', [ProyectoController::class, 'store'])->name('proyectos.store');
+
 // Rutas de recuperación y reseteo de contraseña
 Route::get('/recuperarpassword', function () {
     return view('auth.recupassword');
