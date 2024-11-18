@@ -15,8 +15,8 @@ class ProyectoController extends Controller
 {
     public function index()
     {
-       $proyectos = Proyecto::with('seccion.departamento')->get();
-       return view('proyectos.proyectos-disponibles', compact('proyectos'));
+        //$proyectos = Proyecto::with(['seccion.departamento'])->where('estado', 1)->get();
+        //return view('proyecto.proyecto-disponible', compact('proyectos'));
     }
 
     public function create()
@@ -28,7 +28,7 @@ class ProyectoController extends Controller
     {
         // Validar los datos del formulario
     $validatedData = $request->validate([
-        'titulo' => 'required|string|max:255',
+        '' => 'required|string|max:255',
         'descripcion' => 'required|string',
         'horas' => 'required|integer|min:1',
         'ubicacion' => 'required|string|max:255',
@@ -65,7 +65,7 @@ class ProyectoController extends Controller
     public function show(string $id)
     {
         $proyecto = Proyecto::find($id);
-        return view('Proyecto.showProyecto', compact('proyecto'));
+        return view('proyecto.proyecto_disponible', compact('proyecto'));
     }
 
     public function edit(string $id)
@@ -194,8 +194,21 @@ class ProyectoController extends Controller
     // Método para mostrar los proyectos disponibles
     public function proyectos_disponibles()
     {
-        $proyectos = Proyecto::where('estado', 1)->get(); // 1 = Disponible 
-        return view('proyecto.proyecto-disponible', compact('proyectos'));
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Debes iniciar sesión para acceder a los proyectos disponibles.');
+        }
+    
+        // Filtrar proyectos con estado 1 (disponible)
+        $proyectos = Proyecto::where('estado', 1)->get();
+    
+        // Verifica si la consulta devolvió resultados
+        if ($proyectos->isEmpty()) {
+            // Opcional: Muestra un mensaje en la vista si no hay proyectos disponibles
+            return view('proyecto.proyecto_disponible', ['proyectos' => collect()]);
+        }
+    
+        // Retorna la vista con los proyectos disponibles
+        return view('proyecto.proyecto_disponible', compact('proyectos'));
     }
 
     public function retornar_departamentos()

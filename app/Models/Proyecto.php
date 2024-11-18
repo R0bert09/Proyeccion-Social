@@ -180,4 +180,12 @@ class Proyecto extends Model
         $diasTranscurridos = now()->parse($this->fecha_inicio)->diffInDays(now());
         return min(100, ($diasTranscurridos / $totalDias) * 100);
     }
+
+
+    public function seccion()
+    {
+        return $this->belongsTo(Seccion::class);
+
+    }
+
 }

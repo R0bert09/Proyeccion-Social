@@ -22,13 +22,16 @@
                     <th scope="col">Descripción</th>
                     <th scope="col">Horas requeridas</th>
                     <th scope="col">Ubicación</th>
-                    <th scope="col">Sección/Departamento</th>
+                    <th scope="col">Sección / Departamento</th>
                     <th scope="col" class="text-center">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @if(isset($proyectos) && $proyectos->isNotEmpty())
                     @foreach ($proyectos as $proyecto)
+                    @php
+                        dd($proyecto);
+                    @endphp
                         <tr>
                             <td><input type="checkbox" class="form-check-input" value="{{ $proyecto->id }}"></td>
                             <td>{{ $proyecto->nombre_proyecto }}</td>

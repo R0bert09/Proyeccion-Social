@@ -17,9 +17,11 @@ class Seccion extends Model
     /**
      * Define una relación que pertenece al modelo Departamento.
      */
-    public function departamento() 
-    {
-        return $this->belongsTo(Departamento::class, 'departamento_id', 'id_departamento');
+    
 
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class);
     }
+
 }
