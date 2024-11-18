@@ -41,6 +41,7 @@
                 </div>
                
                 <div class="row">
+                    
                     <div class="col-md-6 mb-3">
                         <label for="horas" class="form-label">Horas Requeridas</label>
                         <input type="number" class="form-control" id="horas" name="horas" 
@@ -51,21 +52,14 @@
                         <input type="text" class="form-control" id="ubicacion" name="ubicacion" 
                                value="{{ old('ubicacion') }}" required>
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="id_seccion" class="form-label">Sección/Departamento</label>
+                        <select name="id_seccion" class="form-select" id="id_seccion">
+                            <option selected>Seleccionar departamento</option>
+                        </select>
+                    </div>
                 </div>
                 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="fecha_inicio" class="form-label">Fecha inicio</label>
-                        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" 
-                               value="{{ old('fecha_inicio') }}" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="fecha_fin" class="form-label">Fecha fin</label>
-                        <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" 
-                               value="{{ old('fecha_fin') }}" required>
-                    </div>
-                </div>
-               
                 <button type="submit" class="btn btn-publicar w-100" 
                         style="background-color: #800000; color: white;">
                     Publicar Proyecto
