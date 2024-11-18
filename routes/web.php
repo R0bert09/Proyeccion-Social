@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\DepartamentoController;
-use App\Http\Controllers\HistorialDepartamentoController;
 use App\Http\Controllers\TestsKevControllerController;
 use App\Http\Controllers\AsignacionController;
 use Illuminate\Support\Facades\Route;
@@ -38,19 +37,31 @@ Route::post('/logout', function () {
 Route::get('/registro', [UserController::class, 'allSeccionRegistro'])->name('registro');
 Route::post('/registro', [UserController::class, 'registro'])->name('usuarios.registro');
 
-Route::get('/proyecto-g', function () {
+// rutas de proyectos
+Route::get('/proyecto-g',[ProyectoController::class, 'index'], function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Administrador', 'Coordinador', 'Tutor'])) {
         return view('proyecto.proyecto-general');
     }
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto-g');
-
 Route::get('/proyecto', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
         return view('proyecto.publicar-proyecto');
     }
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto');
+
+Route::get('/proyecto/{id}/editar',[ProyectoController::class, 'edit'], function () {
+    if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
+        return view('proyecto.proyecto-editar');
+    }
+    return view('dashboard.dashboard');
+})->middleware('auth')->name('proyecto.proyecto-editar');
+
+Route::post('/proyectos/{proyecto}/asignar-estudiantes', [ProyectoController::class, 'asignarEstudiante'])->name('proyectos.asignarEstudiante');
+Route::delete('/proyectos/{proyecto}/eliminar-estudiante/{estudiante}', [ProyectoController::class, 'eliminarEstudiante'])->name('proyectos.eliminarEstudiante');
+Route::put('/proyectos/{proyecto}/actualizar', [ProyectoController::class, 'actualizar'])->name('proyectos.actualizar');
+
 
 Route::get('/mensajeria', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
@@ -137,16 +148,16 @@ Route::controller(EstudianteController::class)
     });
 
 // Rutas del controlador Proyecto
-Route::controller(ProyectoController::class)
-    ->prefix('proyectos')
-    ->name('proyectos.')
-    ->group(function () {
-        Route::get('/', 'index')->name('index');          
-        Route::post('/', 'store')->name('store');         
-        Route::get('/{id}', 'show')->name('show');        
-        Route::put('/{id}', 'update')->name('update');    
-        Route::delete('/{id}', 'destroy')->name('destroy'); 
-    });
+// Route::controller(ProyectoController::class)
+//     ->prefix('proyectos')
+//     ->name('proyectos.')
+//     ->group(function () {
+//         Route::get('/', 'index')->name('index');          
+//         Route::post('/', 'store')->name('store');         
+//         Route::get('/{id}', 'show')->name('show');        
+//         Route::put('/{id}', 'update')->name('update');    
+//         Route::delete('/{id}', 'destroy')->name('destroy'); 
+//     });
 
 // Rutas de recuperación y reseteo de contraseña
 Route::get('/recuperarpassword', function () {

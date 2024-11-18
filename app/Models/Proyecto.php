@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Estado;
+use App\Models\Estudiante;
 use App\Models\User;
 
 
@@ -22,7 +23,8 @@ class Proyecto extends Model
         'estado',
         'periodo',
         'lugar',
-        'coordinador'
+        'coordinador',
+        'tutor'
     ];
 
     //create
@@ -42,9 +44,9 @@ class Proyecto extends Model
     }
 
     //Relaciones a tabla estado y usuario
-    public function estado()
+    public function estadoo()
     {
-        return $this->belongsTo(Estado::class);
+        return $this->belongsTo(Estado::class,'estado','id_estado');
     }
 
     public static function AsignarFeechas($data)
@@ -52,11 +54,15 @@ class Proyecto extends Model
         return self::create($data);
     }
 
-    public function coordinador()
+    public function coordinadorr()
     {
-
-        return $this->belongsTo(user::class);
+        return $this->belongsTo(User::class, 'coordinador', 'id_usuario');
     }
+
+    public function tutorr()
+    {
+        return $this->belongsTo(User::class,'tutor','id_usuario');
+    }   
 
     //gets
     public function getProyecto_porId($id)
@@ -78,5 +84,9 @@ class Proyecto extends Model
     public function getProyectos_porPeriodo($periodo)
     {
         return self::with('estado', 'coordinador')->where('periodo', $periodo)->get();
+    }
+    public function estudiantes()
+    {
+        return $this->belongsToMany(Estudiante::class, 'proyectos_estudiantes', 'id_proyecto', 'id_estudiante');
     }
 }

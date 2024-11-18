@@ -223,8 +223,8 @@ class UserController extends Controller
             }
             elseif ($request->rol === 'tutor') {
                 \DB::table('seccion_tutor')->insert([
-                    'id_tutor' => $user->id,
-                    'id_seccion' => $idSeccion,
+                    'id_tutor' => $user->id_usuario,
+                    'id_seccion' => $idSeccion
                 ]);
             }
             elseif ($request->rol === 'coordinador') {
