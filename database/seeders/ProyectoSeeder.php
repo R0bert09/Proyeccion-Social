@@ -12,6 +12,7 @@ use Carbon\Carbon;
     {
         $proyectos = [
             [
+                'seccion_id' => 1,
                 'nombre_proyecto' => 'Reforestación Parque Nacional',
                 'descripcion_proyecto' => 'Proyecto de reforestación y conservación ambiental en zonas afectadas del parque nacional.',
                 'horas_requeridas' => 120,
@@ -26,6 +27,7 @@ use Carbon\Carbon;
                 'updated_at' => Carbon::now()
             ],
             [
+                'seccion_id' => 1,
                 'nombre_proyecto' => 'Alfabetización Digital',
                 'descripcion_proyecto' => 'Programa de capacitación en herramientas digitales básicas para adultos mayores.',
                 'horas_requeridas' => 80,
@@ -40,6 +42,7 @@ use Carbon\Carbon;
                 'updated_at' => Carbon::now()
             ],
             [
+                'seccion_id' => 1,
                 'nombre_proyecto' => 'Huerto Urbano Comunitario',
                 'descripcion_proyecto' => 'Implementación de huertos urbanos para promover la agricultura sostenible.',
                 'horas_requeridas' => 100,
