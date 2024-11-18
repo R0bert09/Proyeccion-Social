@@ -55,7 +55,13 @@
                     <div class="col-md-6 mb-3">
                         <label for="id_seccion" class="form-label">Sección/Departamento</label>
                         <select name="id_seccion" class="form-select" id="id_seccion">
-                            <option selected>Seleccionar departamento</option>
+                        <option selected>Seleccionar departamento</option>
+                        @foreach($departamentos as $departamento)
+                        <option value="{{ $departamento->id_departamento }}"> {{ $departamento->nombre_departamento }} </option>
+                        @endforeach
+                        @foreach($secciones as $seccion)
+                        <option value="{{ $seccion->id_seccion }}"> {{ $seccion->nombre_seccion }} </option>
+                        @endforeach
                         </select>
                     </div>
                 </div>
