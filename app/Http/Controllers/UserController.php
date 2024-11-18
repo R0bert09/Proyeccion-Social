@@ -360,33 +360,65 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function updatepassperfil(Request $request){
-       // dd (Auth::user()->id_usuario);
+    public function updatepassperfil(Request $request)
+    {
+        $request->validate([
+            'contrasena_actual' => 'required',
+            'nueva_contrasena' => [
+                'required',
+                'string',
+                'min:8', // mínimo 8 caracteres
+                'confirmed', // requiere nueva_contrasena_confirmation
+                'different:contrasena_actual', // debe ser diferente a la actual
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/' // debe contener mayúsculas, minúsculas, números y caracteres especiales
+            ],
+            'nueva_contrasena_confirmation' => 'required'
+        ], [
+            'contrasena_actual.required' => 'La contraseña actual es requerida',
+            'nueva_contrasena.required' => 'La nueva contraseña es requerida',
+            'nueva_contrasena.min' => 'La nueva contraseña debe tener al menos 8 caracteres',
+            'nueva_contrasena.confirmed' => 'Las contraseñas no coinciden',
+            'nueva_contrasena.different' => 'La nueva contraseña debe ser diferente a la actual',
+            'nueva_contrasena.regex' => 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial',
+            'nueva_contrasena_confirmation.required' => 'Debe confirmar la nueva contraseña'
+        ]);
+    
         $user = User::find(Auth::user()->id_usuario);
-        if (!Hash::check($request->contrasena_actual, $user->password)) {
-            return redirect('/perfil_usuario')->withErrors([
+            if (!Hash::check($request->contrasena_actual, $user->password)) {
+            return back()->withErrors([
                 'contrasena_actual' => 'La contraseña actual es incorrecta.',
+            ])->withInput();
+        }
+        try {
+            $user->password = Hash::make($request->nueva_contrasena);
+            $user->save();
+            return redirect('/perfil_usuario')->with('success', 'Contraseña actualizada correctamente');
+        } catch (\Exception $e) {
+            return back()->withErrors([
+                'error' => 'Ocurrió un error al actualizar la contraseña. Por favor, intente nuevamente.'
             ]);
         }
-        $user->password = bcrypt($request->nueva_contrasena);
-        $user->save();
-        return redirect('/perfil_usuario');
     }
 
-    //logica para mostrar el perfil del usuario para poder editarlo
     public function mostrarPerfil()
     {
-        $usuario = Auth::user(); // Obtiene al usuario autenticado
+        $usuario = Auth::user(); 
         return view('usuarios.perfilUsuario', compact('usuario'));
     }
     public function updateusuario(Request $request, $id)
     {
         try {
             $request->validate([
-                 'nombre' => 'required|string|max:255',
-
+                'nombre' => [
+                    'required',
+                    'string',
+                    'max:28',
+                    'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'
+                ],
             ], [
-                 'nombre.required' => 'El nombre es obligatorio.',
+                'nombre.required' => 'El nombre es obligatorio.',
+                'nombre.max' => 'El nombre no puede tener más de 22 caracteres.',
+                'nombre.regex' => 'El nombre solo puede contener letras.',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()->withErrors($e->errors())->withInput();
