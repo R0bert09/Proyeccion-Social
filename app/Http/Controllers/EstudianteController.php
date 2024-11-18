@@ -164,4 +164,9 @@ class EstudianteController extends Controller
         $pdf = Pdf::loadView('exports.estudiantesPDF', ['estudiantes' => $estudiantes]);
         return $pdf->download('estudiantes.pdf');
     }
+
+    public function totalEstudiantes()
+    {
+        return Estudiante::count();
+    }
 }
