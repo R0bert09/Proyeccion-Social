@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProyectoSeeder::class);
         $this->call(DocumentosSeeder::class);
         $this->call(AsignacionesSeeder::class);
-        $this->call(DocumentosSeeder::class);
         $this->call(ProyectosEstudiantesSeeder::class);
     }
 }
