@@ -52,7 +52,17 @@ Route::get('/proyecto', function () {
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto');
 
+//Mostrar los departamentos en publicar proyectos
 Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
+
+Route::get('/proyecto-disponible',[ProyectoController::class, 'retornar_proyectos'], function () {
+    if (Auth::check() && auth()->user()->hasAnyRole(['Administrador', 'Coordinador', 'Tutor'])) {
+        return view('proyecto.proyect-disponible');
+    }
+    return view('dashboard.dashboard');
+})->middleware('auth')->name('proyecto-disponible');
+
+
 
 Route::get('/proyecto/{id}/editar',[ProyectoController::class, 'edit'], function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
@@ -89,12 +99,6 @@ Route::get('/gestion-permiso', function () {
 
 Route::get('/gestion-roles', [RoleController::class, 'index'])->middleware('auth')->name('gestion-roles');
 
-Route::get('/proyecto-disponible', function () {
-    if (Auth::check() && auth()->user()->hasAnyRole(['Administrador', 'Coordinador'])) {
-        return view('proyecto.proyecto-disponible');
-    }
-    return view('dashboard.dashboard'); 
-})->middleware('auth')->name('proyecto-disponible');
 
 Route::get('/detalle', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {

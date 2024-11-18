@@ -45,13 +45,13 @@
                             </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('proyectos.show', $proyecto->id) }}" class="btn btn-light btn-sm p-2 px-3">
+                                    <a href="" class="btn btn-light btn-sm p-2 px-3">
                                         <i class="bi bi-eye text-muted"></i>
                                     </a>
-                                    <a href="{{ route('proyectos.edit', $proyecto->id) }}" class="btn btn-light btn-sm p-2 px-3">
+                                    <a href="" class="btn btn-light btn-sm p-2 px-3">
                                         <i class="bi bi-pencil text-warning"></i>
                                     </a>
-                                    <form action="{{ route('proyectos.destroy', $proyecto->id) }}" method="POST" style="display:inline;">
+                                    <form action="" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-light btn-sm p-2 px-3">

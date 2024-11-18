@@ -24,6 +24,13 @@ class ProyectoController extends Controller
         return view("proyecto.proyecto-general", compact("ListProyecto"));
     }
 
+    public function retornar_proyectos()
+    {
+        $proyectos = Proyecto::with('estudiantes','coordinadorr','tutorr.seccionesTutoreadas','estadoo')->get();
+        //dd($ListProyecto);
+        return view("proyecto.proyecto-disponible", compact("proyectos"));
+    }
+
     public function create()
     {
         return view("Proyecto.createProyecto");
@@ -32,39 +39,41 @@ class ProyectoController extends Controller
     public function store(Request $request)
     {
         // Validar los datos del formulario
-    $validatedData = $request->validate([
-        'titulo' => 'required|string|max:255',
-        'descripcion' => 'required|string',
-        'horas' => 'required|integer|min:1',
-        'ubicacion' => 'required|string|max:255',
-        'fecha_inicio' => 'required|date',
-        'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
-    ]);
-
-    try {
-        // Crear el nuevo proyecto
-        $proyecto = new Proyecto();
-        $proyecto->nombre_proyecto = $validatedData['titulo'];
-        $proyecto->descripcion_proyecto = $validatedData['descripcion'];
-        $proyecto->horas_requeridas = $validatedData['horas'];
-        $proyecto->lugar = $validatedData['ubicacion'];
-        $proyecto->fecha_inicio = $validatedData['fecha_inicio'];
-        $proyecto->fecha_fin = $validatedData['fecha_fin'];
-        $proyecto->estado = 1; // Estado inicial
-        $proyecto->periodo = now()->format('Y-m');
-        $proyecto->coordinador = auth()->id();
-        $proyecto->tutor = null; // Agregamos esta línea para establecer el tutor como null inicialmente
-        
-        $proyecto->save();
-
-        return redirect()->back()->with('success', 'Proyecto creado exitosamente');
-
-    } catch (\Exception $e) {
-        \Log::error('Error al crear proyecto: ' . $e->getMessage());
-        return redirect()->back()
-            ->withInput()
-            ->with('error', 'Error al crear el proyecto. Por favor intente nuevamente.');
-    }
+        $validatedData = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'horas' => 'required|integer|min:1',
+            'ubicacion' => 'required|string|max:255',
+            'id_seccion' => 'required|exists:secciones,id_seccion', // Validamos que exista en la tabla secciones
+        ]);
+    
+        try {
+            // Crear el nuevo proyecto
+            $proyecto = new Proyecto();
+            $proyecto->nombre_proyecto = $validatedData['titulo'];
+            $proyecto->descripcion_proyecto = $validatedData['descripcion'];
+            $proyecto->horas_requeridas = $validatedData['horas'];
+            $proyecto->lugar = $validatedData['ubicacion'];
+            $proyecto->estado = 1; // Estado inicial (disponible)
+            $proyecto->periodo = now()->format('Y-m');
+            $proyecto->coordinador = auth()->id();
+            $proyecto->seccion_id = $validatedData['id_seccion']; // Usamos el nombre correcto del campo
+            $proyecto->fecha_inicio = now(); // Establecemos la fecha actual como fecha de inicio por defecto
+            $proyecto->fecha_fin = now()->addMonths(3); // Establecemos 3 meses después como fecha de fin por defecto
+            
+            $proyecto->save();
+    
+            return redirect()
+                ->back()
+                ->with('success', 'Proyecto creado exitosamente');
+    
+        } catch (\Exception $e) {
+            \Log::error('Error al crear proyecto: ' . $e->getMessage());
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Error al crear el proyecto. Por favor intente nuevamente.');
+        }
     }
 
     public function show(string $id)
