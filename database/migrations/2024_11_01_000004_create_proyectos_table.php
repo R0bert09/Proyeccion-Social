@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('proyectos', function (Blueprint $table) {
             $table->id('id_proyecto');
+            $table->foreignId('seccion_id')->constrained('secciones', 'id_seccion')->onDelete('cascade');
             $table->text('nombre_proyecto');
             $table->text('descripcion_proyecto');
             $table->integer('horas_requeridas');
