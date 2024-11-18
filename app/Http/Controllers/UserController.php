@@ -8,6 +8,7 @@ use App\Models\Seccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -357,6 +358,45 @@ class UserController extends Controller
         $user->save();
         CodigosRecuperacion::where('codigo', $request->codigo_verificacion)->delete();
         return redirect('/');
+    }
+
+    public function updatepassperfil(Request $request){
+       // dd (Auth::user()->id_usuario);
+        $user = User::find(Auth::user()->id_usuario);
+        if (!Hash::check($request->contrasena_actual, $user->password)) {
+            return redirect('/perfil_usuario')->withErrors([
+                'contrasena_actual' => 'La contraseña actual es incorrecta.',
+            ]);
+        }
+        $user->password = bcrypt($request->nueva_contrasena);
+        $user->save();
+        return redirect('/perfil_usuario');
+    }
+
+    //logica para mostrar el perfil del usuario para poder editarlo
+    public function mostrarPerfil()
+    {
+        $usuario = Auth::user(); // Obtiene al usuario autenticado
+        return view('usuarios.perfilUsuario', compact('usuario'));
+    }
+    public function updateusuario(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                 'nombre' => 'required|string|max:255',
+
+            ], [
+                 'nombre.required' => 'El nombre es obligatorio.',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->errors())->withInput();
+        }
+    
+        $usuario = User::findOrFail($id);
+        $usuario->name = $request->nombre;
+        $usuario->save();
+    
+        return redirect()->route('perfil_usuario')->with('success', 'Perfil actualizado correctamente');
     }
 
     public function login(Request $request)

@@ -25,7 +25,7 @@
 @endif
 
 <div class="container">
-    <h1 class="mb-4">Gestión de Proyectos</h1>
+    <h1 class="mb-4">Editar Proyecto</h1>
 
     <div class="card w-100">
         <div class="card-body">
@@ -85,7 +85,7 @@
                         <label for="tutor" class="form-label">Tutor</label>
                             <select class="form-select" id="idTutor" name="idTutor" >
                                 @foreach ($tutores as $tutor)
-                                    <option value="{{ $tutor->id_usuario }}">
+                                    <option value="{{ $tutor->id_usuario }}" {{ $tutor->id_usuario == $proyecto->tutor ? 'selected' : '' }}>
                                         {{ $tutor->name }}
                                     </option>
                                 @endforeach

@@ -1,15 +1,19 @@
 <?php
 namespace App\Http\Controllers;
 
+
+
 use App\Models\ProyectosEstudiantes;
 use App\Models\Proyecto;
+use App\Models\Seccion;
 use App\Models\Estudiante;
 use App\Models\Estado;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Departamento;
 
 class ProyectoController extends Controller
 {
@@ -27,16 +31,40 @@ class ProyectoController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nombre_proyecto' => 'required|string|max:255',
-            'estado' => 'required|integer',
-            'periodo' => 'required|string|max:255',
-            'lugar' => 'required|string|max:255',
-            'coordinador' => 'required|integer',
-        ]);
+        // Validar los datos del formulario
+    $validatedData = $request->validate([
+        'titulo' => 'required|string|max:255',
+        'descripcion' => 'required|string',
+        'horas' => 'required|integer|min:1',
+        'ubicacion' => 'required|string|max:255',
+        'fecha_inicio' => 'required|date',
+        'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+    ]);
 
-        Proyecto::create($data);
-        return redirect()->route('proyectos.index')->with('success', 'Proyecto creado con éxito');
+    try {
+        // Crear el nuevo proyecto
+        $proyecto = new Proyecto();
+        $proyecto->nombre_proyecto = $validatedData['titulo'];
+        $proyecto->descripcion_proyecto = $validatedData['descripcion'];
+        $proyecto->horas_requeridas = $validatedData['horas'];
+        $proyecto->lugar = $validatedData['ubicacion'];
+        $proyecto->fecha_inicio = $validatedData['fecha_inicio'];
+        $proyecto->fecha_fin = $validatedData['fecha_fin'];
+        $proyecto->estado = 1; // Estado inicial
+        $proyecto->periodo = now()->format('Y-m');
+        $proyecto->coordinador = auth()->id();
+        $proyecto->tutor = null; // Agregamos esta línea para establecer el tutor como null inicialmente
+        
+        $proyecto->save();
+
+        return redirect()->back()->with('success', 'Proyecto creado exitosamente');
+
+    } catch (\Exception $e) {
+        \Log::error('Error al crear proyecto: ' . $e->getMessage());
+        return redirect()->back()
+            ->withInput()
+            ->with('error', 'Error al crear el proyecto. Por favor intente nuevamente.');
+    }
     }
 
     public function show(string $id)
@@ -215,7 +243,7 @@ class ProyectoController extends Controller
             ->leftJoin('Horas_Sociales as hs', 'e.id_estudiante', '=', 'hs.id_estudiante')
             ->leftJoin('Asignaciones as a', function ($join) {
                 $join->on('e.id_estudiante', '=', 'a.id_estudiante')
-                     ->on('a.id_proyecto', '=', 'p.id_proyecto');
+                    ->on('a.id_proyecto', '=', 'p.id_proyecto');
             })
             ->orderBy('e.nombre')
             ->get();
@@ -240,10 +268,18 @@ class ProyectoController extends Controller
     }
 
     // Método para mostrar los proyectos disponibles
-    public function proyectos_disponibles() 
+    public function proyectos_disponibles()
     {
         $proyectos = Proyecto::where('estado', 1)->get(); // 1 = Disponible 
-        return view('proyecto.proyecto-disponible', compact('proyectos')); 
+        return view('proyecto.proyecto-disponible', compact('proyectos'));
+    }
+
+    public function retornar_departamentos()
+    {
+        $departamentos = Departamento::all();
+        $secciones = Seccion::all();
+        return view("proyecto.publicar-proyecto", compact('departamentos', 'secciones'));
+
     }
 }
 

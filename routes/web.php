@@ -51,6 +51,8 @@ Route::get('/proyecto', function () {
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto');
 
+Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
+
 Route::get('/proyecto/{id}/editar',[ProyectoController::class, 'edit'], function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
         return view('proyecto.proyecto-editar');
@@ -110,7 +112,9 @@ Route::delete('/usuarios/eliminar', [UserController::class, 'deleteSelected'])->
 Route::delete('/usuarios/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminarUsuario');
 Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('usuarios.buscar');
 
-
+Route::get('/est', function () {
+    return view('estudiantes.dashboard');
+});
 
 Route::resource('permissions', PermissionController::class)->except(['show']);
 
@@ -158,6 +162,8 @@ Route::controller(EstudianteController::class)
 //         Route::put('/{id}', 'update')->name('update');    
 //         Route::delete('/{id}', 'destroy')->name('destroy'); 
 //     });
+
+    Route::post('/proyectos', [ProyectoController::class, 'store'])->name('proyectos.store');
 
 // Rutas de recuperación y reseteo de contraseña
 Route::get('/recuperarpassword', function () {
@@ -266,4 +272,18 @@ Route::controller(ProyectosDocumentosController::class)
     Route::delete('/layouts/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
     Route::put('/layouts/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
 
+    Route::get('/perfil_usuario', [UserController::class, 'mostrarPerfil'], function () {
+        return view('usuarios.perfilUsuario');
+    })->name('perfil_usuario');
+
+    Route::put('/perfil_usuario/{id}', [UserController::class, 'updateusuario'])->name('update_usuario');
+
+    Route::put('/perfil_usuario', [UserController::class, 'updatepassperfil'])->name('update_password');
+
+
+    //ruta publicar proyectos de estudiantes
+    Route::get('/pry', function () {
+        return view('estudiantes.publicar-proyecto');
+    });
 ?>
+
