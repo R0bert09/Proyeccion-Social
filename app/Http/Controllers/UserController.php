@@ -413,4 +413,11 @@ class UserController extends Controller
         ]);
     }
 
+    public function totalTutores()
+    {
+        return User::whereHas('roles', function ($query) {
+            $query->where('name', 'Tutor');
+        })->count();
+    }
+
 }

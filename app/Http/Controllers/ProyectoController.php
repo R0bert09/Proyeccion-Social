@@ -205,5 +205,10 @@ class ProyectoController extends Controller
         return view("proyecto.publicar-proyecto", compact('departamentos', 'secciones'));
 
     }
+
+    public function totalProyectosActivos()
+    {
+        return Proyecto::whereBetween('estado', [1, 6])->count();
+    }
 }
 

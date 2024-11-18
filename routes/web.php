@@ -6,6 +6,7 @@ use App\Http\Controllers\TestsKevControllerController;
 use App\Http\Controllers\AsignacionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatDocumentoController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\DocumentoController;
@@ -26,9 +27,9 @@ Route::get('/', function () {
 
 Route::post('/', [UserController::class, 'login'])->name('login.process');
 
-Route::get('/dashboard', function () {
-    return view('dashboard.dashboard');
-})->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware('auth') 
+    ->name('dashboard');
 
 Route::post('/logout', function () {
     auth()->logout();
