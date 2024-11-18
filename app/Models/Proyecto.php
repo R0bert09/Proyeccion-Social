@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\Estudiante;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -25,11 +26,11 @@ class Proyecto extends Model
         'coordinador',
         'tutor',
         'fecha_inicio',
-        'fecha_fin',
+        'fecha_fin'
     ];
 
 
-    protected $with = ['estado', 'coordinador'];
+    protected $with = ['estadoo', 'coordinadorr'];
 
     private static $rules = [
         'nombre_proyecto' => 'required|string|max:255',
@@ -44,21 +45,21 @@ class Proyecto extends Model
         'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
     ];
 
-    public function estado()
+    //Relaciones a tabla estado y usuario
+    public function estadoo()
     {
-        return $this->belongsTo(Estado::class, 'estado', 'id_estado');
+        return $this->belongsTo(Estado::class,'estado','id_estado', 'estado', 'id_estado');
     }
 
-    public function coordinador()
+    public function coordinadorr()
     {
         return $this->belongsTo(User::class, 'coordinador', 'id_usuario');
     }
 
-    public function tutor()
+    public function tutorr()
     {
-        return $this->belongsTo(User::class, 'tutor', 'id_usuario')->withDefault([
-            'nombre' => 'Sin tutor asignado'
-        ]);
+        return $this->belongsTo(User::class,'tutor','id_usuario');
+
     }
 
     public function scopePorEstado(Builder $query, $estadoId)
@@ -142,12 +143,10 @@ class Proyecto extends Model
     {
         return self::porCoordinador($coordinadorId)->get();
     }
-
-    public static function listarPorPeriodo($periodo)
+    public function listarPorPeriodo($periodo)
     {
         return self::porPeriodo($periodo)->get();
     }
-
     private static function validarDatos(array $data)
     {
         $validator = Validator::make($data, self::$rules);
@@ -157,6 +156,10 @@ class Proyecto extends Model
         }
 
         return $validator->validated();
+    }
+    public function estudiantes()
+    {
+        return $this->belongsToMany(Estudiante::class, 'proyectos_estudiantes', 'id_proyecto', 'id_estudiante');
     }
 
     public function estaActivo(): bool

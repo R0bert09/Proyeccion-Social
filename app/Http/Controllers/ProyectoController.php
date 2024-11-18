@@ -2,21 +2,26 @@
 namespace App\Http\Controllers;
 
 
+
+use App\Models\ProyectosEstudiantes;
 use App\Models\Proyecto;
 use App\Models\Seccion;
+use App\Models\Estudiante;
+use App\Models\Estado;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Departamento;
-use App\Models\User;
 
 class ProyectoController extends Controller
 {
     public function index()
     {
-       $proyectos = Proyecto::with('seccion.departamento')->get();
-       return view('proyectos.proyectos-disponibles', compact('proyectos'));
+        $ListProyecto = Proyecto::with('estudiantes','coordinadorr','tutorr.seccionesTutoreadas','estadoo')->get();
+        // dd($ListProyecto);
+        return view("proyecto.proyecto-general", compact("ListProyecto"));
     }
 
     public function create()
@@ -71,11 +76,14 @@ class ProyectoController extends Controller
     public function edit(string $id)
     {
         $proyecto = Proyecto::find($id);
-
+        $estados= Estado::all();
+        $estudiantes= Estudiante::all(); 
+        $tutores = User::role('tutor')->get();
         if (!$proyecto) {
             return redirect()->route('proyectos.index')->with('error', 'Proyecto no encontrado');
         }
-        return view("Proyecto.editProyecto", compact('proyecto'));
+        // dd($proyecto);
+        return view("proyecto.proyecto-editar", compact('proyecto', 'estados', 'estudiantes','tutores'));
     }
 
     public function update(Request $request, $id)
@@ -89,13 +97,81 @@ class ProyectoController extends Controller
         ]);
 
         $proyecto = Proyecto::find($id);
-
+        
         if (!$proyecto) {
             return redirect()->route('proyectos.index')->with('error', 'Proyecto no encontrado');
         }
 
         $proyecto->update($data);
         return redirect()->route('proyectos.index')->with('success', 'Proyecto actualizado con éxito');
+    }
+    public function asignarEstudiante(Request $request, $idProyecto)
+    {
+        $request->validate([
+            'idEstudiante' => 'required|string|exists:estudiantes,id_estudiante',
+        ], [
+            'idEstudiante.exists' => 'El estudiante seleccionado no existe en la base de datos.',
+            'idEstudiante.required' => 'El ID del estudiante es requerido.',
+        ]);
+    
+        // Buscar al estudiante por id
+        $estudiante = Estudiante::find($request->idEstudiante);
+    
+        if (!$estudiante) {
+            return back()->withErrors(['El estudiante no existe.']);
+        }
+    
+        // Buscar el proyecto y asociar al estudiante
+        $proyecto = Proyecto::findOrFail($idProyecto);
+    
+        // // Verificar si el estudiante ya está asignado
+         if (!$proyecto->estudiantes->contains($estudiante->id_estudiante)) {
+             $proyecto->estudiantes()->attach($estudiante->id_estudiante);
+         } else {
+             return back()->withErrors(['El estudiante ya está asignado a este proyecto.']);
+         }
+    
+        return back()->with('success', 'Estudiante asignado correctamente.');
+    }
+    public function eliminarEstudiante($proyectoId, $estudianteId)
+    {
+        // Buscar el proyecto y estudiante en la tabla pivot
+        $proyecto = Proyecto::findOrFail($proyectoId);
+
+        // Verificar si el estudiante está asociado al proyecto
+        $proyecto->estudiantes()->detach($estudianteId);
+
+        return back()->with('success', 'Estudiante eliminado del proyecto exitosamente.');
+    }
+    public function actualizar(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'nombre_proyecto' => 'required|string|max:255',
+            'idTutor' => 'required|string|exists:users,id_usuario',
+            'lugar' => 'nullable|string|max:255',
+            'fecha_inicio' => 'nullable|date',
+            'fecha_fin' => 'nullable|date|after_or_equal:fecha_inicio',
+            'estado' => 'required|integer|exists:estados,id_estado',
+        ]);
+    
+        // Buscar el tutor por nombre
+        $tutor = User::find($request->idTutor);
+    
+        if ($validatedData['idTutor'] && !$tutor) {
+            return redirect()->back()->withErrors(['tutor' => 'El tutor ingresado no existe.']);
+        }
+    
+        $proyecto = Proyecto::findOrFail($id);
+        $proyecto->update([
+            'nombre_proyecto' => $validatedData['nombre_proyecto'],
+            'tutor' => $tutor->id_usuario ?? null,
+            'lugar' => $validatedData['lugar'],
+            'fecha_inicio' => $validatedData['fecha_inicio'],
+            'fecha_fin' => $validatedData['fecha_fin'],
+            'estado' => $validatedData['estado'],
+        ]);
+    
+        return redirect()->route('proyecto-g')->with('success', 'Proyecto actualizado correctamente.');
     }
 
     public function destroy(string $id)
