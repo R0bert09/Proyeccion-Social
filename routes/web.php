@@ -26,6 +26,9 @@ Route::get('/', function () {
 
 Route::post('/', [UserController::class, 'login'])->name('login.process');
 
+Route::get('/dashboard/datos-grafico', [ProyectoController::class, 'obtenerDatosGrafico'])->name('dashboard.datosGrafico');
+Route::get('/dashboard/estudiantes-proyectos-por-fecha', [ProyectoController::class, 'obtenerEstudiantesYProyectosPorFecha'])->name('dashboard.estudiantesProyectosPorFecha');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth') 
     ->name('dashboard');
