@@ -346,6 +346,20 @@ class ProyectoController extends Controller
         });
 
         return response()->json($data);
+
+        
     }
+
+    //retorna vista gertor de TI
+    public function gestor_de_TI()
+    {
+        return view('proyecto.gestor-de-TI');
+    }
+    //retorna vista solicitud de proyecto
+    public function solicitud_proyecto()
+    {
+        return view('proyecto.solicitud-proyecto');
+    }
+
 }
 

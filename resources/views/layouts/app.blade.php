@@ -136,6 +136,13 @@
                             <i class="bi bi-briefcase me-2"></i> Proyectos
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('solicitud_proyecto') }}" onclick="establecerActivo(this)">
+                            <i class="fas fa-file-alt me-2"></i>Solicitud de Proyectos
+                        </a>
+                    </li>
+
                 @endif
             
                 @if(auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador']))
