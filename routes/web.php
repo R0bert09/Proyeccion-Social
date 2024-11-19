@@ -60,10 +60,6 @@ Route::get('/proyecto', function () {
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto');
 
-Route::get('/gestor-de-TI', [ProyectoController::class, 'gestor_de_TI'])->name('gestor_de_TI');
-Route::get('/solicitud-proyecto', [ProyectoController::class, 'solicitud_proyecto'])->name('solicitud_proyecto');
-    
-
 
 //Mostrar los departamentos en publicar proyectos
 Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
@@ -306,15 +302,18 @@ Route::controller(ProyectosDocumentosController::class)
     Route::put('/perfil_usuario', [UserController::class, 'updatepassperfil'])->name('update_password');
 
 
-    //ruta publicar proyectos de estudiantes
-    Route::get('/pry', function () {
-        return view('estudiantes.publicar-proyecto');
+    //ruta solicitud proyectos de estudiantes
+    Route::get('/solicitudproyecto', function () {
+        return view('estudiantes.solicitud-proyecto');
     });
 
-    //ruta publicar proyectos de estudiantes
+    //ruta dashboard de estudiantes
     Route::get('/pry', function () {
         return view('estudiantes.dashboard');
     });
+
+    Route::get('/gestor-de-TI', [ProyectoController::class, 'gestor_de_TI'])->name('gestor_de_TI');
+    Route::get('/solicitud-proyecto', [ProyectoController::class, 'solicitud_proyecto'])->name('solicitud_proyecto');
 
 
 ?>
