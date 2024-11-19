@@ -24,6 +24,10 @@ Route::get('/', function () {
     return view('login.login');
 })->name('login');
 
+Route::get('/hrs', function () {
+    return view('estudiantes.actualizar-horas');
+});
+
 Route::post('/', [UserController::class, 'login'])->name('login.process');
 
 Route::get('/dashboard/datos-grafico', [ProyectoController::class, 'obtenerDatosGrafico'])->name('dashboard.datosGrafico');
