@@ -119,6 +119,17 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="col-md-6">
+                        <label for="id_seccion" class="form-label">Sección/Departamento</label>
+                        <select name="seccion_id" class="form-select @error('departamento') is-invalid @enderror" id="seccion_id">
+                            <option selected disabled>Seleccionar departamento</option>
+                        @foreach($secciones as $seccion)
+                            <option value="{{$seccion->id_seccion}}" {{ $seccion->id_seccion == $proyecto->seccion->id_seccion ? 'selected' : '' }}>
+                                {{$seccion->nombre_seccion}}
+                            </option>
+                        @endforeach
+                        </select>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100 btn-gestion fw-bold">Actualizar Proyecto</button>
