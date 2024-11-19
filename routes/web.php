@@ -25,10 +25,6 @@ Route::get('/', function () {
     return view('login.login');
 })->name('login');
 
-/* ruta de prueba del chat */
-Route::get('/chat', function () {
-    return view('mensaje.chat');
-})->name('chat');
 
 
 Route::get('/hrs', function () {
@@ -101,12 +97,11 @@ Route::delete('/proyectos/{proyecto}/eliminar-estudiante/{estudiante}', [Proyect
 Route::put('/proyectos/{proyecto}/actualizar', [ProyectoController::class, 'actualizar'])->name('proyectos.actualizar');
 
 
-Route::get('/mensajeria', function () {
-    if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
-        return view('mensaje.mensaje');
-    }
-    return view('dashboard.dashboard');
-})->middleware('auth')->name('mensajeria');
+Route::get('/mensajeria', [UserController::class, 'show'])
+    ->middleware('auth')
+    ->name('mensajeria');
+
+Route::get('/api/users', [UserController::class, 'getUsers']);
 
 Route::get('/gestion-proyecto', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Coordinador', 'Administrador'])) {
