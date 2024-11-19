@@ -14,6 +14,7 @@ use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\HorasSocialesController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\ProyectosDocumentosController;
+use App\Http\Controllers\ProyectosEstudiantesController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\PermissionController;
@@ -315,9 +316,10 @@ Route::controller(ProyectosDocumentosController::class)
     Route::get('/gestor-de-TI', [ProyectoController::class, 'gestor_de_TI'])->name('gestor_de_TI');
     Route::get('/solicitud-proyecto', [ProyectoController::class, 'solicitud_proyecto'])->name('solicitud_proyecto');
 
-    //ruta proyectos mios de estudiantes
-    Route::get('/proyectomio', function () {
-        return view('estudiantes.proyectomio');
-    });
+    Route::get('/detallesmio', [ProyectosEstudiantesController::class, 'detallesmio'])->name('detallesmio');
+    Route::get('/proyectomio', [ProyectosEstudiantesController::class, 'proyectomio'])->name('proyectomio');
+
+    
+
 ?>
 

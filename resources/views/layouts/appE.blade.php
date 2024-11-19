@@ -41,7 +41,7 @@
             </li>
             <li class="nav-item text-muted mt-3">Proyectos</li>
             <li class="nav-item">
-                <a class="nav-link" href="" onclick="establecerActivo(this)">
+                <a class="nav-link" href="{{ route('proyectomio') }}" onclick="establecerActivo(this)">
                     <i class="bi bi-folder me-2"></i> Mi proyecto
                 </a>
             </li>
