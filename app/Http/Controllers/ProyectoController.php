@@ -14,13 +14,25 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Departamento;
+use App\Exports\ProyectosExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProyectoController extends Controller
 {
     public function index()
     {
-        $ListProyecto = Proyecto::with('seccion.departamento','estudiantes','coordinadorr','tutorr.seccionesTutoreadas','estadoo')->get();
-        // dd($ListProyecto);
+        $ListProyecto = Proyecto::with([
+                'seccion.departamento',
+                'estudiantes',
+                'coordinadorr',
+                'tutorr.seccionesTutoreadas',
+                'estadoo'
+            ])
+            ->whereHas('estadoo', function ($query) {
+                $query->where('nombre_estado', '!=', 'Disponible');
+            })
+            ->get();
+    
         return view("proyecto.proyecto-general", compact("ListProyecto"));
     }
 
@@ -89,12 +101,13 @@ class ProyectoController extends Controller
         $proyecto = Proyecto::find($id);
         $estados= Estado::all();
         $estudiantes= Estudiante::all(); 
+        $secciones=Seccion::all();
         $tutores = User::role('tutor')->get();
         if (!$proyecto) {
             return redirect()->route('proyectos.index')->with('error', 'Proyecto no encontrado');
         }
         // dd($proyecto);
-        return view("proyecto.proyecto-editar", compact('proyecto', 'estados', 'estudiantes','tutores'));
+        return view("proyecto.proyecto-editar", compact('proyecto', 'estados', 'estudiantes','tutores','secciones'));
     }
 
     public function update(Request $request, $id)
@@ -105,6 +118,7 @@ class ProyectoController extends Controller
             'periodo' => 'required|string|max:255',
             'lugar' => 'required|string|max:255',
             'coordinador' => 'required|integer',
+            'id_seccion' => 'required|integer',
         ]);
 
         $proyecto = Proyecto::find($id);
@@ -163,9 +177,9 @@ class ProyectoController extends Controller
             'fecha_inicio' => 'nullable|date',
             'fecha_fin' => 'nullable|date|after_or_equal:fecha_inicio',
             'estado' => 'required|integer|exists:estados,id_estado',
+            'seccion_id' => 'required|string|exists:secciones,id_seccion',
         ]);
     
-        // Buscar el tutor por nombre
         $tutor = User::find($request->idTutor);
     
         if ($validatedData['idTutor'] && !$tutor) {
@@ -180,20 +194,56 @@ class ProyectoController extends Controller
             'fecha_inicio' => $validatedData['fecha_inicio'],
             'fecha_fin' => $validatedData['fecha_fin'],
             'estado' => $validatedData['estado'],
+            'seccion_id' => $validatedData['seccion_id'],
         ]);
     
         return redirect()->route('proyecto-g')->with('success', 'Proyecto actualizado correctamente.');
     }
 
-    public function destroy(string $id)
+    public function generar(Request $request)
+    {
+        $action = $request->input('action');
+        $proyectos = $request->input('proyectos', []);
+    
+        switch ($action) {
+            case 'pdf':
+                return $this->generarPDF($proyectos);
+            case 'excel':
+                return $this->generarExcel($proyectos);
+            case 'delete':
+                Proyecto::whereIn('id_proyecto', $proyectos)->delete();
+                return redirect()->route('proyecto-g')->with('success', 'Proyectos eliminados correctamente.');
+            default:
+                return redirect()->route('proyecto-g')->with('error', 'Acción no válida.');
+        }
+    }
+    private function generarPDF($proyectos)
+    {
+        $proyectosData = Proyecto::with(['estudiantes.usuario', 'tutorr', 'estadoo', 'seccion'])
+            ->whereIn('id_proyecto', $proyectos)
+            ->get();
+        $pdf = Pdf::loadView('proyecto.pdf', compact('proyectosData'))->setPaper('a4', 'landscape');
+        return $pdf->download('proyectos_' . date('Y-m-d') . '.pdf');
+    }
+    private function generarExcel($proyectos)
+    {
+        return Excel::download(new ProyectosExport($proyectos), 'proyectos_' . date('Y-m-d') . '.xlsx');
+    }
+    public function destroy($id)
     {
         $proyecto = Proyecto::find($id);
         if (!$proyecto) {
-            return redirect()->route('proyectos.index')->with('error', 'Proyecto no encontrado');
+            return redirect()->back()->with('error', 'Proyecto no encontrado');
         }
 
         $proyecto->delete();
-        return redirect()->route('proyectos.index')->with('success', 'Proyecto eliminado con éxito');
+
+        $currentRoute = request()->route()->getName();
+        if ($currentRoute == 'proyecto-g') {
+            return redirect()->route('proyecto-g')->with('success', 'Proyecto eliminado con éxito');
+        } else {
+            return redirect()->route('proyecto-disponible')->with('success', 'Proyecto eliminado con éxito');
+        }
     }
 
     public function filtrarProyectos(Request $request)
