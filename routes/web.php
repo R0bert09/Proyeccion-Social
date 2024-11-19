@@ -61,6 +61,8 @@ Route::get('/proyecto', function () {
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto');
 
+Route::delete('/proyecto/{id}', [ProyectoController::class, 'destroy'])->name('proyecto.eliminarProyecto');
+Route::post('/proyectos/generar', [ProyectoController::class, 'generar'])->name('proyectos.generar');
 
 //Mostrar los departamentos en publicar proyectos
 Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
