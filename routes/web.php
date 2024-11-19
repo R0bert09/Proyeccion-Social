@@ -41,7 +41,8 @@ Route::post('/logout', function () {
 Route::get('/registro', [UserController::class, 'allSeccionRegistro'])->name('registro');
 Route::post('/registro', [UserController::class, 'registro'])->name('usuarios.registro');
 
-// rutas de proyectos
+
+// -----------------rutas de proyectos---------
 Route::get('/proyecto-g',[ProyectoController::class, 'index'], function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Administrador', 'Coordinador', 'Tutor'])) {
         return view('proyecto.proyecto-general');
@@ -55,6 +56,11 @@ Route::get('/proyecto', function () {
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto');
 
+Route::get('/gestor-de-TI', [ProyectoController::class, 'gestor_de_TI'])->name('gestor_de_TI');
+Route::get('/solicitud-proyecto', [ProyectoController::class, 'solicitud_proyecto'])->name('solicitud_proyecto');
+    
+
+
 //Mostrar los departamentos en publicar proyectos
 Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
 
@@ -66,6 +72,12 @@ Route::get('/proyecto-disponible',[ProyectoController::class, 'retornar_proyecto
 })->middleware('auth')->name('proyecto-disponible');
 
 
+// Ruta para la página del gestor de TI
+Route::get('/gestor-de-TI', [ProyectoController::class, 'gestor_de_TI'])
+    ->name('gestor_de_TI');
+// Ruta para la solicitud de proyecto
+Route::get('/solicitud-proyecto', [ProyectoController::class, 'solicitud_proyecto'])
+    ->name('solicitud_proyecto');
 
 Route::get('/proyecto/{id}/editar',[ProyectoController::class, 'edit'], function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
@@ -153,7 +165,8 @@ Route::controller(EstudianteController::class)
     ->group(function () {
         Route::get('/', 'index')->name('index');          
         Route::get('/create', 'create')->name('create');          
-        Route::post('/', 'store')->name('store');         
+        Route::post('/', 'store')->name('store'); 
+
         Route::get('/{id}', 'show')->name('show');        
         Route::put('/{id}', 'update')->name('update');    
         Route::delete('/{id}', 'destroy')->name('destroy'); 
