@@ -79,6 +79,7 @@ Route::get('/gestor-de-TI', [ProyectoController::class, 'gestor_de_TI'])
 // Ruta para la solicitud de proyecto
 Route::get('/solicitud-proyecto', [ProyectoController::class, 'solicitud_proyecto'])
     ->name('solicitud_proyecto');
+Route::get('/proyecto-disponibles-list', [ProyectoController::class, 'proyecto__disponible_list'])->name('proyecto__disponible_list');
 
 Route::get('/proyecto/{id}/editar',[ProyectoController::class, 'edit'], function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {

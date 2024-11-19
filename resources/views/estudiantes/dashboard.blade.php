@@ -4,6 +4,8 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/estudianteprincipal.css') }}">
+<link rel="stylesheet" href="{{ asset('css/deshboard-title.css') }}">
+
 @endsection
 
 @section('content')
@@ -39,7 +41,7 @@
 </div>
 
 <div class="contenedor-carrusel ">
-    <h2 class="titulo-proyectos mb-4">Proyectos disponibles</h2>
+<h2 class="titulo-proyectos mb-4">Proyectos disponibles <a class="ver-mas" href="{{ route('proyecto__disponible_list') }}" onclick="establecerActivo(this)">Ver más</a></h2>
     <div class="d-flex align-items-center justify-content-center ">
         <button class="btn boton-carrusel" id="btnIzquierda">
             <span class="flecha-carrusel"><i class="bi bi-arrow-left"></i></span>
