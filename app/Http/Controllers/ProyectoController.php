@@ -411,5 +411,9 @@ class ProyectoController extends Controller
         return view('proyecto.solicitud-proyecto');
     }
 
+    public function proyecto__disponible_list(){
+        return view('proyecto.proyecto-disponible-list');
+    }
+
 }
 
