@@ -22,4 +22,8 @@ class Seccion extends Model
         return $this->belongsTo(Departamento::class, 'departamento_id', 'id_departamento');
 
     }
+    public function proyectos()
+    {
+        return $this->hasMany(Proyecto::class, 'seccion_id', 'id_seccion');
+    }
 }
