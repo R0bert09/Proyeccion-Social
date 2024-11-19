@@ -25,6 +25,12 @@ Route::get('/', function () {
     return view('login.login');
 })->name('login');
 
+/* ruta de prueba del chat */
+Route::get('/chat', function () {
+    return view('mensaje.chat');
+})->name('chat');
+
+
 Route::get('/hrs', function () {
     return view('estudiantes.actualizar-horas');
 });
