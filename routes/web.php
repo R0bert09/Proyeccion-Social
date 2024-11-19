@@ -315,6 +315,9 @@ Route::controller(ProyectosDocumentosController::class)
     Route::get('/gestor-de-TI', [ProyectoController::class, 'gestor_de_TI'])->name('gestor_de_TI');
     Route::get('/solicitud-proyecto', [ProyectoController::class, 'solicitud_proyecto'])->name('solicitud_proyecto');
 
-
+    //ruta proyectos mios de estudiantes
+    Route::get('/proyectomio', function () {
+        return view('estudiantes.proyectomio');
+    });
 ?>
 
