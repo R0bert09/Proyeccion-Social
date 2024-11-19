@@ -32,16 +32,18 @@
                         <tr>
                             <td><input type="checkbox" class="form-check-input" value="{{ $proyecto->id }}"></td>
                             <td>{{ $proyecto->nombre_proyecto }}</td>
-                            <td>{{ $proyecto->descripcion_proyecto }}</td>
+                            <td>{!! strip_tags($proyecto->descripcion_proyecto) !!}</td>
                             <td>{{ $proyecto->horas_requeridas }}</td>
                             <td>{{ $proyecto->lugar }}</td>
                             <td>
-                                @if ($proyecto->seccion)
-                                    {{ $proyecto->seccion->nombre }} / 
-                                    {{ $proyecto->seccion->departamento->nombre }}
-                                @else
-                                    No asignada
-                                @endif
+                            @if ($proyecto->seccion)
+                            {{ $proyecto->seccion->nombre_seccion }}
+                            @if($proyecto->seccion->departamento)
+                            / {{ $proyecto->seccion->departamento->nombre_departamento }}
+                            @endif
+                            @else
+                            No asignada
+                            @endif
                             </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-2">

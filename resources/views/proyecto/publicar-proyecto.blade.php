@@ -41,7 +41,6 @@
                 </div>
                
                 <div class="row">
-                    
                     <div class="col-md-6 mb-3">
                         <label for="horas" class="form-label">Horas Requeridas</label>
                         <input type="number" class="form-control" id="horas" name="horas" 
@@ -54,14 +53,18 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="id_seccion" class="form-label">Sección/Departamento</label>
-                        <select name="id_seccion" class="form-select" id="id_seccion">
-                        <option selected>Seleccionar departamento</option>
-                        @foreach($departamentos as $departamento)
-                        <option value="{{ $departamento->id_departamento }}"> {{ $departamento->nombre_departamento }} </option>
-                        @endforeach
-                        @foreach($secciones as $seccion)
-                        <option value="{{ $seccion->id_seccion }}"> {{ $seccion->nombre_seccion }} </option>
-                        @endforeach
+                        <select name="id_seccion" class="form-select" id="id_seccion" required>
+                            <option value="">Seleccionar sección</option>
+                            @foreach($departamentos as $departamento)
+                                <optgroup label="{{ $departamento->nombre_departamento }}">
+                                    @foreach($secciones->where('id_departamento', $departamento->id_departamento) as $seccion)
+                                        <option value="{{ $seccion->id_seccion }}" 
+                                                {{ old('id_seccion') == $seccion->id_seccion ? 'selected' : '' }}>
+                                            {{ $seccion->nombre_seccion }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -75,15 +78,18 @@
     </div>
 </div>
 
+<!-- CKEditor Script -->
 <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 <script>
-    ClassicEditor
-        .create(document.querySelector('#descripcion'), {
-            toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'],
-            language: 'es'
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        ClassicEditor
+            .create(document.querySelector('#descripcion'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'],
+                language: 'es'
+            })
+            .catch(error => {
+                console.error('Error al inicializar CKEditor:', error);
+            });
+    });
 </script>
 @endsection
