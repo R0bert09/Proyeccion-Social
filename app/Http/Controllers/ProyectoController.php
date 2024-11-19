@@ -136,7 +136,7 @@ class ProyectoController extends Controller
             'idEstudiante' => 'required|string|exists:estudiantes,id_estudiante',
         ], [
             'idEstudiante.exists' => 'El estudiante seleccionado no existe en la base de datos.',
-            'idEstudiante.required' => 'El ID del estudiante es requerido.',
+            'idEstudiante.required' => 'El estudiante no esta registrado.',
         ]);
     
         // Buscar al estudiante por id
