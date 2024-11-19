@@ -113,6 +113,7 @@
 }
 
 .carru{
+    overflow-x: hidden;
     overflow-y: hidden; 
     width: 950px;
     height: 300px;
