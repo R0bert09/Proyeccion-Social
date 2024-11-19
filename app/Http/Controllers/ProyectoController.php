@@ -295,5 +295,51 @@ class ProyectoController extends Controller
     {
         return Proyecto::whereBetween('estado', [1, 6])->count();
     }
+
+    public function obtenerDatosGrafico()
+    {
+        $datos = DB::table('proyectos')
+            ->selectRaw("
+                COUNT(CASE WHEN estado IN (2, 3, 4) THEN 1 END) as en_progreso,
+                COUNT(CASE WHEN estado IN (5, 7) THEN 1 END) as completados,
+                COUNT(CASE WHEN estado IN (1, 8, 9) THEN 1 END) as en_revision
+            ")
+            ->first();
+
+        return response()->json([
+            'labels' => ['En Progreso', 'Completados', 'En Revisión'],
+            'data' => [$datos->en_progreso, $datos->completados, $datos->en_revision],
+        ]);
+    } 
+
+    public function obtenerEstudiantesYProyectosPorFecha()
+    {
+        $estudiantesPorFecha = DB::table('estudiantes')
+            ->selectRaw('DATE(created_at) as fecha, COUNT(*) as total_estudiantes')
+            ->groupBy('fecha')
+            ->orderBy('fecha', 'asc')
+            ->get();
+
+        $proyectosPorFecha = DB::table('proyectos')
+            ->selectRaw('DATE(created_at) as fecha, COUNT(*) as total_proyectos')
+            ->groupBy('fecha')
+            ->orderBy('fecha', 'asc')
+            ->get();
+
+        $fechas = $estudiantesPorFecha->pluck('fecha')->merge($proyectosPorFecha->pluck('fecha'))->unique()->sort();
+
+        $data = $fechas->map(function ($fecha) use ($estudiantesPorFecha, $proyectosPorFecha) {
+            $totalEstudiantes = $estudiantesPorFecha->firstWhere('fecha', $fecha)->total_estudiantes ?? 0;
+            $totalProyectos = $proyectosPorFecha->firstWhere('fecha', $fecha)->total_proyectos ?? 0;
+
+            return [
+                'fecha' => $fecha,
+                'total_estudiantes' => $totalEstudiantes,
+                'total_proyectos' => $totalProyectos,
+            ];
+        });
+
+        return response()->json($data);
+    }
 }
 
