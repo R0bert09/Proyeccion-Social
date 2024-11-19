@@ -38,9 +38,9 @@
                     @csrf
                     <select class="form-select" id="idEstudiante" name="idEstudiante" >
                             @foreach ($estudiantes as $estudiante)
-                                <option value="{{ $estudiante->id_estudiante }}">
-                                    {{ $estudiante->usuario->name }}
-                                </option>
+                                    <option value="{{ $estudiante->id_estudiante }}">
+                                        {{ $estudiante->usuario->name }}
+                                    </option>
                             @endforeach
                     </select>
                     <button type="submit" class="btn btn-light btn-sm p-2 px-3">
@@ -137,6 +137,7 @@
         </div>
     </div>
 </div>
-
+<div id="estudiantes-data" data-estudiantes='@json($estudiantes)'></div>
+<script src="{{ asset('js/filtrarEstudiantes.js') }}"></script>
 <script src="{{ asset('js/gestionProyecto.js') }}"></script>
 @endsection
