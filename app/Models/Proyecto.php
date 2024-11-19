@@ -26,7 +26,8 @@ class Proyecto extends Model
         'coordinador',
         'tutor',
         'fecha_inicio',
-        'fecha_fin'
+        'fecha_fin',
+        'seccion_id'
     ];
 
 
@@ -44,7 +45,15 @@ class Proyecto extends Model
         'fecha_inicio' => 'required|date',
         'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
     ];
-
+// En el modelo Seccion.php
+public function seccion()
+{
+    return $this->belongsTo(Seccion::class, 'seccion_id', 'id_seccion');
+}
+public function departamento()
+{
+    return $this->belongsTo(Departamento::class, 'id_departamento');
+}
     //Relaciones a tabla estado y usuario
     public function estadoo()
     {

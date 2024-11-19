@@ -19,16 +19,20 @@ class ProyectoController extends Controller
 {
     public function index()
     {
-        $ListProyecto = Proyecto::with('estudiantes','coordinadorr','tutorr.seccionesTutoreadas','estadoo')->get();
+        $ListProyecto = Proyecto::with('seccion.departamento','estudiantes','coordinadorr','tutorr.seccionesTutoreadas','estadoo')->get();
         // dd($ListProyecto);
         return view("proyecto.proyecto-general", compact("ListProyecto"));
     }
 
     public function retornar_proyectos()
     {
-        $proyectos = Proyecto::with('estudiantes','coordinadorr','tutorr.seccionesTutoreadas','estadoo')->get();
+        $proyectos = Proyecto::with('seccion.departamento','estudiantes','coordinadorr','tutorr.seccionesTutoreadas','estadoo')->get();
         //dd($ListProyecto);
         return view("proyecto.proyecto-disponible", compact("proyectos"));
+        /*
+        $proyectos = Proyecto::with(['seccion.departamento'])->get();
+        return view("proyecto.proyecto-disponible", compact("proyectos"));
+        */
     }
 
     public function create()
@@ -38,28 +42,26 @@ class ProyectoController extends Controller
 
     public function store(Request $request)
     {
-        // Validar los datos del formulario
         $validatedData = $request->validate([
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'horas' => 'required|integer|min:1',
             'ubicacion' => 'required|string|max:255',
-            'id_seccion' => 'required|exists:secciones,id_seccion', // Validamos que exista en la tabla secciones
+            'id_seccion' => 'required|exists:secciones,id_seccion',
         ]);
     
         try {
-            // Crear el nuevo proyecto
             $proyecto = new Proyecto();
             $proyecto->nombre_proyecto = $validatedData['titulo'];
-            $proyecto->descripcion_proyecto = $validatedData['descripcion'];
+            $proyecto->descripcion_proyecto = strip_tags($validatedData['descripcion']);
             $proyecto->horas_requeridas = $validatedData['horas'];
             $proyecto->lugar = $validatedData['ubicacion'];
-            $proyecto->estado = 1; // Estado inicial (disponible)
+            $proyecto->estado = 1;
             $proyecto->periodo = now()->format('Y-m');
             $proyecto->coordinador = auth()->id();
-            $proyecto->seccion_id = $validatedData['id_seccion']; // Usamos el nombre correcto del campo
-            $proyecto->fecha_inicio = now(); // Establecemos la fecha actual como fecha de inicio por defecto
-            $proyecto->fecha_fin = now()->addMonths(3); // Establecemos 3 meses después como fecha de fin por defecto
+            $proyecto->seccion_id = $validatedData['id_seccion']; // Asegúrate de que este campo se guarde
+            $proyecto->fecha_inicio = now();
+            $proyecto->fecha_fin = now()->addMonths(3);
             
             $proyecto->save();
     
@@ -285,10 +287,14 @@ class ProyectoController extends Controller
 
     public function retornar_departamentos()
     {
+        /*
         $departamentos = Departamento::all();
         $secciones = Seccion::all();
         return view("proyecto.publicar-proyecto", compact('departamentos', 'secciones'));
-
+        */
+        $departamentos = Departamento::all();
+        $secciones = Seccion::with('departamento')->get();
+        return view("proyecto.publicar-proyecto", compact('departamentos', 'secciones'));
     }
 
     public function totalProyectosActivos()
