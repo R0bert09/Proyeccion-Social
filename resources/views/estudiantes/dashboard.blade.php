@@ -42,56 +42,62 @@
     <h2 class="titulo-proyectos mb-4">Proyectos disponibles</h2>
     <div class="d-flex align-items-center justify-content-center ">
         <button class="btn boton-carrusel" id="btnIzquierda">
-            <span class="flecha-carrusel">&lt;</span>
+            <span class="flecha-carrusel"><i class="bi bi-arrow-left"></i></span>
         </button>
         <div class="carrusel carru" id="contenedorCarrusel">
             <div class="tarjeta-proyecto carru">
                 <h3 class="card-title">Gestor de TI</h3>
+                <br>
                 <p class="card-text">
-                    Descripción:<br> Este proyecto busca desarrollar las competencias tecnológicas y de gestión de TI.<br>
-                    <strong>Horas requeridas:</strong> 500
+                    Descripción:
+                </p>
+                <p class="card-text">
+                Este proyecto busca desarrollar las competencias tecnológicas y de gestión de TI.
+                </p>
+                <p class="card-text">
+                <strong>Horas requeridas:</strong> 500
                 </p>
                 <div class="estado-boton">
-                    <span class="badge estado-disponible">disponible</span>
+                    <span class="badge estado-disponible">Disponible</span>
                     <a href="#" class="ver-mas">VER MÁS</a>
                 </div>
             </div>
             <div class="tarjeta-proyecto">
                 <h3 class="card-title">Gestor de TI</h3>
-                <p class="card-text">
-                    Descripción:<br> Este proyecto busca desarrollar las competencias tecnológicas y de gestión de TI.<br>
-                    <strong>Horas requeridas:</strong> 500
-                </p>
+                <br>
+                <p class="card-text">Descripción:</p>
+                <p class="card-text">Este proyecto busca desarrollar las competencias tecnológicas y de gestión de TI.</p>
+                <p class="card-text"><strong>Horas requeridas:</strong> 500</p>
                 <div class="estado-boton">
-                    <span class="badge estado-no-disponible">no disponible</span>
+                    <span class="badge estado-no-disponible">No disponible</span>
                     <a href="#" class="ver-mas">VER MÁS</a>
                 </div>
             </div>
             <div class="tarjeta-proyecto">
                 <h3 class="card-title">Gestor de Infraestructura</h3>
-                <p class="card-text">
-                    Descripción:<br> Propuesta para mejorar la infraestructura tecnológica.<br>
-                    <strong>Horas requeridas:</strong> 400
-                </p>
+                <br>
+                <p class="card-text">Descripción:</p>
+                <p class="card-text">Propuesta para mejorar la infraestructura tecnológica.</p>
+                <p class="card-text"><strong>Horas requeridas:</strong> 400</p>
                 <div class="estado-boton">
-                    <span class="badge estado-disponible">disponible</span>
+                    <span class="badge estado-disponible">Disponible</span>
                     <a href="#" class="ver-mas">VER MÁS</a>
                 </div>
             </div>
             <div class="tarjeta-proyecto">
                 <h3 class="card-title">Desarrollador Web</h3>
-                <p class="card-text">
-                    Descripción:<br> Crear páginas web dinámicas con tecnologías modernas.<br>
-                    <strong>Horas requeridas:</strong> 350
-                </p>
+                <br>
+                <p class="card-text">Descripción:</p>
+                <p class="card-text">Crear páginas web dinámicas con tecnologías modernas.</p>
+                <p class="card-text"><strong>Horas requeridas:</strong> 350</p>
                 <div class="estado-boton">
-                    <span class="badge estado-no-disponible">no disponible</span>
+                    <span class="badge estado-no-disponible">No disponible</span>
                     <a href="#" class="ver-mas">VER MÁS</a>
                 </div>
             </div>
         </div>
         <button class="btn boton-carrusel" id="btnDerecha">
-            <span class="flecha-carrusel">&gt;</span>
+            <span class="flecha-carrusel"><i class="bi bi-arrow-right"></i></span>
         </button>
     </div>
 </div>
