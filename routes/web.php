@@ -334,5 +334,16 @@ Route::controller(ProyectosDocumentosController::class)
         return view('estudiantes.vista_procesos_horas');
     });
 
+
+    use Illuminate\Support\Facades\Storage;
+
+Route::get('/descargar/{filename}', function ($filename) {
+    $filePath = 'documentos/' . $filename;
+    if (Storage::disk('public')->exists($filePath)) {
+        return response()->download(storage_path('app/public/' . $filePath));
+    } else {
+        abort(404, 'Archivo no encontrado.');
+    }
+})->name('descargar');
 ?>
 
