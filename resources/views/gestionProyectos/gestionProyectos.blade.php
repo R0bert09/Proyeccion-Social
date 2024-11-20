@@ -75,8 +75,13 @@
             </div>
 
             <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <input type="text" class="form-control" id="estado" name="estado" readonly>
+                    <label for="estado" class="form-label">Estado</label>
+                    <select class="form-control" id="estado" name="estado_id">
+                        <option selected disabled>Seleccione un estado</option>
+                        @foreach ($estados as $estado)
+                            <option value="{{ $estado->id }}">{{ $estado->nombre_estado }}</option>
+                        @endforeach
+                    </select>
             </div>
 
             <button type="submit" class="btn btn-primary w-100 btn-gestion fw-bold">Crear Proyecto</button>
