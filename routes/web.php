@@ -27,7 +27,9 @@ Route::get('/', function () {
     return view('login.login');
 })->name('login');
 
-
+Route::get('/prys', function () {
+    return view('estudiantes.documentos-sociales');
+});
 
 Route::get('/hrs', function () {
     return view('estudiantes.actualizar-horas');
