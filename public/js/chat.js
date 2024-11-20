@@ -1,6 +1,6 @@
 let selectedChatId = null;
 
-    const socket = new WebSocket("wss://chat-ues-production.up.railway.app");
+    const socket = new WebSocket("https://chat-ues-production.up.railway.app");
 
     socket.onopen = () => {
         console.log("Conexión establecida con el WebSocket.");
