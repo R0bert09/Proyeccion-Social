@@ -36,6 +36,7 @@ Route::post('/', [UserController::class, 'login'])->name('login.process');
 Route::get('/secciones-disponibles', [EstudianteController::class, 'seccionesDisponibles'])->name('secciones.disponibles');
 Route::get('/estudiantes-por-seccion/{idSeccion}', [EstudianteController::class, 'estudiantesPorSeccion'])->name('estudiantes.porSeccion');
 Route::get('/proyectos-disponibles', [ProyectoController::class, 'proyectosDisponibles'])->name('proyectos.disponibles');
+Route::get('/dashboard/estudiantes', [ProyectoController::class, 'obtenerProyectosDashboard'])->name('estudiantes.dashboard');
 
 
 Route::get('/dashboard/datos-grafico', [ProyectoController::class, 'obtenerDatosGrafico'])->name('dashboard.datosGrafico');
@@ -315,11 +316,6 @@ Route::controller(ProyectosDocumentosController::class)
     //ruta solicitud proyectos de estudiantes
     Route::get('/solicitudproyecto', function () {
         return view('estudiantes.solicitud-proyecto');
-    });
-
-    //ruta dashboard de estudiantes
-    Route::get('/pry', function () {
-        return view('estudiantes.dashboard');
     });
 
     Route::get('/gestor-de-TI', [ProyectoController::class, 'gestor_de_TI'])->name('gestor_de_TI');
