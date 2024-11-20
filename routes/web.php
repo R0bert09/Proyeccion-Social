@@ -327,12 +327,11 @@ Route::controller(ProyectosDocumentosController::class)
     Route::get('/gestor-de-TI', [ProyectoController::class, 'gestor_de_TI'])->name('gestor_de_TI');
     Route::get('/solicitud-proyecto', [ProyectoController::class, 'solicitud_proyecto'])->name('solicitud_proyecto');
 
-    Route::get('/detallesmio', [ProyectosEstudiantesController::class, 'detallesmio'])->name('detallesmio');
-    Route::get('/proyectomio', [ProyectosEstudiantesController::class, 'proyectomio'])->name('proyectomio');
+    Route::get('/detallesmio', [ProyectosEstudiantesController::class, 'Detalles_proyecto'])->name('detallesmio');
+    Route::get('/proyectomio', [ProyectosEstudiantesController::class, 'Mi_proyecto'])->name('proyectomio');
+    Route::get('/solicitud-proyecto', [ProyectosEstudiantesController::class, 'Solicitud_Proyecto_Student'])->name('solicitud-proyecto');
+    Route::get('/procesos', [ProyectosEstudiantesController::class, 'Procesos'])->name('vista_procesos_horas');
 
-    Route::get('/vistaproyect', function () {
-        return view('estudiantes.vista_procesos_horas');
-    });
 
 
     use Illuminate\Support\Facades\Storage;
