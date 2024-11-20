@@ -328,7 +328,9 @@ Route::controller(ProyectosDocumentosController::class)
     Route::get('/detallesmio', [ProyectosEstudiantesController::class, 'detallesmio'])->name('detallesmio');
     Route::get('/proyectomio', [ProyectosEstudiantesController::class, 'proyectomio'])->name('proyectomio');
 
-    
+    Route::get('/vistaproyect', function () {
+        return view('estudiantes.vista_procesos_horas');
+    });
 
 ?>
 
