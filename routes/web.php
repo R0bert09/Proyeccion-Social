@@ -110,12 +110,17 @@ Route::get('/mensajeria', [UserController::class, 'show'])
 
 Route::get('/api/users', [UserController::class, 'getUsers']);
 
+use App\Models\Estado;
+
 Route::get('/gestion-proyecto', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Coordinador', 'Administrador'])) {
-        return view('gestionProyectos.gestionProyectos');
+        $estados = Estado::orderBy('nombre_estado', 'asc')->get();
+
+        return view('gestionProyectos.gestionProyectos', compact('estados'));
     }
     return view('dashboard.dashboard');
 })->middleware('auth')->name('gestion-proyecto');
+
 
 Route::get('/gestion-permiso', function () {
     if (Auth::check() && auth()->user()->hasRole('Administrador')) {
