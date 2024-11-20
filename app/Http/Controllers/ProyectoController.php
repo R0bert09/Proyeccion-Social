@@ -424,5 +424,14 @@ class ProyectoController extends Controller
         return response()->json($proyectos);
     }
 
+    public function obtenerProyectosDashboard()
+    {
+        $proyectos = Proyecto::where('estado', 1) 
+            ->get(['id_proyecto', 'nombre_proyecto', 'descripcion_proyecto', 'horas_requeridas', 'estado']);
+
+        return view('estudiantes.dashboard', compact('proyectos'));
+    }
+
+
 }
 

@@ -52,8 +52,11 @@
 
             <div class="mb-3">
                 <label for="tutor" class="form-label">Tutor</label>
-                <input type="text" class="form-control" id="tutor" name="tutor" readonly>
+                <select class="form-control" id="tutor" name="tutor_id">
+                    <option selected disabled>Seleccione un tutor</option>
+                </select>
             </div>
+
 
             <div class="mb-3">
                 <label for="ubicacion" class="form-label">Ubicación</label>
