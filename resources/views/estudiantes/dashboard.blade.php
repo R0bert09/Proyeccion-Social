@@ -60,7 +60,7 @@
                         <span class="badge {{ $proyecto->estado == 1 ? 'estado-disponible' : 'estado-no-disponible' }}">
                             {{ $proyecto->estado == 1 ? 'Disponible' : 'No Disponible' }}
                         </span>
-                        <a href="#" class="ver-mas">VER MÁS</a>
+                        <a href="{{ route('proyecto.ver', $proyecto->id_proyecto) }}" class="ver-mas">VER MÁS</a>
                     </div>
                 </div>
             @endforeach

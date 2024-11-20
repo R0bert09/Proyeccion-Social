@@ -432,6 +432,14 @@ class ProyectoController extends Controller
         return view('estudiantes.dashboard', compact('proyectos'));
     }
 
+    public function mostrarProyecto($id)
+    {
+        $proyecto = Proyecto::with(['seccion', 'estadoo'])
+            ->findOrFail($id);
+
+        return view('estudiantes.proyecto-disponibles', compact('proyecto'));
+    }
+
 
 }
 
