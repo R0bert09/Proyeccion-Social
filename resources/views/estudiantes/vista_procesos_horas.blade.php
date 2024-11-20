@@ -25,7 +25,7 @@
                     <li>Solicitar y llenar el Formulario de Hoja de Inscripción (Formulario N°1).</li>
                     <li>Entregar el formulario al coordinador de la subunidad de Proyección Social.</li>
                 </ul>
-                <a href="#" class="download-btn">
+                <a href="{{ route('descargar', ['filename' => 'Formato_de_Inscripcion.docx']) }}" class="download-btn">
                     <i class="bi bi-download me-2"></i>
                     Descargar formulario-inscripcion.pdf
                 </a>
