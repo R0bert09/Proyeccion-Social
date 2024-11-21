@@ -8,19 +8,19 @@
 @endsection
 
 @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
 @endif
 
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
 @endif
 
 @section('content')
@@ -48,17 +48,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($ListProyecto as $proyecto)
+                    @foreach($ListProyecto as $proyecto)
                     <tr>
                         <td><input type="checkbox" name="proyectos[]" value="{{ $proyecto->id_proyecto }}"></td>
                         <td>{{ $proyecto->nombre_proyecto }}</td>
                         <td>
                             @if($proyecto->estudiantes->isNotEmpty())
-                                @foreach($proyecto->estudiantes as $estudiante)
-                                    <li>{{ $estudiante->usuario->name }}</li>
-                                @endforeach
+                            @foreach($proyecto->estudiantes as $estudiante)
+                            <li>{{ $estudiante->usuario->name }}</li>
+                            @endforeach
                             @else
-                                <p>No hay estudiantes asignados</p>
+                            <p>No hay estudiantes asignados</p>
                             @endif
                         </td>
                         <td>{{ $proyecto->tutorr?->name ?? 'Sin tutor asignado' }}</td>
@@ -68,37 +68,43 @@
                         <td>-</td>
                         <td>{{ $proyecto->estadoo->nombre_estado }}</td>
                         <td>{{ $proyecto->seccion->nombre_seccion }}</td>
-                        <td>
+                        <td style="display: flex;">
+
+                            <!--Boton de solicitudes-->
+                            <a  class="btn btn-light btn-sm p-2 px-3">
+                                <i class="bi bi-info"></i>
+                            </a>
+
                             <!-- Botón de edición -->
                             <a href="{{ route('proyecto.proyecto-editar', ['id' => $proyecto->id_proyecto]) }}" class="btn btn-light btn-sm p-2 px-3">
                                 <i class="bi bi-pencil text-warning"></i>
                             </a>
                         </td>
                     </tr>
-                @endforeach
+                    @endforeach
                 </tbody>
             </table>
             <div class="p-3 d-flex flex-column flex-md-row justify-content-between align-items-center bg-light border-top">
-            <span class="text-muted mb-2 mb-md-0">Mostrando 1 a 10 de 50 resultados</span>
-            <div class="d-flex align-items-center gap-2 mb-2 mb-md-0">
-                <select class="form-select form-select-sm" style="width: auto;">
-                    <option>10</option>
-                    <option>20</option>
-                    <option>50</option>
-                </select>
-                <span>por página</span>
+                <span class="text-muted mb-2 mb-md-0">Mostrando 1 a 10 de 50 resultados</span>
+                <div class="d-flex align-items-center gap-2 mb-2 mb-md-0">
+                    <select class="form-select form-select-sm" style="width: auto;">
+                        <option>10</option>
+                        <option>20</option>
+                        <option>50</option>
+                    </select>
+                    <span>por página</span>
+                </div>
+                <ul class="paginacion d-flex gap-2 mb-0">
+                    <li class="pagina-item activo">
+                        <a class="pagina-enlace" href="#">1</a>
+                    </li>
+                    <li class="pagina-item"><a class="pagina-enlace" href="#">2</a></li>
+                    <li class="pagina-item"><a class="pagina-enlace" href="#">3</a></li>
+                    <li class="pagina-item"><a class="pagina-enlace" href="#">4</a></li>
+                    <li class="pagina-item"><a class="pagina-enlace" href="#">5</a></li>
+                    <li class="pagina-item"><a class="pagina-enlace" href="#"><i class="bi bi-chevron-right"></i></a></li>
+                </ul>
             </div>
-            <ul class="paginacion d-flex gap-2 mb-0">
-                <li class="pagina-item activo">
-                    <a class="pagina-enlace" href="#">1</a>
-                </li>
-                <li class="pagina-item"><a class="pagina-enlace" href="#">2</a></li>
-                <li class="pagina-item"><a class="pagina-enlace" href="#">3</a></li>
-                <li class="pagina-item"><a class="pagina-enlace" href="#">4</a></li>
-                <li class="pagina-item"><a class="pagina-enlace" href="#">5</a></li>
-                <li class="pagina-item"><a class="pagina-enlace" href="#"><i class="bi bi-chevron-right"></i></a></li>
-            </ul>
-        </div>
         </div>
         <div class="d-flex justify-content-end">
             <div class="button-group mt-3 px-4 mb-4">
@@ -117,7 +123,7 @@
 
         if (action === 'delete') {
             const confirmDelete = confirm('¿Estás seguro de que deseas eliminar los proyectos seleccionados?');
-            if (!confirmDelete) return; 
+            if (!confirmDelete) return;
         }
 
         form.submit();

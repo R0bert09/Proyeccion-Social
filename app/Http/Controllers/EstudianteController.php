@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Exports\EstudianteExport;
 use App\Models\User;
 use App\Models\Estudiante;
+use App\Models\Proyecto;
+use App\Models\ProyectosEstudiantes;
 use App\Models\Seccion;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -85,7 +87,7 @@ class EstudianteController extends Controller
             return redirect()->route('estudiantes.index')->with('error', 'Estudiante no encontrado');
         }
 
-        return view("estudiante.show", compact('estudiante')); 
+        return view("estudiante.show", compact('estudiante'));
     }
 
     // Mostrar formulario para editar un estudiante
@@ -130,7 +132,7 @@ class EstudianteController extends Controller
         return redirect()->route('estudiantes.index')->with('success', 'Estudiante eliminado con éxito');
     }
 
-    public function exportExcel() 
+    public function exportExcel()
     {
         return Excel::download(new EstudianteExport, 'estudiantes.xlsx');
     }
@@ -152,16 +154,16 @@ class EstudianteController extends Controller
             'id_seccion' => $data['id_seccion'],
             'nombre' => $data['name'],
             'porcentaje_completado' => 0,
-            'horas_sociales_completadas' => 0, 
+            'horas_sociales_completadas' => 0,
         ]);
 
         return redirect()->route('estudiantes.index')
             ->with('success', 'Estudiante registrado exitosamente');
     }
-    
+
     public function exportPDF(){
         $estudiantes = Estudiante::all();
-       
+
         $pdf = Pdf::loadView('exports.estudiantesPDF', ['estudiantes' => $estudiantes]);
         return $pdf->download('estudiantes.pdf');
     }
@@ -188,5 +190,47 @@ class EstudianteController extends Controller
             ->get();
 
         return response()->json($estudiantes);
+    }
+
+    public function actualizarHorasView()
+    {
+        $user = auth()->user();
+
+        $proyectoEstudiante = ProyectosEstudiantes::where('id_estudiante', $user->id_usuario)->first();
+        $proyecto = Proyecto::find($proyectoEstudiante->id_proyecto);
+        $horas = Estudiante::where('id_estudiante', $user->id_usuario)->first();
+
+        return view('estudiantes.actualizar-horas')->with([
+            'proyecto' => $proyecto,
+            'horas' => $horas,
+        ]);
+    }
+
+    public function actualizarHoras(Request $request)
+    {
+
+        /*Enviar
+        estudiante_id
+        proyecto_id
+        valor
+        documentos
+        */
+
+        dd($request->all());
+
+        return;
+
+        /*$estudiantes = Estudiante::all();
+
+        foreach ($estudiantes as $estudiante) {
+            $horas = DB::table('horas_sociales')
+                ->where('id_estudiante', $estudiante->id_estudiante)
+                ->sum('horas_completadas');
+
+            $estudiante->horas_sociales_completadas = $horas;
+            $estudiante->save();
+        }
+
+        return response()->json(['message' => 'Horas actualizadas']);*/
     }
 }
