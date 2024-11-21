@@ -130,6 +130,7 @@ class ProyectoController extends Controller
         $proyecto->update($data);
         return redirect()->route('proyectos.index')->with('success', 'Proyecto actualizado con éxito');
     }
+    
     public function asignarEstudiante(Request $request, $idProyecto)
     {
         $request->validate([
@@ -217,6 +218,7 @@ class ProyectoController extends Controller
                 return redirect()->route('proyecto-g')->with('error', 'Acción no válida.');
         }
     }
+
     private function generarPDF($proyectos)
     {
         $proyectosData = Proyecto::with(['estudiantes.usuario', 'tutorr', 'estadoo', 'seccion'])
@@ -225,10 +227,14 @@ class ProyectoController extends Controller
         $pdf = Pdf::loadView('proyecto.pdf', compact('proyectosData'))->setPaper('a4', 'landscape');
         return $pdf->download('proyectos_' . date('Y-m-d') . '.pdf');
     }
+
+
     private function generarExcel($proyectos)
     {
         return Excel::download(new ProyectosExport($proyectos), 'proyectos_' . date('Y-m-d') . '.xlsx');
     }
+
+
     public function destroy($id)
     {
         $proyecto = Proyecto::find($id);
@@ -439,7 +445,61 @@ class ProyectoController extends Controller
 
         return view('estudiantes.proyecto-disponibles', compact('proyecto'));
     }
+    public function mostrarDetalle($id)
+    {
+        try {
+            // Primero debug del ID recibido
+            \Log::info('ID recibido: ' . $id);
+    
+            // Buscar el proyecto
+            $proyecto = Proyecto::with(['seccion.departamento'])->findOrFail($id);
+            
+            // Debug del proyecto encontrado
+            \Log::info('Proyecto encontrado:', $proyecto->toArray());
+    
+            // Intentar ambas formas de pasar la variable
+            return view('proyecto.detalle-proyecto')
+                ->with('proyecto', $proyecto)
+                ->with('debug', true);
+                
+        } catch (\Exception $e) {
+            \Log::error('Error en mostrarDetalle: ' . $e->getMessage());
+            return back()->with('error', 'Proyecto no encontrado');
+        }
+    }
 
+    //editar
+    public function edit_proyecto($id)
+{
+    $proyecto = Proyecto::findOrFail($id);
+    $departamentos = Departamento::all();
+    $secciones = Seccion::all();
 
+    return view('proyecto.editar-proyecto', compact('proyecto', 'departamentos', 'secciones'));
+}
+
+public function update_proyecto(Request $request, $id)
+{
+    $data = $request->validate([
+        'titulo' => 'required|string|max:255',
+        'descripcion' => 'required|string|max:1000', // Ajusta el máximo si necesitas más texto
+        'ubicacion' => 'required|string|max:255',
+        'horas' => 'required|integer|min:1',
+        'id_seccion' => 'required|exists:secciones,id_seccion',
+    ]);
+
+    $proyecto = Proyecto::findOrFail($id); // Esto lanza un error 404 si no encuentra el proyecto
+
+    // Actualizar el proyecto con los datos validados
+    $proyecto->update([
+        'nombre_proyecto' => $data['titulo'],
+        'descripcion_proyecto' => $data['descripcion'],
+        'lugar' => $data['ubicacion'],
+        'horas_requeridas' => $data['horas'],
+        'id_seccion' => $data['id_seccion'],
+    ]);
+
+    return redirect()->route('proyecto-disponible')->with('success', 'Proyecto actualizado con éxito');
+}
 }
 
