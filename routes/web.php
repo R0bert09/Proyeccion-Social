@@ -29,7 +29,7 @@ Route::get('/', function () {
 
 Route::get('/prys', function () {
     return view('estudiantes.documentos-sociales');
-});
+})->name('documentos');
 
 Route::get('/hrs', function () {
     return view('estudiantes.actualizar-horas');
