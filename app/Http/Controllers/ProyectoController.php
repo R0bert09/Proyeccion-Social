@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Departamento;
 use App\Exports\ProyectosExport;
 use App\Models\Solicitud;
+use Illuminate\Container\Attributes\DB as AttributesDB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProyectoController extends Controller
@@ -519,4 +520,39 @@ class ProyectoController extends Controller
 
         return view('proyecto.proyecto-solicitudes', compact('solicitudes', 'estudiantes', 'proyecto', 'estados', 'nombresEstudiantes'));
     }
+
+    public function obtenerDetalleProyecto($id)
+    {
+        try {
+            $proyecto = Proyecto::with(['seccion.departamento'])->findOrFail($id);
+            return view('proyecto.detalle-proyecto', compact('proyecto'));
+        } catch (\Exception $e) {
+            \Log::error('Error en obtenerDetalleProyecto: ' . $e->getMessage());
+            return back()->with('error', 'Proyecto no encontrado');
+        }
+    }
+
+    public function descargarPDF($id)
+    {
+        $proyecto = Proyecto::with('seccion')->findOrFail($id);
+
+        $nombreArchivo = str_replace(' ', '_', $proyecto->nombre_proyecto) . '.pdf';
+
+        $pdf = Pdf::loadView('proyecto.pdf_proyecto', compact('proyecto'));
+        return $pdf->download($nombreArchivo);
+    }
+    public function GetTutoresPorSeccion($id)
+    {
+        $tutoresSeccion = DB::table('seccion_tutor')
+            ->join('users', 'seccion_tutor.id_tutor', '=', 'users.id_usuario')
+            ->select('users.id_usuario', 'users.name')
+            ->where('seccion_tutor.id_seccion', $id)
+            ->get();
+        return response()->json($tutoresSeccion);
+    }
+
 }
+
+
+
+

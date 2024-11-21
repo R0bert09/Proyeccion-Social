@@ -91,6 +91,12 @@ Route::get('/proyecto/{id}/editar_proyecto',[ProyectoController::class, 'edit_pr
 //Update proyecto
 Route::put('/proyectos/{id}/update_proyecto', [ProyectoController::class, 'update_proyecto'])->name('proyectos.proyectos_update');
 
+//Mostrar los detalle de los proyectos 
+// En routes/web.php
+Route::get('/proyecto/{id}/detalle', [ProyectoController::class, 'obtenerDetalleProyecto'])->name('obtener-detalle');
+
+// En routes/web.php
+Route::get('/proyecto/{id}/descargar-pdf', [ProyectoController::class, 'descargarPDF'])->name('proyecto.descargar-pdf');
 
 //Vista de solicitudes de proyectos
 Route::get('/proyecto/{id}/solicitudes', [ProyectoController::class, 'solicitudes_proyectos'])->name('solicitudesProyectos');
@@ -361,3 +367,7 @@ Route::get('/descargar/{filename}', function ($filename) {
         abort(404, 'Archivo no encontrado.');
     }
 })->name('descargar');
+
+Route::get('/obtener-tutores-por-seccion/{id}', [ProyectoController::class, 'GetTutoresPorSeccion']);
+?>
+
