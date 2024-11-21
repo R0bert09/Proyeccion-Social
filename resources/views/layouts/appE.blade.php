@@ -72,6 +72,15 @@
                     <i class="bi bi-chat me-2"></i> Mensajes
                 </a>
             </li>
+            <li class="nav-item text-muted mt-3">Salir</li>
+            <li class="nav-item mt-3">
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-link nav-link">
+                        <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+                    </button>
+                </form>
+            </li>
         </ul>
     </nav>
 

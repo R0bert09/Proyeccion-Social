@@ -62,17 +62,8 @@
                             <i class="bi bi-people me-2"></i> Gestión de Usuarios
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('permissions.index') }}" onclick="establecerActivo(this)">
-                            <i class="bi bi-person-gear me-2"></i> Gestión de Permisos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-
-                        <a class="nav-link" href="{{ route('gestion-roles') }}" onclick="establecerActivo(this)">
-                            <i class="bi bi-journal me-2"></i> Gestión de Roles
-                        </a>
-                    </li>
+                    
+                   
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('usuarios') }}" onclick="establecerActivo(this)">
                             <i class="bi bi-person me-2"></i> Usuarios
@@ -87,12 +78,7 @@
                             <i class="bi bi-people me-2"></i> Gestión de Usuarios
                         </a>
                     </li>
-                    <li class="nav-item">
-
-                        <a class="nav-link" href="{{ route('gestion-roles') }}" onclick="establecerActivo(this)">
-                            <i class="bi bi-journal me-2"></i> Gestión de Roles
-                        </a>
-                    </li>
+                   
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('usuarios') }}" onclick="establecerActivo(this)">
                             <i class="bi bi-person me-2"></i> Usuarios

@@ -28,7 +28,9 @@ Route::get('/', function () {
     return view('login.login');
 })->name('login');
 
-
+Route::get('/prys', function () {
+    return view('estudiantes.documentos-sociales');
+});
 
 Route::get('/hrs', [EstudianteController::class, 'actualizarHorasView'])->name('estudiante.actualizarHorasView');
 
