@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Exports\EstudianteExport;
@@ -7,7 +8,9 @@ use App\Models\Estudiante;
 use App\Models\Proyecto;
 use App\Models\ProyectosEstudiantes;
 use App\Models\Seccion;
+use App\Models\Solicitud;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -55,7 +58,7 @@ class EstudianteController extends Controller
     {
         $query = $request->input('query');
         $ListEstudiantes = $this->buscarEstudiantes($query);
-        $User=User::all();
+        $User = User::all();
         // dd($ListEstudiantes);
         return view("estudiante.index", compact("ListEstudiantes"));
     }
@@ -63,9 +66,9 @@ class EstudianteController extends Controller
     // Mostrar formulario para crear un nuevo estudiante
     public function create()
     {
-        $secciones=Seccion::all();
+        $secciones = Seccion::all();
         // dd($secciones);
-        return view("estudiante.create",compact("secciones"));
+        return view("estudiante.create", compact("secciones"));
     }
 
     // Almacenar un nuevo estudiante en la base de datos
@@ -161,7 +164,8 @@ class EstudianteController extends Controller
             ->with('success', 'Estudiante registrado exitosamente');
     }
 
-    public function exportPDF(){
+    public function exportPDF()
+    {
         $estudiantes = Estudiante::all();
 
         $pdf = Pdf::loadView('exports.estudiantesPDF', ['estudiantes' => $estudiantes]);
@@ -208,29 +212,49 @@ class EstudianteController extends Controller
 
     public function actualizarHoras(Request $request)
     {
+        //dd($request->all());
 
-        /*Enviar
-        estudiante_id
-        proyecto_id
-        valor
-        documentos
-        */
+        $request->validate(
+            [
+                'horasTrabajadas' => 'required|numeric|min:0',
+                'documentos' => 'required|file|mimes:pdf',
+            ],
+            [
+                'horasTrabajadas.required' => 'El campo horas trabajadas es obligatorio',
+                'horasTrabajadas.numeric' => 'El campo horas trabajadas debe ser un número',
+                'horasTrabajadas.min' => 'El campo horas trabajadas debe ser mayor a 0',
+                'documentos.required' => 'El campo documento es obligatorio',
+                'documentos.file' => 'El campo documento debe ser un archivo',
+                'documentos.mimes' => 'El campo documento debe ser un archivo PDF',
+            ]
+        );
 
-        dd($request->all());
 
-        return;
+        if ($request->hasFile('documentos')) {
+            $file = $request->file('documentos');
+            $name = time() . $file->getClientOriginalName();
 
-        /*$estudiantes = Estudiante::all();
+            $rutaDocumento = $file->storeAs('documentos', $name, ['disk' => 'public']);
 
-        foreach ($estudiantes as $estudiante) {
-            $horas = DB::table('horas_sociales')
-                ->where('id_estudiante', $estudiante->id_estudiante)
-                ->sum('horas_completadas');
-
-            $estudiante->horas_sociales_completadas = $horas;
-            $estudiante->save();
+            Storage::disk('public')->put($name, $file);
+        } else {
+            $rutaDocumento = null;
         }
 
-        return response()->json(['message' => 'Horas actualizadas']);*/
+        $valorHoras = $request->horasTrabajadas;
+        $estudiante = $request->idEstudiante_;
+        $proyecto = $request->idProyecto;
+
+        //dd($valorHoras, $estudiante, $proyecto, $rutaDocumento);
+
+        Solicitud::create([
+            'id_estudiante' => $estudiante,
+            'id_proyecto' => $proyecto,
+            'valor' => $valorHoras,
+            'documento' => $rutaDocumento,
+            'estado' => 7,
+        ]);
+
+        return redirect()->back()->with('success', 'Solicitud enviada con éxito');
     }
 }

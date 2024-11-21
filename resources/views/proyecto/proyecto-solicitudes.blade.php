@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Proyecto')
+@section('title', 'Solicitud de Proyecto')
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/proyecto-general.css') }}">
@@ -24,7 +24,7 @@
 @endif
 
 @section('content')
-<h1>Proyectos</h1>
+<h1>Solicitudes</h1>
 <form id="proyectosForm" action="{{ route('proyectos.generar') }}" method="POST">
     @csrf
     <input type="hidden" name="action" id="actionInput">
@@ -34,51 +34,51 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col"><input type="checkbox" id="selectAll"></th>
-                        <th>Título del proyecto</th>
-                        <th>Estudiantes</th>
-                        <th>Tutor</th>
-                        <th>Fecha de inicio</th>
-                        <th>Fecha de finalización</th>
-                        <th>Ubicación</th>
-                        <th>Progreso</th>
-                        <th>Estado</th>
-                        <th>Sección/Departamento</th>
+                        <th>Correlativo</th>
+                        <th>Estudiante</th>
+                        <th>Proyecto</th>
+                        <th>Valor</th>
+                        <th>Fecha de solicitud</th>
+                        <th>estado</th>
                         <th>Acciones</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($ListProyecto as $proyecto)
+                    @if ($solicitudes->isEmpty())
+
                     <tr>
-                        <td><input type="checkbox" name="proyectos[]" value="{{ $proyecto->id_proyecto }}"></td>
+                        <td colspan="7" class="text-center">No hay solicitudes</td>
+                    </tr>
+
+                    @endif
+                    @foreach($solicitudes as $solicitud)
+                    <tr>
+                        <td>{{ $solicitud->solicitud_id }}</td>
+                        <td>{{$nombresEstudiantes[0]}}</td>
                         <td>{{ $proyecto->nombre_proyecto }}</td>
-                        <td>
-                            @if($proyecto->estudiantes->isNotEmpty())
-                            @foreach($proyecto->estudiantes as $estudiante)
-                            <li>{{ $estudiante->usuario->name }}</li>
-                            @endforeach
+                        <td>{{ $solicitud->valor }} Hr(s)</td>
+                        <td>{{ $solicitud->created_at }}</td>
+                        <td>@if ($solicitud->estado == 6)
+                            <span class="badge bg-danger">{{$estados[$solicitud->estado]->nombre_estado}}</span>
+                            @elseif ($solicitud->estado == 7)
+                            <span class="badge bg-info">{{$estados[$solicitud->estado]->nombre_estado}}</span>
+                            @elseif ($solicitud->estado == 9)
+                            <span class="badge bg-success">{{$estados[$solicitud->estado]->nombre_estado}}</span>
                             @else
-                            <p>No hay estudiantes asignados</p>
-                            @endif
+                            <span class="badge bg-info">{{$estados[$solicitud->estado]->nombre_estado}}</span>
+
                         </td>
-                        <td>{{ $proyecto->tutorr?->name ?? 'Sin tutor asignado' }}</td>
-                        <td>{{ $proyecto->fecha_inicio }}</td>
-                        <td>{{ $proyecto->fecha_fin }}</td>
-                        <td>{{ $proyecto->lugar }}</td>
-                        <td>-</td>
-                        <td>{{ $proyecto->estadoo->nombre_estado }}</td>
-                        <td>{{ $proyecto->seccion->nombre_seccion }}</td>
+
+                        @endif
+
                         <td style="display: flex;">
 
                             <!--Boton de solicitudes-->
-                            <a  href="{{ route('solicitudesProyectos', ['id' => $proyecto->id_proyecto]) }}" class="btn btn-light btn-sm p-2 px-3">
+                            <a class="btn btn-light btn-sm p-2 px-3">
                                 <i class="bi bi-info"></i>
                             </a>
 
-                            <!-- Botón de edición -->
-                            <a href="{{ route('proyecto.proyecto-editar', ['id' => $proyecto->id_proyecto]) }}" class="btn btn-light btn-sm p-2 px-3">
-                                <i class="bi bi-pencil text-warning"></i>
-                            </a>
                         </td>
                     </tr>
                     @endforeach
@@ -104,13 +104,6 @@
                     <li class="pagina-item"><a class="pagina-enlace" href="#">5</a></li>
                     <li class="pagina-item"><a class="pagina-enlace" href="#"><i class="bi bi-chevron-right"></i></a></li>
                 </ul>
-            </div>
-        </div>
-        <div class="d-flex justify-content-end">
-            <div class="button-group mt-3 px-4 mb-4">
-                <button type="button" onclick="submitForm('pdf')" class="btn btn-success me-2">Generar PDF</button>
-                <button type="button" onclick="submitForm('excel')" class="btn btn-primary">Generar Excel</button>
-                <button type="button" onclick="submitForm('delete')" class="btn btn-danger">Eliminar Seleccionados</button>
             </div>
         </div>
     </div>

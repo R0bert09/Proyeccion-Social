@@ -78,6 +78,9 @@ Route::get('/proyecto', function () {
 Route::delete('/proyecto/{id}', [ProyectoController::class, 'destroy'])->name('proyecto.eliminarProyecto');
 Route::post('/proyectos/generar', [ProyectoController::class, 'generar'])->name('proyectos.generar');
 
+//Vista de solicitudes de proyectos
+Route::get('/proyecto/{id}/solicitudes', [ProyectoController::class, 'solicitudes_proyectos'])->name('solicitudesProyectos');
+
 //Mostrar los departamentos en publicar proyectos
 Route::get('/proyecto', [ProyectoController::class, 'retornar_departamentos'])->name('proyecto');
 
