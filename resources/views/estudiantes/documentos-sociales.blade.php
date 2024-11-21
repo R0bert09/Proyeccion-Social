@@ -162,7 +162,7 @@
                 <div class="card-body">
                     <h5 class="titulo-documento">Manual de Proyección Social</h5>
                     <p class="descripcion-corta">Guía completa sobre el proceso de proyección social</p>
-                    <a href="{{ route('descargar', ['filename' => 'MANUALDEPROYECCIONSOCIAL.docx']) }}" class="btn btn-descargar"><i class="bi bi-download"></i> Descargar</a>
+                    <a href="{{ route('descargar', ['filename' => 'Manual de proyeccion social.doc']) }}" class="btn btn-descargar"><i class="bi bi-download"></i> Descargar</a>
                 </div>
             </div>
         </div>

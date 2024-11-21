@@ -363,5 +363,7 @@ Route::get('/descargar/{filename}', function ($filename) {
         abort(404, 'Archivo no encontrado.');
     }
 })->name('descargar');
+
+Route::get('/obtener-tutores-por-seccion/{id}', [ProyectoController::class, 'GetTutoresPorSeccion']);
 ?>
 
