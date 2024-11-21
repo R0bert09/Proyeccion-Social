@@ -30,7 +30,7 @@ Route::get('/', function () {
 
 Route::get('/prys', function () {
     return view('estudiantes.documentos-sociales');
-});
+})->name('documentos');
 
 Route::get('/hrs', [EstudianteController::class, 'actualizarHorasView'])->name('estudiante.actualizarHorasView');
 
@@ -68,6 +68,7 @@ Route::get('/proyecto-g', [ProyectoController::class, 'index'], function () {
     }
     return view('dashboard.dashboard');
 })->middleware('auth')->name('proyecto-g');
+
 Route::get('/proyecto', function () {
     if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
         return view('proyecto.publicar-proyecto');
@@ -77,6 +78,19 @@ Route::get('/proyecto', function () {
 
 Route::delete('/proyecto/{id}', [ProyectoController::class, 'destroy'])->name('proyecto.eliminarProyecto');
 Route::post('/proyectos/generar', [ProyectoController::class, 'generar'])->name('proyectos.generar');
+
+
+//editar
+Route::get('/proyecto/{id}/editar_proyecto',[ProyectoController::class, 'edit_proyecto'], function () {
+    if (Auth::check() && auth()->user()->hasAnyRole(['Tutor', 'Coordinador', 'Administrador'])) {
+        return view('proyecto.editar-proyecto');
+    }
+    return view('dashboard.dashboard');
+})->middleware('auth')->name('proyecto.editar-proyecto');
+
+//Update proyecto
+Route::put('/proyectos/{id}/update_proyecto', [ProyectoController::class, 'update_proyecto'])->name('proyectos.proyectos_update');
+
 
 //Vista de solicitudes de proyectos
 Route::get('/proyecto/{id}/solicitudes', [ProyectoController::class, 'solicitudes_proyectos'])->name('solicitudesProyectos');
