@@ -22,8 +22,7 @@
             
             <div class="button-container">
                 <a href="{{ route('proyecto-disponible') }}" class="btn btn-secondary btn-return">Volver</a>
-                <!-- En detalle-proyecto.blade.php -->
-<a href="{{ route('proyecto.descargar-pdf', ['id' => $proyecto->id_proyecto]) }}" class="btn btn-danger btn-pdf">Generar PDF</a>
+                <a href="{{ route('proyecto.descargar-pdf', ['id' => $proyecto->id_proyecto]) }}" class="btn btn-danger btn-pdf">Generar PDF</a>
             </div>
         </div>
     </div>

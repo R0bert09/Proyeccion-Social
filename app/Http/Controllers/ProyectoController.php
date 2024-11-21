@@ -482,15 +482,15 @@ public function update_proyecto(Request $request, $id)
 {
     $data = $request->validate([
         'titulo' => 'required|string|max:255',
-        'descripcion' => 'required|string|max:1000', // Ajusta el máximo si necesitas más texto
+        'descripcion' => 'required|string|max:1000', 
         'ubicacion' => 'required|string|max:255',
         'horas' => 'required|integer|min:1',
         'id_seccion' => 'required|exists:secciones,id_seccion',
     ]);
 
-    $proyecto = Proyecto::findOrFail($id); // Esto lanza un error 404 si no encuentra el proyecto
+    $proyecto = Proyecto::findOrFail($id); 
 
-    // Actualizar el proyecto con los datos validados
+    
     $proyecto->update([
         'nombre_proyecto' => $data['titulo'],
         'descripcion_proyecto' => $data['descripcion'],
@@ -502,7 +502,7 @@ public function update_proyecto(Request $request, $id)
     return redirect()->route('proyecto-disponible')->with('success', 'Proyecto actualizado con éxito');
 }
     
-// En ProyectoController.php
+
 public function obtenerDetalleProyecto($id)
 {
     try {
@@ -514,23 +514,14 @@ public function obtenerDetalleProyecto($id)
     }
 }
 
-
-
-
-// En ProyectoController.php
-// public function descargarPDF($id)
-// {
-//     $proyecto = Proyecto::with(['seccion', 'seccion.departamento'])->findOrFail($id);
-
-//     $pdf = Pdf::loadView('proyecto.pdf_proyecto', compact('proyecto'));
-//     return $pdf->download('proyecto.pdf');
-// }
 public function descargarPDF($id)
 {
     $proyecto = Proyecto::with('seccion')->findOrFail($id);
 
+    $nombreArchivo = str_replace(' ', '_', $proyecto->nombre_proyecto) . '.pdf';
+
     $pdf = Pdf::loadView('proyecto.pdf_proyecto', compact('proyecto'));
-    return $pdf->download('proyecto.pdf');
+    return $pdf->download($nombreArchivo);
 }
 
 

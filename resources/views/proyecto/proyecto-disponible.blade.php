@@ -47,7 +47,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-2">
-                                <!-- En proyecto-disponible.blade.php -->
+                                
                                 <a href="{{ route('obtener-detalle', ['id' => $proyecto->id_proyecto]) }}" class="btn btn-light btn-sm p-2 px-3">
                                     <i class="bi bi-eye text-muted"></i>
                                 </a>
