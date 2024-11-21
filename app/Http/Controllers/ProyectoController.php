@@ -501,5 +501,40 @@ public function update_proyecto(Request $request, $id)
 
     return redirect()->route('proyecto-disponible')->with('success', 'Proyecto actualizado con éxito');
 }
+    
+// En ProyectoController.php
+public function obtenerDetalleProyecto($id)
+{
+    try {
+        $proyecto = Proyecto::with(['seccion.departamento'])->findOrFail($id);
+        return view('proyecto.detalle-proyecto', compact('proyecto'));
+    } catch (\Exception $e) {
+        \Log::error('Error en obtenerDetalleProyecto: ' . $e->getMessage());
+        return back()->with('error', 'Proyecto no encontrado');
+    }
+}
+
+
+
+
+// En ProyectoController.php
+// public function descargarPDF($id)
+// {
+//     $proyecto = Proyecto::with(['seccion', 'seccion.departamento'])->findOrFail($id);
+
+//     $pdf = Pdf::loadView('proyecto.pdf_proyecto', compact('proyecto'));
+//     return $pdf->download('proyecto.pdf');
+// }
+public function descargarPDF($id)
+{
+    $proyecto = Proyecto::with('seccion')->findOrFail($id);
+
+    $pdf = Pdf::loadView('proyecto.pdf_proyecto', compact('proyecto'));
+    return $pdf->download('proyecto.pdf');
+}
+
+
+
+
 }
 
